@@ -1,9 +1,14 @@
-const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize('metropos', 'root', '', {
-  host: 'localhost',
+module.exports = {
+  HOST: 'localhost',
+  USER: 'root', // pastikan menggunakan lowercase 'root'
+  PASSWORD: '',
+  DB: 'metropos',
   dialect: 'mysql',
-  logging: false, // matikan logging SQL jika tidak diperlukan
-});
 
-module.exports = sequelize;
+  pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+  }
+};
