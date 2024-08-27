@@ -14,18 +14,63 @@ const Sidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to={"/product"}>
+            <NavLink to={"/produk"}>
               <IoPricetag />
-              Product
+              Produk
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Admin</p>
+        <p className="menu-label">Member</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/member"}>
+              <IoPerson />
+              Member
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">Transaksi</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/transaksi"}>
+              <IoPerson />
+              Transaksi
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">Kategori</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/kategori"}>
+              <IoPerson />
+              Kategori
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">User</p>
         <ul className="menu-list">
           <li>
             <NavLink to={"/users"}>
               <IoPerson />
               Users
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">Supplier</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/supplier"}>
+              <IoPerson />
+              Supplier
+            </NavLink>
+          </li>
+        </ul>
+        <p className="menu-label">Pembelian</p>
+        <ul className="menu-list">
+          <li>
+            <NavLink to={"/pembelian"}>
+              <IoPerson />
+              Pembelian
             </NavLink>
           </li>
         </ul>
