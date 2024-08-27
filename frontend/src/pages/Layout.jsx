@@ -10,8 +10,9 @@ const Layout = ({ children }) => {
         <div className="column is-2">
           <Sidebar />
         </div>
-        <div className="column has-background-light"></div>
-        <main>{children}</main>
+        <div className="column has-background-light">
+          <main>{children}</main>
+        </div>
       </div>
     </React.Fragment>
   );
