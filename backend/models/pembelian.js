@@ -9,7 +9,10 @@ const Pembelian = sequelize.define('Pembelian', {
   id_produk: DataTypes.STRING,
   kuantitas: DataTypes.INTEGER,
   id_supplier: DataTypes.STRING,
-  tanggal: DataTypes.DATEONLY,
+  tanggal: {
+    type: DataTypes.DATEONLY,
+    defaultValue: DataTypes.NOW, // Tanggal otomatis terisi dengan tanggal saat ini
+  },
   harga_beli: DataTypes.INTEGER,
 }, {
   tableName: 'pembelian',
@@ -17,5 +20,3 @@ const Pembelian = sequelize.define('Pembelian', {
 });
 
 module.exports = Pembelian;
-
-
