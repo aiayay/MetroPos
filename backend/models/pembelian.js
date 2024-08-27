@@ -17,3 +17,5 @@ const Pembelian = sequelize.define('Pembelian', {
 });
 
 module.exports = Pembelian;
+
+
