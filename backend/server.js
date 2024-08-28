@@ -3,10 +3,9 @@ const cors = require("cors");
 
 const app = express();
 
-// middleware
-
+// Middleware
+app.use(cors());
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
 
 // routers
