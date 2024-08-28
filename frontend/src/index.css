@@ -1,0 +1,17 @@
+.hero {
+  background-color: #c081ff;
+}
+/* .box {
+  background-color: white;
+} */
+.box .button {
+  background-color: #36dda5;
+  font-weight: 500;
+  font-size: large;
+}
+.menu {
+  background-color: #c081ff;
+}
+.item-sidebar {
+  background-color: #c081ff;
+}

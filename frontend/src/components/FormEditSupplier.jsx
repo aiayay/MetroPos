@@ -35,7 +35,7 @@ const FormEditSupplier = () => {
               </div>
               <div className="field">
                 <div className="control">
-                  <button className="button is-success">Simpan</button>
+                  <button className="button">Simpan</button>
                 </div>
               </div>
             </form>
