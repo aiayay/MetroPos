@@ -16,3 +16,5 @@ const Keranjang = sequelize.define('Keranjang', {
 });
 
 module.exports = Keranjang;
+
+//aini
