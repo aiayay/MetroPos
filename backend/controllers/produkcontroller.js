@@ -1,9 +1,10 @@
 const db = require("../models");
-const Product = db.product;
+const produk = db.produk;
 
 // image Upload
 const multer = require('multer')
-const path = require('path')
+const path = require('path');
+const Produk = require("../models/produk");
 
 exports.create = (req, res) => {
   if (!req.body.nama_produk) {
@@ -12,7 +13,7 @@ exports.create = (req, res) => {
     });
   }
 
-  const product = {
+  const Produk = {
     
     id_kategori: req.body.id_kategori,
     id_pembelian: req.body.id_pembelian,
@@ -27,7 +28,7 @@ exports.create = (req, res) => {
     keterangan: req.body.keterangan
   };
 
-  Product.create(product)
+  Produk.create(produk)
     .then(data => res.send(data))
     .catch(err => {
       res.status(500).send({
@@ -37,7 +38,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-  Product.findAll()
+  Produk.findAll()
     .then(data => res.send(data))
     .catch(err => {
       res.status(500).send({
@@ -49,7 +50,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Product.findByPk(id)
+  Produk.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -69,7 +70,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Product.update(req.body, {
+  Produk.update(req.body, {
     where: { id_produk: id }
   })
     .then(num => {
@@ -93,7 +94,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Product.destroy({
+  Produk.destroy({
     where: { id_produk: id }
   })
     .then(num => {
@@ -145,5 +146,5 @@ module.exports = {
     getOneproduct,
     updateProduct,
     deleteproduct,
-    getpublishedproduct,
+    getpublishedproduct
 }
