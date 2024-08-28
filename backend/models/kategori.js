@@ -5,6 +5,7 @@ const Kategori = sequelize.define('Kategori', {
   id_kategori: {
     type: DataTypes.STRING,
     primaryKey: true,
+    autoIncrement: true
   },
   nmkategori: DataTypes.STRING,
 }, {
