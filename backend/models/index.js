@@ -1,5 +1,5 @@
-const dbconfig = require('../config/dbconfig.js');
 const { Sequelize, DataTypes } = require('sequelize');
+const dbconfig = require('../config/dbconfig.js');
 
 // Buat instance sequelize
 const sequelize = new Sequelize(
@@ -9,8 +9,6 @@ const sequelize = new Sequelize(
   {
     host: dbconfig.HOST,
     dialect: dbconfig.dialect,
-    
-
     pool: {
       max: dbconfig.pool.max,
       min: dbconfig.pool.min,
@@ -23,34 +21,33 @@ const sequelize = new Sequelize(
 // Autentikasi koneksi
 sequelize.authenticate()
   .then(() => {
-    console.log('connected..');
+    console.log('Connected to the database.');
   })
   .catch(err => {
-    console.log('error:' + err);
+    console.error('Unable to connect to the database:', err);
   });
 
 // Inisialisasi objek db
 const db = {};
 
-db.Sequelize = Sequelize;
+db.Sequelize = sequelize;
 db.sequelize = sequelize;
 
 // Memuat model
 db.detail_transaksi = require('./detail_transaksi.js')(sequelize, DataTypes);
-db.kategori = require('./kategori.js')(sequelize, DataTypes);
-db.supplier = require('./supplier.js')(sequelize, DataTypes);
-db.transaksi = require('./transaksi.js')(sequelize, DataTypes);
-db.user = require('./user.js')(sequelize, DataTypes);
-db.member = require('./member.js')(sequelize, DataTypes);
-db.pembelian = require('./pembelian.js') (sequelize, DaTaTypes);
-db.produk = require ('./produk.js') (sequelize,DaTaTypes);
-db.keranjang = require ('./keranjang.js') (sequelize,DaTaTypes)
-
+// db.kategori = require('./kategori.js')(sequelize, DataTypes);
+// db.supplier = require('./supplier.js')(sequelize, DataTypes);
+// db.transaksi = require('./transaksi.js')(sequelize, DataTypes);
+// db.user = require('./user.js')(sequelize, DataTypes);
+// db.member = require('./member.js')(sequelize, DataTypes);
+// db.pembelian = require('./pembelian.js')(sequelize, DataTypes);
+// db.produk = require('./produk.js')(sequelize, DataTypes);
+// db.keranjang = require('./keranjang.js')(sequelize, DataTypes);
 
 // Sync database
 db.sequelize.sync({ force: false })
   .then(() => {
-    console.log('yes re-sync done!');
+    console.log('Database synced successfully.');
   });
 
 module.exports = db;

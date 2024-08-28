@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/dbconfig.js');
+const {sequelize, DataTypes } = require ('sequelize');
+const dbconfig = require ('../config/dbconfig.js');
 
-const DetailTransaksi = sequelize.define('DetailTransaksi', {
-  id_detailtrans: {
+const Detail_Transaksi = sequelize.define('Detail_Transaksi', {
+  id_detail_transaksi: {
     type: DataTypes.STRING,
     primaryKey: true,
   },
@@ -22,4 +22,4 @@ const DetailTransaksi = sequelize.define('DetailTransaksi', {
   timestamps: false,
 });
 
-module.exports = DetailTransaksi;
+module.exports = Detail_Transaksi;
