@@ -6,13 +6,30 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     primaryKey: true,
   },
-  username: DataTypes.STRING,
-  password: DataTypes.STRING,
-  nama_lengkap: DataTypes.STRING,
-  notlp: DataTypes.STRING,
-  jk: DataTypes.STRING,
-  level: DataTypes.ENUM('admin', 'kasir'),
-  foto: DataTypes.STRING,
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  nama_lengkap: {
+    type: DataTypes.STRING,
+  },
+  notlp: {
+    type: DataTypes.STRING,
+  },
+  jk: {
+    type: DataTypes.STRING,
+  },
+  level: {
+    type: DataTypes.ENUM('admin', 'kasir'),
+    allowNull: false,
+  },
+  foto: {
+    type: DataTypes.STRING,
+  }
 }, {
   tableName: 'user',
   timestamps: false,
