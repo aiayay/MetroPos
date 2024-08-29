@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 //Import semua router
 const detailtransaksirouter = require('./routes/detailtransaksirouter.js');
 //const keranjangRoutes = require('./routes/keranjangRoutes');
-// const produkRoutes = require('./routes/produkRoutes.js');
+ //const produkRouter = require('./routes/produkRouter.js');
 // const kategoriRoutes = require('./routes/kategoriRoutes.js');
 // const pembelianRoutes = require('./routes/pembelianRoutes.js');
 // const supplierRoutes = require('./routes/supplierRoutes.js');
@@ -26,7 +26,7 @@ const detailtransaksirouter = require('./routes/detailtransaksirouter.js');
 // //Gunakan router yang diimport
 app.use('/api/detailtransaksi', detailtransaksirouter);
 // app.use('/api/keranjang', keranjangRoutes);
-// app.use('/api/produk', produkRoutes);
+ //app.use('/api/produk', produkRouter);
 // app.use('/api/kategori', kategoriRoutes);
 // app.use('/api/pembelian', pembelianRoutes);
 // app.use('/api/supplier', supplierRoutes);
