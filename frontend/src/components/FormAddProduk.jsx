@@ -1,4 +1,5 @@
 import React from "react";
+import "../index.css";
 
 const FormAddProduk = () => {
   return (
@@ -6,9 +7,9 @@ const FormAddProduk = () => {
       <h1 className="title">Produk</h1>
       <h2 className="subtitle">Tambah Produk</h2>
       <div className="card is-shadowless">
-        <div className="card-content">
+        <div className="card-content has-background-light">
           <div className="content">
-            <form>
+            <form className="box has-background-light">
               <div className="field">
                 <label className="label">Kode Produk</label>
                 <div className="control">
@@ -79,6 +80,7 @@ const FormAddProduk = () => {
               <div className="field">
                 <div className="control">
                   <button className="button is-success">Simpan</button>
+                  <button className="button is-danger">Cancle</button>
                 </div>
               </div>
             </form>

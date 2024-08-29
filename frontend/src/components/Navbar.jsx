@@ -1,7 +1,7 @@
 import React from "react";
 import "../index.css";
 import { NavLink } from "react-router-dom";
-import logo from "../metropos.png";
+import logo from "../logo.jpeg";
 
 const Navbar = () => {
   return (
@@ -22,7 +22,8 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button className="button is-light">Log out</button>
+                <h1>nama</h1>
+                <img src={logo} width="50" height="28" alt="" />
               </div>
             </div>
           </div>

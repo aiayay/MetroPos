@@ -1,4 +1,5 @@
 import React from "react";
+import "../index.css";
 
 const FormAddKategori = () => {
   return (
@@ -21,10 +22,11 @@ const FormAddKategori = () => {
                   <input type="text" className="input" placeholder="nama kategori" />
                 </div>
               </div>
+
               <div className="field">
                 <div className="control">
                   <button className="button is-success">Simpan</button>
-                  <button className="button is-danger">Delete</button>
+                  <button className="button is-danger">Cancle</button>
                 </div>
               </div>
             </form>

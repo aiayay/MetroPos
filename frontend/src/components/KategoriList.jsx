@@ -1,11 +1,21 @@
 import React from "react";
+import "../index.css";
 
 const KategoriList = () => {
   return (
     <div>
       <h1 className="title">Kategori</h1>
       <h2 className="subtitle">Data Kategori</h2>
-      <button className="button is-success">Tambah Data +</button>
+
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <button className="button is-success">Tambah Data +</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
         <table className="table is-striped is-fullwidth">
           <thead>

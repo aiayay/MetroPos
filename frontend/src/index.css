@@ -16,7 +16,7 @@
   color: #8127db;
   font-size: 30px;
 }
-.box .button {
+.box .login {
   background-color: #36dda5;
   font-weight: 500;
   font-size: large;
@@ -69,4 +69,14 @@
 }
 .tanggal {
   color: black !important;
+}
+.input {
+  background-color: gainsboro !important;
+  color: black !important;
+}
+.input ::placeholder {
+  color: #8127db;
+}
+.select select {
+  background-color: gainsboro !important;
 }
