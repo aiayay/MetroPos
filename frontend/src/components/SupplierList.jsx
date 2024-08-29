@@ -1,11 +1,20 @@
 import React from "react";
+import "../index.css";
 
 const SupplierList = () => {
   return (
     <div>
       <h1 className="title">Supplier</h1>
       <h2 className="subtitle">Data Supplier</h2>
-      <button className="button is-success">Tambah Data +</button>
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <button className="button is-success">Tambah Data +</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
         <table className="table is-striped is-fullwidth">
           <thead>

@@ -49,7 +49,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="field mt-5 has-text-centered">
-                  <button type="submit" className="button ">
+                  <button type="submit" className="button login ">
                     {isLoading ? "Loading.." : "Login"}
                   </button>
                 </div>
