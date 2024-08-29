@@ -6,9 +6,9 @@ const FormAddKategori = () => {
       <h1 className="title">Kategori</h1>
       <h2 className="subtitle">Tambah Kategori</h2>
       <div className="card is-shadowless">
-        <div className="card-content">
+        <div className="card-content has-background-light">
           <div className="content">
-            <form>
+            <form className="box has-background-light">
               <div className="field">
                 <label className="label">Kode Kategori</label>
                 <div className="control">
@@ -24,6 +24,7 @@ const FormAddKategori = () => {
               <div className="field">
                 <div className="control">
                   <button className="button is-success">Simpan</button>
+                  <button className="button is-danger">Delete</button>
                 </div>
               </div>
             </form>

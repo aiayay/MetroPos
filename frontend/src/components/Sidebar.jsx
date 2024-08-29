@@ -1,12 +1,11 @@
 import React from "react";
 import "../index.css";
 import { NavLink } from "react-router-dom";
-import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
+import { IoPerson, IoHome, IoLogOut, IoCube, IoPeopleOutline, IoCart, IoList, IoPeopleCircle, IoWallet } from "react-icons/io5";
 const Sidebar = () => {
   return (
     <div>
       <aside className="menu pl-2 pr-2 has-shadow mt-5">
-        <p className="menu-label">General</p>
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/dashboard"}>
@@ -16,39 +15,39 @@ const Sidebar = () => {
           </li>
           <li className="item-sidebar">
             <NavLink to={"/produk"}>
-              <IoPricetag />
+              <IoCube />
               Produk
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Member</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/member"}>
-              <IoPerson />
+              <IoPeopleOutline />
               Member
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Transaksi</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/transaksi"}>
-              <IoPerson />
+              <IoCart />
               Transaksi
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Kategori</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/kategori"}>
-              <IoPerson />
+              <IoList />
               Kategori
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">User</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/users"}>
@@ -57,28 +56,28 @@ const Sidebar = () => {
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Supplier</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/supplier"}>
-              <IoPerson />
+              <IoPeopleCircle />
               Supplier
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Pembelian</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
             <NavLink to={"/pembelian"}>
-              <IoPerson />
+              <IoWallet />
               Pembelian
             </NavLink>
           </li>
         </ul>
-        <p className="menu-label">Setting</p>
+
         <ul className="menu-list">
           <li className="item-sidebar">
-            <button className="button is-white">
+            <button className="button is-black">
               <IoLogOut />
               Logout
             </button>

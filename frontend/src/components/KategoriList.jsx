@@ -4,7 +4,8 @@ const KategoriList = () => {
   return (
     <div>
       <h1 className="title">Kategori</h1>
-      <h2 className="subtitle">List Of Kategori</h2>
+      <h2 className="subtitle">Data Kategori</h2>
+      <button className="button is-success">Tambah Data +</button>
       <div>
         <table className="table is-striped is-fullwidth">
           <thead>
@@ -18,7 +19,10 @@ const KategoriList = () => {
             <tr>
               <td></td>
               <td></td>
-              <td></td>
+              <td>
+                <button className="button is-success pr-10">Edit</button>
+                <button className="button is-danger">Delete</button>
+              </td>
             </tr>
           </tbody>
         </table>

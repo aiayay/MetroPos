@@ -1,4 +1,5 @@
 import React from "react";
+import "../index.css";
 import { NavLink } from "react-router-dom";
 import logo from "../metropos.png";
 
@@ -8,9 +9,8 @@ const Navbar = () => {
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
           <NavLink className="navbar-item" to="/dashboard">
-            <img src={logo} width="112" height="28" alt="logo" />
+            <h1>Metro Pos</h1>
           </NavLink>
-
           <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>

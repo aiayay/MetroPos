@@ -4,7 +4,8 @@ const Userlist = () => {
   return (
     <div>
       <h1 className="title">Users</h1>
-      <h2 className="subtitle">List Of User</h2>
+      <h2 className="subtitle">Data Admin dan Kasir</h2>
+      <button className="button is-success">Tambah Data +</button>
       <div>
         <table className="table is-striped is-fullwidth">
           <thead>
@@ -28,7 +29,10 @@ const Userlist = () => {
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>
+                <button className="button is-success pr-10">Edit</button>
+                <button className="button is-danger">Delete</button>
+              </td>
             </tr>
           </tbody>
         </table>

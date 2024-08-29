@@ -4,7 +4,8 @@ const PembelianList = () => {
   return (
     <div>
       <h1 className="title">Pembelian</h1>
-      <h2 className="subtitle">List Of Pembelian</h2>
+      <h2 className="subtitle">Barang Masuk</h2>
+      <button className="button is-success">Tambah Data +</button>
       <div>
         <table className="table is-striped is-fullwidth">
           <thead>
@@ -28,7 +29,10 @@ const PembelianList = () => {
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
+              <td>
+                <button className="button is-success pr-10">Edit</button>
+                <button className="button is-danger">Delete</button>
+              </td>
             </tr>
           </tbody>
         </table>

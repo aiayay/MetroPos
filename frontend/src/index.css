@@ -1,9 +1,21 @@
 .hero {
   background-color: #c081ff;
 }
+.column {
+  background-color: #c081ff;
+}
+
+.label {
+  color: black;
+}
 /* .box {
   background-color: white;
 } */
+
+.navbar h1 {
+  color: #8127db;
+  font-size: 30px;
+}
 .box .button {
   background-color: #36dda5;
   font-weight: 500;
@@ -12,6 +24,49 @@
 .menu {
   background-color: #c081ff;
 }
-.item-sidebar {
+/* .item-sidebar {
   background-color: #c081ff;
+} */
+.navbar {
+  background-color: #36dda5 !important;
+}
+.item-sidebar a {
+  color: white !important;
+  background-color: #c081ff !important;
+}
+.item-sidebar a:hover {
+  background-color: #36dda5 !important;
+}
+.menu p {
+  color: white;
+}
+
+.title {
+  color: black !important;
+}
+.subtitle {
+  color: black;
+}
+.table {
+  background-color: white !important;
+}
+.table tr,
+.table th {
+  color: black !important;
+}
+.box h1,
+.box label {
+  color: black !important;
+}
+.table td {
+  color: black !important;
+}
+.ungu {
+  background-color: #c081ff !important;
+}
+.button {
+  color: white !important;
+}
+.tanggal {
+  color: black !important;
 }

@@ -4,12 +4,14 @@ const SupplierList = () => {
   return (
     <div>
       <h1 className="title">Supplier</h1>
-      <h2 className="subtitle">List Of Supplier</h2>
+      <h2 className="subtitle">Data Supplier</h2>
+      <button className="button is-success">Tambah Data +</button>
       <div>
         <table className="table is-striped is-fullwidth">
           <thead>
             <tr>
               <th>No</th>
+              <th>Kode Supplier</th>
               <th>Nama Supplier</th>
               <th>Alamat</th>
               <th>No Telepon</th>
@@ -18,10 +20,15 @@ const SupplierList = () => {
           </thead>
           <tbody>
             <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td>jdhh</td>
+              <td>kode</td>
+              <td>swww</td>
+              <td>sd</td>
+              <td>jshdf</td>
+              <td>
+                <button className="button is-success pr-10">Edit</button>
+                <button className="button is-danger">Delete</button>
+              </td>
             </tr>
           </tbody>
         </table>
