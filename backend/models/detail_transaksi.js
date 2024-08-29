@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
   // Definisi hubungan
   Detail_Transaksi.associate = (models) => {
     // Hubungan dengan Transaksi (One-to-Many)
-    DetailTransaksi.belongsTo(models.Transaksi, {
+    Detail_Transaksi.belongsTo(models.Transaksi, {
       foreignKey: 'id_transaksi',
       as: 'transaksi',
       onDelete: 'CASCADE',

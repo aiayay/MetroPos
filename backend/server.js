@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 //Import semua router
-//const detailTransaksiRoutes = require('./routes/detailTransaksiRoutes');
+const detailtransaksirouter = require('./routes/detailtransaksirouter.js');
 //const keranjangRoutes = require('./routes/keranjangRoutes');
 // const produkRoutes = require('./routes/produkRoutes.js');
 // const kategoriRoutes = require('./routes/kategoriRoutes.js');
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // //Gunakan router yang diimport
-// app.use('/api/detailTransaksi', detailTransaksiRoutes);
+app.use('/api/detailtransaksi', detailtransaksirouter);
 // app.use('/api/keranjang', keranjangRoutes);
 // app.use('/api/produk', produkRoutes);
 // app.use('/api/kategori', kategoriRoutes);
@@ -35,14 +35,16 @@ app.use(express.urlencoded({ extended: true }));
 // app.use('/api/user', userRoutes);
 
 app.get('/', (req, res) => {
-    res.json({ message: 'hello ' });
+    res.json({ message: 'aplikasi kasir ready ' });
 });
 //Koneksi ke database
 const db = require('./models');
 db.sequelize.sync();
 
 // Start server
-const PORT = process.env.PORT || 8080
+// Start server
+const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

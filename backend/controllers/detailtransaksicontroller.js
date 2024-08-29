@@ -1,10 +1,10 @@
 // controllers/detailTransaksiController.js
 const db = require('../models');
-const detail_Transaksi = db.detail_Transaksi;
+const detailtransaksi = db.detailtransaksi;
 
 exports.getAllDetailTransaksi = async (req, res) => {
   try {
-    const detailTransaksi = await DetailTransaksi.findAll();
+    const detailTransaksi = await detailtransaksi.findAll();
     res.status(200).json(detailTransaksi);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -14,7 +14,7 @@ exports.getAllDetailTransaksi = async (req, res) => {
 exports.getDetailTransaksiById = async (req, res) => {
   const id = req.params.id;
   try {
-    const detailTransaksi = await DetailTransaksi.findByPk(id);
+    const detailTransaksi = await detailtransaksi.findByPk(id);
     if (detailTransaksi) {
       res.status(200).json(detailTransaksi);
     } else {
@@ -27,7 +27,7 @@ exports.getDetailTransaksiById = async (req, res) => {
 
 exports.createDetailTransaksi = async (req, res) => {
   try {
-    const newDetailTransaksi = await DetailTransaksi.create(req.body);
+    const newDetailTransaksi = await detailtransaksi.create(req.body);
     res.status(201).json(newDetailTransaksi);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -37,7 +37,7 @@ exports.createDetailTransaksi = async (req, res) => {
 exports.updateDetailTransaksi = async (req, res) => {
   const id = req.params.id;
   try {
-    const updated = await DetailTransaksi.update(req.body, { where: { id_detailtrans: id } });
+    const updated = await detailtransaksi.update(req.body, { where: { id_detailtrans: id } });
     if (updated) {
       res.status(200).json({ message: "Detail Transaksi updated successfully" });
     } else {
@@ -51,7 +51,7 @@ exports.updateDetailTransaksi = async (req, res) => {
 exports.deleteDetailTransaksi = async (req, res) => {
   const id = req.params.id;
   try {
-    const deleted = await DetailTransaksi.destroy({ where: { id_detailtrans: id } });
+    const deleted = await detailtransaksi.destroy({ where: { id_detailtrans: id } });
     if (deleted) {
       res.status(200).json({ message: "Detail Transaksi deleted successfully" });
     } else {
