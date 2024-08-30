@@ -34,7 +34,7 @@ db.Sequelize = sequelize;
 db.sequelize = sequelize;
 
 // Memuat model
-db.detail_transaksi = require('./detail_transaksi.js')(sequelize, DataTypes);
+db.DetailTransaksi = require('./detailtransaksi.js')(sequelize, DataTypes);
 // db.kategori = require('./kategori.js')(sequelize, DataTypes);
 // db.supplier = require('./supplier.js')(sequelize, DataTypes);
 // db.transaksi = require('./transaksi.js')(sequelize, DataTypes);
@@ -44,6 +44,12 @@ db.detail_transaksi = require('./detail_transaksi.js')(sequelize, DataTypes);
 // db.produk = require('./produk.js')(sequelize, DataTypes);
 // db.keranjang = require('./keranjang.js')(sequelize, DataTypes);
 
+// memanggil fungsu associate ke semua db.
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 // Sync database
 db.sequelize.sync({ force: false })
   .then(() => {
@@ -51,3 +57,4 @@ db.sequelize.sync({ force: false })
   });
 
 module.exports = db;
+ 

@@ -15,6 +15,18 @@ const Keranjang = sequelize.define('Keranjang', {
   timestamps: false,
 });
 
+Keranjang.associate = (models) => {
+  // Relasi many-to-one dengan Member dan Produk
+  Keranjang.belongsTo(models.Member, {
+    foreignKey: 'id_member',
+    as: 'member',
+  });
+  Keranjang.belongsTo(models.Produk, {
+    foreignKey: 'id_produk',
+    as: 'produk',
+  });
+};
+
 module.exports = Keranjang;
 
 //aini

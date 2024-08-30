@@ -19,4 +19,16 @@ const Pembelian = sequelize.define('Pembelian', {
   timestamps: false,
 });
 
+Pembelian.associate = (models) => {
+  // Relasi many-to-one dengan Supplier dan Produk
+  Pembelian.belongsTo(models.Supplier, {
+    foreignKey: 'id_supplier',
+    as: 'supplier',
+  });
+  Pembelian.belongsTo(models.Produk, {
+    foreignKey: 'id_produk',
+    as: 'produk',
+  });
+};
+
 module.exports = Pembelian;

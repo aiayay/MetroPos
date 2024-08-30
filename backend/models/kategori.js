@@ -13,4 +13,11 @@ const Kategori = sequelize.define('Kategori', {
   timestamps: false,
 });
 
+Kategori.associate = (models) => {
+  // Relasi one-to-many dengan Produk
+  Kategori.hasMany(models.Produk, {
+    foreignKey: 'id_kategori',
+    as: 'produk',
+  });
+};
 module.exports = Kategori;

@@ -1,6 +1,6 @@
 // models/DetailTransaksi.js
 module.exports = (sequelize, DataTypes) => {
-  const Detail_Transaksi = sequelize.define('Detail_Transaksi', {
+  const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -48,36 +48,16 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   // Definisi hubungan
-  Detail_Transaksi.associate = (models) => {
-    // Hubungan dengan Transaksi (One-to-Many)
-    Detail_Transaksi.belongsTo(models.Transaksi, {
+  DetailTransaksi.associate = (models) => {
+    DetailTransaksi.belongsTo(models.Transaksi, {
       foreignKey: 'id_transaksi',
       as: 'transaksi',
-      onDelete: 'CASCADE',
     });
-
-    // Hubungan dengan Produk (Many-to-One)
-    Detail_Transaksi.belongsTo(models.Produk, {
+    DetailTransaksi.belongsTo(models.Produk, {
       foreignKey: 'id_produk',
       as: 'produk',
-      onDelete: 'CASCADE',
-    });
-
-    // Hubungan dengan Member melalui Transaksi (optional)
-    Detail_Transaksi.belongsTo(models.Member, {
-      foreignKey: 'id_member',
-      as: 'member',
-      onDelete: 'SET NULL',
-      allowNull: true
-    });
-
-    // Hubungan dengan Diskon (Jika ada informasi diskon langsung)
-    Detail_Transaksi.belongsTo(models.Diskon, {
-      foreignKey: 'id_diskon',
-      as: 'diskon',
-      allowNull: true
     });
   };
 
-  return Detail_Transaksi;
+  return Detailtransaksi;
 };
