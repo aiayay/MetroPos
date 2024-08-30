@@ -27,7 +27,7 @@ const Login = () => {
         <div className="container ">
           <div className="columns is-centered">
             <div className="column is-4">
-              <form onSubmit={Auth} className="box has-background-light">
+              <form onSubmit={Auth} className="box has-background-light form-border">
                 {isError && <p className="has-text-centered">{message}</p>}
                 <h1 className="title is-2" style={{ color: "black" }}>
                   Sign In
