@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
 const dbconfig = require('../config/dbconfig.js');
 
@@ -29,32 +31,35 @@ sequelize.authenticate()
 
 // Inisialisasi objek db
 const db = {};
-
-db.Sequelize = sequelize;
+db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-// Memuat model
-db.DetailTransaksi = require('./detailtransaksi.js')(sequelize, DataTypes);
-// db.kategori = require('./kategori.js')(sequelize, DataTypes);
-// db.supplier = require('./supplier.js')(sequelize, DataTypes);
-// db.transaksi = require('./transaksi.js')(sequelize, DataTypes);
-// db.user = require('./user.js')(sequelize, DataTypes);
-// db.member = require('./member.js')(sequelize, DataTypes);
-// db.pembelian = require('./pembelian.js')(sequelize, DataTypes);
-// db.produk = require('./produk.js')(sequelize, DataTypes);
-// db.keranjang = require('./keranjang.js')(sequelize, DataTypes);
+// Memuat semua model secara otomatis dari folder ini
+const basename = path.basename(__filename);
 
-// memanggil fungsu associate ke semua db.
+fs.readdirSync(__dirname)
+  .filter((file) => {
+    return (file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js');
+  })
+  .forEach((file) => {
+    const model = require(path.join(__dirname, file))(sequelize, DataTypes);
+    db[model.name] = model;
+  });
+
+// Memanggil fungsi associate jika ada
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
-// Sync database
+
+// Sinkronisasi database
 db.sequelize.sync({ force: false })
   .then(() => {
     console.log('Database synced successfully.');
+  })
+  .catch(err => {
+    console.error('Failed to sync database:', err);
   });
 
 module.exports = db;
- 

@@ -1,7 +1,7 @@
 // routes/detail_transaksiRoutes.js
 const express = require('express');
 const router = express.Router();
-const detailTransaksiController = require('../controllers/detailtransaksicontroller');
+const detailTransaksiController = require('../controllers/detailtransaksicontroller.js');
 
 // Routes CRUD untuk Detail Transaksi
 router.get('/', detailTransaksiController.getAllDetailTransaksi);      // Mendapatkan semua detail transaksi
