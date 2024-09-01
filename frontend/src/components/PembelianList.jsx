@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../features/constants";
 import "../index.css";
 const PembelianList = () => {
+  const [pembelian, setPembelian] = useState([]);
+
+  useEffect(() => {
+    getPembelian();
+  }, []);
+  const getPembelian = async () => {
+    const response = await axios.get(API_URL + "pembelian");
+    setPembelian(response.data);
+  };
+
+  //metod delete pembelian
+
+  const deletePembelian = async (id_pembelian) => {
+    await axios.delete(API_URL + "pembelian/" + id_pembelian);
+    getPembelian();
+  };
   return (
     <div>
       <h1 className="title">Pembelian</h1>
@@ -9,7 +28,9 @@ const PembelianList = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button className="button is-success">Tambah Data +</button>
+              <Link to="/pembelian/add" className="button is-primary mb-2">
+                Tambah Data +
+              </Link>
             </div>
           </div>
         </div>
@@ -19,29 +40,35 @@ const PembelianList = () => {
           <thead>
             <tr>
               <th>No</th>
+              <th>Kode Pembelian</th>
               <th>Nama Produk</th>
               <th>Nama Supplier</th>
-              <th>Jumlah</th>
+              <th>Kuantitas</th>
               <th>Harga Beli</th>
               <th>Tanggal Beli</th>
-              <th>Harga Beli</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <button className="button is-success pr-10">Edit</button>
-                <button className="button is-danger">Delete</button>
-              </td>
-            </tr>
+            {pembelian.map((pembelian, index) => (
+              <tr key={pembelian.id_pembelian}>
+                <td>{index + 1}</td>
+                <td>{pembelian.id_pembelian}</td>
+                <td>{pembelian.nmproduk}</td>
+                <td>{pembelian.nmsupplier}</td>
+                <td>{pembelian.kuantitas}</td>
+                <td>{pembelian.harga_beli}</td>
+                <td>{pembelian.tanggal}</td>
+                <td>
+                  <Link to={`/pembelian/edit/${pembelian.id_pembelian}`} className="button is-small is-info">
+                    Edit
+                  </Link>
+                  <button onClick={() => deletePembelian(pembelian.id_pembelian)} className="button is-small is-danger">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

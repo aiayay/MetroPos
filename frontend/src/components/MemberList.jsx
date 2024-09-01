@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../features/constants";
 import "../index.css";
 
 const MemberList = () => {
+  const [member, setMember] = useState([]);
+
+  useEffect(() => {
+    getMember();
+  }, []);
+  const getMember = async () => {
+    const response = await axios.get(API_URL + "member");
+    setMember(response.data);
+  };
+
+  //metod delete member
+
+  const deleteMember = async (id_member) => {
+    await axios.delete(API_URL + "member/" + id_member);
+    getMember();
+  };
   return (
     <div>
       <h1 className="title">Member</h1>
@@ -10,7 +29,9 @@ const MemberList = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button className="button is-success">Tambah Data +</button>
+              <Link to="/member/add" className="button is-primary mb-2">
+                Tambah Data +
+              </Link>
             </div>
           </div>
         </div>
@@ -20,6 +41,7 @@ const MemberList = () => {
           <thead>
             <tr>
               <th>No</th>
+              <th>Kode Member</th>
               <th>Nama Member</th>
               <th>No Telepon</th>
               <th>Alamat</th>
@@ -28,17 +50,24 @@ const MemberList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <button className="button is-success pr-10">Edit</button>
-                <button className="button is-danger">Delete</button>
-              </td>
-            </tr>
+            {member.map((member, index) => (
+              <tr key={member.id_member}>
+                <td>{index + 1}</td>
+                <td>{member.id_member}</td>
+                <td>{member.nama_member}</td>
+                <td>{member.no_telepon}</td>
+                <td>{member.alamat}</td>
+                <td>{member.jk}</td>
+                <td>
+                  <Link to={`/member/edit/${member.id_member}`} className="button is-small is-info">
+                    Edit
+                  </Link>
+                  <button onClick={() => deleteMember(member.id_member)} className="button is-small is-danger">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

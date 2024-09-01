@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../features/constants";
 import "../index.css";
 
 const SupplierList = () => {
+  const [supplier, setSupplier] = useState([]);
+
+  useEffect(() => {
+    getSupplier();
+  }, []);
+  const getSupplier = async () => {
+    const response = await axios.get(API_URL + "supplier");
+    setSupplier(response.data);
+  };
+
+  //metod delete supplier
+
+  const deleteSupplier = async (id_supplier) => {
+    await axios.delete(API_URL + "supplier/" + id_supplier);
+    getSupplier();
+  };
   return (
     <div>
       <h1 className="title">Supplier</h1>
@@ -10,7 +29,9 @@ const SupplierList = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button className="button is-success">Tambah Data +</button>
+              <Link to="/supplier/add" className="button is-primary mb-2">
+                Tambah Data +
+              </Link>
             </div>
           </div>
         </div>
@@ -28,17 +49,23 @@ const SupplierList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>jdhh</td>
-              <td>kode</td>
-              <td>swww</td>
-              <td>sd</td>
-              <td>jshdf</td>
-              <td>
-                <button className="button is-success pr-10">Edit</button>
-                <button className="button is-danger">Delete</button>
-              </td>
-            </tr>
+            {supplier.map((supplier, index) => (
+              <tr key={supplier.id_supplier}>
+                <td>{index + 1}</td>
+                <td>{supplier.id_supplier}</td>
+                <td>{supplier.nmsupplier}</td>
+                <td>{supplier.alamat}</td>
+                <td>{supplier.notlp}</td>
+                <td>
+                  <Link to={`/supplier/edit/${supplier.id_supplier}`} className="button is-small is-info">
+                    Edit
+                  </Link>
+                  <button onClick={() => deleteSupplier(supplier.id_supplier)} className="button is-small is-danger">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

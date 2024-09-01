@@ -11,7 +11,7 @@ const initialState = {
 
 export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAPI) => {
   try {
-    const response = await axios.post("http://localhost:8080/login", {
+    const response = await axios.post("", {
       username: user.username,
       password: user.password,
     });
@@ -27,7 +27,7 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAP
 
 export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   try {
-    const response = await axios.get("http://localhost:8080/me");
+    const response = await axios.get("");
     return response.data;
   } catch (error) {
     if (error.response) {
