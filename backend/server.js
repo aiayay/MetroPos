@@ -1,52 +1,73 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+// const session = require("express-session");
 
 // Inisialisasi Express
 const app = express();
 
 // Middleware
+
+// app.use(
+//   session({
+//     secret: "1A23jhJSIqj33j111",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       secure: "auto",
+//     },
+//   })
+// );
+
+// app.use(
+//   cors({
+//     credentials: true,
+//     origin: "http://localhost:3000",
+//   })
+// );
 app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Import semua router
-const detailtransaksirouter = require('./routes/detailtransaksirouter.js');
-const produkRouter = require('./routes/produktrouter.js');
-const kategoriRouter = require('./routes/kategorirouter.js');
+const detailtransaksirouter = require("./routes/detailtransaksirouter.js");
+const produkRouter = require("./routes/produktrouter.js");
+const kategoriRouter = require("./routes/kategorirouter.js");
 // Uncomment router lainnya saat sudah siap digunakan
 // const keranjangRoutes = require('./routes/keranjangRoutes');
 // const pembelianRoutes = require('./routes/pembelianRoutes.js');
 // const supplierRoutes = require('./routes/supplierRoutes.js');
 // const transaksiRoutes = require('./routes/transaksiRoutes.js');
 // const memberRoutes = require('./routes/memberRoutes.js');
- //const userrouter = require('./routes/userrouter.js');
+//const userrouter = require('./routes/userrouter.js');
 
 // Gunakan router yang diimport
-app.use('/api/detailtransaksi', detailtransaksirouter);
-app.use('/api/produk', produkRouter);
-app.use('/api/kategori', kategoriRouter);
+app.use("/api/detailtransaksi", detailtransaksirouter);
+app.use("/api/produk", produkRouter);
+app.use("/api/kategori", kategoriRouter);
 // Uncomment penggunaan router lainnya saat sudah siap
 // app.use('/api/keranjang', keranjangRoutes);
 // app.use('/api/pembelian', pembelianRoutes);
 // app.use('/api/supplier', supplierRoutes);
 // app.use('/api/transaksi', transaksiRoutes);
 // app.use('/api/member', memberRoutes);
- //app.use('/api/user', userrouter);
+//app.use('/api/user', userrouter);
 
 // Root route
-app.get('/', (req, res) => {
-    res.json({ message: 'Aplikasi kasir ready' });
+app.get("/", (req, res) => {
+  res.json({ message: "Aplikasi kasir ready" });
 });
 
 // Koneksi ke database
-const db = require('./models');
-const user = require('./models/user.js');
-db.sequelize.sync()
+const db = require("./models");
+const user = require("./models/user.js");
+db.sequelize
+  .sync()
   .then(() => {
-    console.log('Database synced successfully.');
+    console.log("Database synced successfully.");
   })
   .catch((err) => {
-    console.error('Failed to sync database:', err);
+    console.error("Failed to sync database:", err);
   });
 
 // Start server
