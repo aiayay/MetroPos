@@ -3,7 +3,7 @@
 module.exports = (sequelize,DataTypes) => {
 const User = sequelize.define('User', {
   id_user: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true, // Perbaiki dari autoincrement menjadi autoIncrement
   },
