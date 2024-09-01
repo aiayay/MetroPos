@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
-import "../index.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
+import "../index.css";
 
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
+  const [produk, setProduk] = useState([]);
 
   useEffect(() => {
-    getProducts();
+    getProduk();
   }, []);
-  const getProducts = async () => {
+  const getProduk = async () => {
     const response = await axios.get(API_URL + "produk");
-    setProducts(response.data);
+    setProduk(response.data);
   };
+
+  //metod delete produk
+
+  const deleteProduk = async (id_produk) => {
+    await axios.delete(API_URL + "produk/" + id_produk);
+    getProduk();
+  };
+
   return (
     <div>
       <h1 className="title">Produk</h1>
@@ -22,7 +30,9 @@ const ProductList = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button className="button is-success">Tambah Data +</button>
+              <Link to="/produk/add" className="button is-primary mb-2">
+                Tambah Data +
+              </Link>
             </div>
           </div>
         </div>
@@ -46,12 +56,12 @@ const ProductList = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((produk, index) => (
+            {produk.map((produk, index) => (
               <tr key={produk.id_produk}>
                 <td>{index + 1}</td>
                 <td>{produk.id_produk}</td>
                 <td>{produk.nmproduk}</td>
-                <td></td>
+                <td>{produk.nmproduk}</td>
                 <td>{produk.harga_beli}</td>
                 <td>{produk.harga_jual}</td>
                 <td>{produk.merk}</td>
@@ -60,11 +70,10 @@ const ProductList = () => {
                 <td>{produk.foto_produk}</td>
                 <td>{produk.diskon}</td>
                 <td>
-                  <Link to={`/products/edit/${produk.id_produk}`} className="button is-small is-info">
+                  <Link to={`/produk/edit/${produk.id_produk}`} className="button is-small is-info">
                     Edit
                   </Link>
-                  {/* <button className="button is-success pr-10">Edit</button> */}
-                  <button onClick={() => deleteProduct(produk.id_produk)} className="button is-small is-danger">
+                  <button onClick={() => deleteProduk(produk.id_produk)} className="button is-small is-danger">
                     Delete
                   </button>
                 </td>
