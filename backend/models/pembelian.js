@@ -5,26 +5,34 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    id_produk: DataTypes.STRING,
-    kuantitas: DataTypes.INTEGER,
-    id_supplier: DataTypes.STRING,
+    id_supplier: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    kuantitas: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     tanggal: {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW, // Tanggal otomatis terisi dengan tanggal saat ini
-    },})
-    harga_beli: DataTypes.INTEGER,
-    
-    Pembelian.associate = (models) => {
-      // Relasi many-to-one dengan Supplier dan Produk
-      Pembelian.belongsTo(models.Supplier, {
-        foreignKey: 'id_supplier',
-        as: 'supplier',
-      });
-      Pembelian.belongsTo(models.Produk, {
-        foreignKey: 'id_produk',
-        as: 'produk',
-      });
-    };
+    },
+    harga_beli: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'pembelian',
+    timestamps: false,
+  });
+
+  Pembelian.associate = (models) => {
+    // Relasi many-to-one dengan Supplier
+    Pembelian.belongsTo(models.Supplier, {
+      foreignKey: 'id_supplier',
+      as: 'supplier',
+    });
+  };
 
   return Pembelian;
 };

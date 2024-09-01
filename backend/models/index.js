@@ -46,7 +46,7 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-// Memanggil fungsi associate jika ada
+//Memanggil fungsi associate jika ada
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
