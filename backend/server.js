@@ -11,27 +11,27 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import semua router
 const detailtransaksirouter = require('./routes/detailtransaksirouter.js');
-const produkRouter = require('./routes/produkRouter.js');
-const kategoriRoutes = require('./routes/kategoriRoutes.js');
+const produkRouter = require('./routes/produktrouter.js');
+const kategoriRouter = require('./routes/kategorirouter.js');
 // Uncomment router lainnya saat sudah siap digunakan
 // const keranjangRoutes = require('./routes/keranjangRoutes');
 // const pembelianRoutes = require('./routes/pembelianRoutes.js');
 // const supplierRoutes = require('./routes/supplierRoutes.js');
 // const transaksiRoutes = require('./routes/transaksiRoutes.js');
 // const memberRoutes = require('./routes/memberRoutes.js');
-// const userRoutes = require('./routes/userRoutes.js');
+ //const userrouter = require('./routes/userrouter.js');
 
 // Gunakan router yang diimport
 app.use('/api/detailtransaksi', detailtransaksirouter);
 app.use('/api/produk', produkRouter);
-app.use('/api/kategori', kategoriRoutes);
+app.use('/api/kategori', kategoriRouter);
 // Uncomment penggunaan router lainnya saat sudah siap
 // app.use('/api/keranjang', keranjangRoutes);
 // app.use('/api/pembelian', pembelianRoutes);
 // app.use('/api/supplier', supplierRoutes);
 // app.use('/api/transaksi', transaksiRoutes);
 // app.use('/api/member', memberRoutes);
-// app.use('/api/user', userRoutes);
+ //app.use('/api/user', userrouter);
 
 // Root route
 app.get('/', (req, res) => {
@@ -40,6 +40,7 @@ app.get('/', (req, res) => {
 
 // Koneksi ke database
 const db = require('./models');
+const user = require('./models/user.js');
 db.sequelize.sync()
   .then(() => {
     console.log('Database synced successfully.');

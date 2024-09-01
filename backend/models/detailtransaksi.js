@@ -1,4 +1,5 @@
 // models/DetailTransaksi.js
+
 module.exports = (sequelize, DataTypes) => {
   const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {

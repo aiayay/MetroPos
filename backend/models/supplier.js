@@ -1,5 +1,5 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/dbconfig.js');
+module.exports = (sequelize,DataTypes) => {
+
 
 const Supplier = sequelize.define('Supplier', {
   id_supplier: {
@@ -22,4 +22,5 @@ Supplier.associate = (models) => {
   });
 };
 
-module.exports = Supplier;
+return  Supplier;
+};

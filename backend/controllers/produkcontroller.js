@@ -1,11 +1,36 @@
 const db = require("../models");
-const produk = db.produk;
+const Produk = db.produk; // Model produk
 
-// image Upload
-const multer = require('multer')
+// Image Upload
+const multer = require('multer');
 const path = require('path');
-const Produk = require("../models/produk");
 
+// Konfigurasi penyimpanan file gambar
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'foto_produk');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extname = fileTypes.test(path.extname(file.originalname));
+
+    if (mimeType && extname) {
+      return cb(null, true);
+    }
+    cb('Give proper file format to upload');
+  }
+}).single('image');
+
+// Fungsi untuk menambahkan produk
 exports.create = (req, res) => {
   if (!req.body.nama_produk) {
     return res.status(400).send({
@@ -13,8 +38,7 @@ exports.create = (req, res) => {
     });
   }
 
-  const Produk = {
-    
+  const newProduk = {
     id_kategori: req.body.id_kategori,
     id_pembelian: req.body.id_pembelian,
     nama_produk: req.body.nama_produk,
@@ -28,7 +52,7 @@ exports.create = (req, res) => {
     keterangan: req.body.keterangan
   };
 
-  Produk.create(produk)
+  Produk.create(newProduk)
     .then(data => res.send(data))
     .catch(err => {
       res.status(500).send({
@@ -37,6 +61,7 @@ exports.create = (req, res) => {
     });
 };
 
+// Fungsi untuk mendapatkan semua produk
 exports.findAll = (req, res) => {
   Produk.findAll()
     .then(data => res.send(data))
@@ -47,6 +72,7 @@ exports.findAll = (req, res) => {
     });
 };
 
+// Fungsi untuk mendapatkan produk berdasarkan ID
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -67,6 +93,7 @@ exports.findOne = (req, res) => {
     });
 };
 
+// Fungsi untuk memperbarui produk
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -91,6 +118,7 @@ exports.update = (req, res) => {
     });
 };
 
+// Fungsi untuk menghapus produk
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -115,36 +143,5 @@ exports.delete = (req, res) => {
     });
 };
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'foto_produk')
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname))
-    }
-})
+// Ekspor fungsi yang tersedia untuk digunakan di router
 
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: '1000000' },
-    fileFilter: (req, file, cb) => {
-        const fileTypes = /jpeg|jpg|png|gif/
-        const mimeType = fileTypes.test(file.mimetype)  
-        const extname = fileTypes.test(path.extname(file.originalname))
-
-        if(mimeType && extname) {
-            return cb(null, true)
-        }
-        cb('Give proper files formate to upload')
-    }
-}).single('image')
-
-
-module.exports = {
-    addproduct,
-    getAllproducts,
-    getOneproduct,
-    updateProduct,
-    deleteproduct,
-    getpublishedproduct
-}
