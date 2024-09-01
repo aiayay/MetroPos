@@ -1,24 +1,26 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/dbconfig.js');
-
-const Kategori = sequelize.define('kategori', {
+// models/kategori.js
+module.exports = (sequelize, DataTypes) => {
+  const Kategori = sequelize.define('Kategori', {
     id_kategori: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
     },
-    nmkategori: DataTypes.STRING,
-}, {
+    nama_kategori: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  }, {
     tableName: 'kategori',
-    timestamps: false,
-});
+    timestamps: false
+  });
 
-Kategori.associate = (models) => {
-    // Relasi one-to-many dengan Produk
+  Kategori.associate = (models) => {
     Kategori.hasMany(models.Produk, {
-        foreignKey: 'id_kategori',
-        as: 'produk',
+      foreignKey: 'id_kategori',
+      as: 'produk'
     });
-};
+  };
 
-module.exports = Kategori;
+  return Kategori;
+};

@@ -1,12 +1,11 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/dbconfig.js');
-const { FOREIGNKEYS } = require('sequelize/lib/query-types');
 
+
+module.exports = (sequelize,DataTypes) => {
 const User = sequelize.define('User', {
   id_user: {
     type: DataTypes.STRING,
     primaryKey: true,
-    autoincrement: true
+    autoIncrement: true, // Perbaiki dari autoincrement menjadi autoIncrement
   },
   username: {
     type: DataTypes.STRING,
@@ -37,12 +36,14 @@ const User = sequelize.define('User', {
   timestamps: false,
 });
 
-// defenisi hubungan 
+// Definisi hubungan
 User.associate = (models) => {
-  User.hasmany(models.Transaksi, {
-    FOREIGNKEYS: 'id_user',
+  User.hasMany(models.Transaksi, {
+    foreignKey: 'id_user', // Perbaiki FOREIGNKEYS menjadi foreignKey
     as: 'transaksi',
-  })}
+  });
+};
 
-  
-module.exports = User;
+return  User;
+
+};

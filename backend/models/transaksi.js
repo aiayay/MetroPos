@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'user',
+        model: 'user', // Pastikan ini sesuai dengan nama model di file user.js
         key: 'id_user',
       },
     },
@@ -29,8 +29,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    
-    
   }, {
     tableName: 'transaksi',
     timestamps: false,
@@ -44,17 +42,18 @@ module.exports = (sequelize, DataTypes) => {
       as: 'detailTransaksi',
     });
 
-    // Menambahkan relasi dengan User
+    // Many-to-One dengan User
     Transaksi.belongsTo(models.User, {
       foreignKey: 'id_user',
       as: 'user', // Alias untuk mengakses data user dari transaksi
     });
-  };
-  Transaksi.belongsTo(models.Member, {
-    foreignKey: 'id_member',
-    as: 'member',
-  });
 
+    // Many-to-One dengan Member
+    Transaksi.belongsTo(models.Member, {
+      foreignKey: 'id_member',
+      as: 'member',
+    });
+  };
 
   return Transaksi;
 };
