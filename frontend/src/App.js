@@ -21,6 +21,10 @@ import AddProduk from "./pages/AddProduk";
 import EditProduk from "./pages/EditProduk";
 import AddSupplier from "./pages/AddSupplier";
 import EditSupplier from "./pages/EditSupplier";
+import TransaksiDetail from "./pages/TransaksiDetail";
+import Kasir from "./pages/Kasir";
+import KasirAddMember from "./components/KasirAddMember";
+import KasirTransaksi from "./pages/KasirTransaksi";
 
 function App() {
   return (
@@ -28,6 +32,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/kasir" element={<Kasir />} />
+          <Route path="/kasirmember/add" element={<KasirAddMember />} />
+          <Route path="/kasirtransaksi" element={<KasirTransaksi />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/add" element={<AddUser />} />
@@ -48,6 +55,7 @@ function App() {
           <Route path="/supplier/add" element={<AddSupplier />} />
           <Route path="/supplier/edit/:id" element={<EditSupplier />} />
           <Route path="/transaksi" element={<Transaksi />} />
+          <Route path="/transaksi/detail/:id" element={<TransaksiDetail />} />
         </Routes>
       </BrowserRouter>
     </div>
