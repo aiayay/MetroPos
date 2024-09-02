@@ -4,7 +4,7 @@ import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
 
-const TransaksiList = () => {
+const KasirTransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
 
   useEffect(() => {
@@ -100,4 +100,4 @@ const TransaksiList = () => {
   );
 };
 
-export default TransaksiList;
+export default KasirTransaksiList;

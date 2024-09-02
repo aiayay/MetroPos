@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
 
 // Inisialisasi Express
 const app = express();
@@ -10,9 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Import semua router
-const detailtransaksirouter = require('./routes/detailtransaksirouter.js');
-const produkRouter = require('./routes/produktrouter.js');
-const kategoriRouter = require('./routes/kategorirouter.js');
+const detailtransaksirouter = require("./routes/detailtransaksirouter.js");
+const produkRouter = require("./routes/produktrouter.js");
+const kategoriRouter = require("./routes/kategorirouter.js");
 // Uncomment router lainnya saat sudah siap digunakan
 //  const keranjangRouter = require('./routes/keranjangrouter.js');
 //  const pembelianRouter = require('./routes/pembelianrouter.js');
@@ -22,9 +22,9 @@ const kategoriRouter = require('./routes/kategorirouter.js');
 //  const userrouter = require('./routes/userrouter.js');
 
 // Gunakan router yang diimport
-app.use('/api/detailtransaksi', detailtransaksirouter);
-app.use('/api/produk', produkRouter);
-app.use('/api/kategori', kategoriRouter);
+app.use("/api/detailtransaksi", detailtransaksirouter);
+app.use("/api/produk", produkRouter);
+app.use("/api/kategori", kategoriRouter);
 // Uncomment penggunaan router lainnya saat sudah siap
 // app.use('/api/keranjang', keranjangRouter);
 // app.use('/api/pembelian', pembelianRouter);
@@ -34,19 +34,20 @@ app.use('/api/kategori', kategoriRouter);
 //  app.use('/api/user', userrouter);
 
 // Root route
-app.get('/', (req, res) => {
-    res.json({ message: 'Aplikasi kasir ready' });
+app.get("/", (req, res) => {
+  res.json({ message: "Aplikasi kasir ready" });
 });
 
 // Koneksi ke database
-const db = require('./models');
-const user = require('./models/user.js');
-db.sequelize.sync()
+const db = require("./models");
+const user = require("./models/user.js");
+db.sequelize
+  .sync()
   .then(() => {
-    console.log('Database synced successfully.');
+    console.log("Database synced successfully.");
   })
   .catch((err) => {
-    console.error('Failed to sync database:', err);
+    console.error("Failed to sync database:", err);
   });
 
 // Start server

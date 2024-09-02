@@ -12,7 +12,8 @@
   background-color: white;
 } */
 
-.navbar h1 {
+.navbar h1,
+.navbar h2 {
   color: #8127db;
   font-size: 30px;
 }
