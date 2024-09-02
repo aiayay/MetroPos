@@ -1,34 +1,5 @@
 const db = require("../models");
-const Produk = db.produk; // Model produk
-
-// Image Upload
-const multer = require('multer');
-const path = require('path');
-
-// Konfigurasi penyimpanan file gambar
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'foto_produk');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
-
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 },
-  fileFilter: (req, file, cb) => {
-    const fileTypes = /jpeg|jpg|png|gif/;
-    const mimeType = fileTypes.test(file.mimetype);
-    const extname = fileTypes.test(path.extname(file.originalname));
-
-    if (mimeType && extname) {
-      return cb(null, true);
-    }
-    cb('Give proper file format to upload');
-  }
-}).single('image');
+const Produk = db.Produk; // Pastikan nama ini sesuai dengan nama model yang didefinisikan di file model
 
 // Fungsi untuk menambahkan produk
 exports.create = (req, res) => {
@@ -43,7 +14,7 @@ exports.create = (req, res) => {
     id_pembelian: req.body.id_pembelian,
     nama_produk: req.body.nama_produk,
     stok: req.body.stok,
-    foto_produk: req.body.foto_produk,
+    foto_produk: req.file ? req.file.filename : req.body.foto_produk,
     satuan: req.body.satuan,
     merk: req.body.merk,
     harga_beli: req.body.harga_beli,
@@ -142,6 +113,3 @@ exports.delete = (req, res) => {
       });
     });
 };
-
-// Ekspor fungsi yang tersedia untuk digunakan di router
-
