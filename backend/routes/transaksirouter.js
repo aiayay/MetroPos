@@ -1,13 +1,21 @@
-// routes/transaksiRoutes.js
+// routes/transaksirouter.js
 const express = require('express');
 const router = express.Router();
-const transaksiController = require('../controllers/transaksicontroller.js');
+const transaksiController = require('../controllers/transaksicontroller.js'); // Pastikan pathnya benar
 
-// Routes CRUD untuk Transaksi
-router.get('/', transaksiController.getAllTransaksi);      // Mendapatkan semua transaksi
-router.get('/:id', transaksiController.getTransaksiById); // Mendapatkan transaksi berdasarkan ID
-router.post('/', transaksiController.createTransaksi);    // Membuat transaksi baru
-router.put('/:id', transaksiController.updateTransaksi);  // Memperbarui transaksi
-router.delete('/:id', transaksiController.deleteTransaksi); // Menghapus transaksi
+// Mendapatkan semua transaksi
+router.get('/', transaksiController.getAllTransaksi);
+
+// Mendapatkan transaksi berdasarkan ID
+router.get('/:id', transaksiController.getTransaksiById);
+
+// Menambahkan transaksi baru
+router.post('/', transaksiController.createTransaksi);
+
+// Mengedit transaksi
+router.put('/:id', transaksiController.updateTransaksi);
+
+// Menghapus transaksi
+router.delete('/:id', transaksiController.deleteTransaksi);
 
 module.exports = router;

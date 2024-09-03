@@ -1,10 +1,11 @@
+// controllers/usercontroller.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user.js');
 
 // Register User
 exports.registerUser = async (req, res) => {
-  const { id_user, username, password, nama_lengkap, notlp, jk, level, foto } = req.body;
+  const { username, password, nama_lengkap, notlp, jk, level, foto } = req.body;
 
   try {
     // Hash password
@@ -12,9 +13,8 @@ exports.registerUser = async (req, res) => {
 
     // Create new user
     const newUser = await User.create({
-      id_user,
       username,
-      password: hashedPassword, // Save hashed password
+      password: hashedPassword,
       nama_lengkap,
       notlp,
       jk,
@@ -46,7 +46,7 @@ exports.loginUser = async (req, res) => {
     if (!isMatch) return res.status(401).json({ message: 'Password salah' });
 
     // Generate token
-    const token = jwt.sign({ id_user: user.id_user, level: user.level }, 'SECRET_KEY', { expiresIn: '1h' });
+    const token = jwt.sign({ id_user: user.id_user, level: user.level }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.json({
       success: true,

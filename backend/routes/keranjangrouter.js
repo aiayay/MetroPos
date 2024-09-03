@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const keranjangcontroller = require('../controllers/keranjangcontroller.js'); // Sesuaikan huruf besar 'C'
+const keranjangController = require('../controllers/keranjangcontroller.js');
 
-// Routes CRUD untuk Keranjang
-router.get('/', keranjangcontroller.getAllKeranjang); // Gunakan keranjangController
-router.get('/:id', keranjangcontrollerr.getKeranjangById);
-router.post('/', keranjangcontroller.createKeranjang);
-router.put('/:id', keranjangcontroller.updateKeranjang);
-router.delete('/:id', keranjangcontroller.deleteKeranjang);
+// Mendapatkan semua item keranjang
+router.get('/', keranjangController.getAllKeranjang);
+
+// Mendapatkan item keranjang berdasarkan ID
+router.get('/:id', keranjangController.getKeranjangById);
+
+// Menambahkan item keranjang baru
+router.post('/', keranjangController.createKeranjang);
+
+// Memperbarui item keranjang
+router.put('/:id', keranjangController.updateKeranjang);
+
+// Menghapus item keranjang
+router.delete('/:id', keranjangController.deleteKeranjang);
 
 module.exports = router;

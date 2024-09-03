@@ -1,13 +1,20 @@
-// routes/memberRoutes.js
 const express = require('express');
 const router = express.Router();
-const memberController = require('../controllers/membercontroller.js');
+const memberController = require('../controllers/memberController');
 
-// Routes CRUD untuk Member
-router.get('/', memberController.getAllMember);      // Mendapatkan semua member
-router.get('/:id', memberController.getMemberById); // Mendapatkan member berdasarkan ID
-router.post('/', memberController.createMember);    // Membuat member baru
-router.put('/:id', memberController.updateMember);  // Memperbarui member
-router.delete('/:id', memberController.deleteMember); // Menghapus member
+// Mendapatkan semua member
+router.get('/', memberController.getAllMembers);
+
+// Mendapatkan member berdasarkan ID
+router.get('/:id', memberController.getMemberById);
+
+// Membuat member baru
+router.post('/', memberController.createMember);
+
+// Memperbarui member
+router.put('/:id', memberController.updateMember);
+
+// Menghapus member
+router.delete('/:id', memberController.deleteMember);
 
 module.exports = router;

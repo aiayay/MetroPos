@@ -47,11 +47,13 @@ exports.getCategoryById = async (req, res) => {
 };
 
 // Create a new category
+// Create a new category
 exports.createCategory = async (req, res) => {
-    const { nmkategori } = req.body;
+    console.log(req.body); // Debugging
+    const { nama_kategori } = req.body;
     try {
         const newCategory = await Kategori.create({
-            nmkategori
+            nama_kategori
         });
         res.status(201).json({
             success: true,
@@ -67,14 +69,24 @@ exports.createCategory = async (req, res) => {
     }
 };
 
+
 // Update category by ID
 exports.updateCategory = async (req, res) => {
     const { id } = req.params;
-    const { nmkategori } = req.body;
+    const { nama_kategori } = req.body;
+
+    // Validasi input
+    if (!nama_kategori || nama_kategori.trim() === '') {
+        return res.status(400).json({
+            success: false,
+            message: 'Nama kategori harus diisi'
+        });
+    }
+
     try {
         const category = await Kategori.findByPk(id);
         if (category) {
-            category.nmkategori = nmkategori;
+            category.nama_kategori = nama_kategori;
             await category.save();
             res.status(200).json({
                 success: true,
@@ -128,7 +140,7 @@ exports.searchCategories = async (req, res) => {
     try {
         const categories = await Kategori.findAll({
             where: {
-                nmkategori: {
+                nama_kategori: {
                     [Op.like]: `%${query}%`
                 }
             }
