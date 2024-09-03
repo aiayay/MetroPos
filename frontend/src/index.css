@@ -97,3 +97,9 @@
 .row {
   display: flex;
 }
+.p {
+  color: black !important;
+}
+.h1 {
+  color: black !important;
+}
