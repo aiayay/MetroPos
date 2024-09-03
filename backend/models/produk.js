@@ -1,12 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
   const Produk = sequelize.define('Produk', {
     id_produk: {
-      type: DataTypes.INTEGER, // Gunakan INTEGER jika id_produk adalah angka
+      type: DataTypes.INTEGER, 
       primaryKey: true,
-      autoIncrement: true // Tambahkan ini jika id_produk auto-increment
+      autoIncrement: true 
     },
-    id_kategori: DataTypes.INTEGER, // Pastikan tipe datanya sesuai dengan tabel
-    id_pembelian: DataTypes.INTEGER,
+    id_kategori: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    id_pembelian: {
+      type: DataTypes.INTEGER,
+      allowNull: true,  
+    },
     nmproduk: DataTypes.STRING,
     stok: DataTypes.INTEGER,
     foto_produk: DataTypes.STRING,
@@ -30,14 +36,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_produk',
       as: 'detailTransaksi',
     });
-    // Relasi many-to-one dengan Kategori dan Pembelian
+    
+    // Relasi many-to-one dengan Kategori
     Produk.belongsTo(models.Kategori, {
       foreignKey: 'id_kategori',
       as: 'kategori',
-    });
-    Produk.belongsTo(models.Pembelian, {
-      foreignKey: 'id_pembelian',
-      as: 'pembelian',
     });
   };
 

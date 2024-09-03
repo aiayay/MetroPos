@@ -3,19 +3,31 @@ module.exports = (sequelize, DataTypes) => {
     id_keranjang: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    id_produk: DataTypes.STRING,
-  id_member: DataTypes.STRING,
-  kuantitas: DataTypes.INTEGER,
-  total_bayar: DataTypes.INTEGER,
+    id_produk: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    id_member: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    kuantitas: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    total_bayar: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    }
   }, {
     tableName: 'keranjang',
     timestamps: false,
   });
 
+  // Definisi hubungan
   Keranjang.associate = (models) => {
-    // Relasi many-to-one dengan Member dan Produk
     Keranjang.belongsTo(models.Member, {
       foreignKey: 'id_member',
       as: 'member',
