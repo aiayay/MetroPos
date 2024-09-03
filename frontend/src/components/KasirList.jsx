@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Col, Card } from "react-bootstrap";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
@@ -40,7 +41,102 @@ const KasirList = () => {
           </div>
         </div>
       </div>
-      <div></div>
+      <div className="container">
+        <div className="columns mt-5 is-8 is-variable">
+          <div className="columna is-4-tablet is-3-desktop">
+            <div className="card">
+              <div className="card-image has-text-centered px-6">
+                <img src="assets/images/foto.png" alt="" />
+              </div>
+              <div className="card-content">
+                <p>1311333</p>
+                <p className="title is-size-5">aini</p>
+              </div>
+              <footer className="card-footer">
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    lihat
+                  </a>
+                </p>
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    batal
+                  </a>
+                </p>
+              </footer>
+            </div>
+          </div>
+          <div className="columna is-4-tablet is-3-desktop">
+            <div className="card">
+              <div className="card-image has-text-centered px-6">
+                <img src="assets/images/foto.png" alt="" />
+              </div>
+              <div className="card-content">
+                <p>1311333</p>
+                <p className="title is-size-5">aini</p>
+              </div>
+              <footer className="card-footer">
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    lihat
+                  </a>
+                </p>
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    batal
+                  </a>
+                </p>
+              </footer>
+            </div>
+          </div>
+          <div className="columna is-4-tablet is-3-desktop">
+            <div className="card">
+              <div className="card-image has-text-centered px-6">
+                <img src="assets/images/foto.png" alt="" />
+              </div>
+              <div className="card-content">
+                <p>1311333</p>
+                <p className="title is-size-5">aini</p>
+              </div>
+              <footer className="card-footer">
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    lihat
+                  </a>
+                </p>
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    batal
+                  </a>
+                </p>
+              </footer>
+            </div>
+          </div>
+          <div className="columna is-4-tablet is-3-desktop">
+            <div className="card">
+              <div className="card-image has-text-centered px-6">
+                <img src="assets/images/foto.png" alt="" />
+              </div>
+              <div className="card-content">
+                <p>1311333</p>
+                <p className="title is-size-5">aini</p>
+              </div>
+              <footer className="card-footer">
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    lihat
+                  </a>
+                </p>
+                <p className="card-footer-item">
+                  <a href="" className="has-text-gray">
+                    batal
+                  </a>
+                </p>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

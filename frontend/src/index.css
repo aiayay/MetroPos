@@ -12,6 +12,15 @@
   background-color: white;
 } */
 
+@media only screen and (max-height: 1000px) {
+  .hasil {
+    height: 650px;
+  }
+  .menu {
+    height: 800px;
+  }
+}
+
 .navbar h1,
 .navbar h2 {
   color: #8127db;
@@ -84,4 +93,7 @@
 .form-border {
   border: 5px solid #36dda5;
   border-radius: 8px;
+}
+.row {
+  display: flex;
 }
