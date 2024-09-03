@@ -1,6 +1,6 @@
 const db = require("../models");
-const member = db.member;
-const { op } = require("sequelize");
+const Member = db.member;
+const { Op } = require("sequelize");
 
 // Get all members
 exports.getAllMembers = async (req, res) => {
