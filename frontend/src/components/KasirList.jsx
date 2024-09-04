@@ -41,100 +41,101 @@ const KasirList = () => {
           </div>
         </div>
       </div>
-      <div className="container">
-        <div className="columns mt-5 is-8 is-variable">
-          <div className="columna is-4-tablet is-3-desktop">
-            <div className="card">
-              <div className="card-image has-text-centered px-6">
-                <img src="assets/images/foto.png" alt="" />
+      <div className="row">
+        <div className="col-lg-8">
+          <div className="col-lg-4">
+            <div className="border">
+              <div className="container">
+                <div className="columns mt-5 is-8 is-variable">
+                  <div className="columna is-4-tablet is-3-desktop">
+                    <div className="card">
+                      <div className="card-image has-text-centered px-6">
+                        <img src="assets/images/foto.png" alt="" />
+                      </div>
+                      <div className="card-content">
+                        <p>1311333</p>
+                        <p className="title is-size-5">aini</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="columna is-4-tablet is-3-desktop">
+                    <div className="card">
+                      <div className="card-image has-text-centered px-6">
+                        <img src="assets/images/foto.png" alt="" />
+                      </div>
+                      <div className="card-content">
+                        <p>1311333</p>
+                        <p className="title is-size-5">aini</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="columna is-4-tablet is-3-desktop">
+                    <div className="card">
+                      <div className="card-image has-text-centered px-6">
+                        <img src="assets/images/foto.png" alt="" />
+                      </div>
+                      <div className="card-content">
+                        <p>1311333</p>
+                        <p className="title is-size-5">aini</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="columna is-4-tablet is-3-desktop">
+                    <div className="card">
+                      <div className="card-image has-text-centered px-6">
+                        <img src="assets/images/foto.png" alt="" />
+                      </div>
+                      <div className="card-content">
+                        <p>1311333</p>
+                        <p className="title is-size-5">aini</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="card-content">
-                <p>1311333</p>
-                <p className="title is-size-5">aini</p>
-              </div>
-              <footer className="card-footer">
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    lihat
-                  </a>
-                </p>
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    batal
-                  </a>
-                </p>
-              </footer>
             </div>
           </div>
-          <div className="columna is-4-tablet is-3-desktop">
-            <div className="card">
-              <div className="card-image has-text-centered px-6">
-                <img src="assets/images/foto.png" alt="" />
-              </div>
-              <div className="card-content">
-                <p>1311333</p>
-                <p className="title is-size-5">aini</p>
-              </div>
-              <footer className="card-footer">
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    lihat
-                  </a>
-                </p>
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    batal
-                  </a>
-                </p>
-              </footer>
-            </div>
+        </div>
+        <div className="col-lg-4">
+          <h1>tanggal</h1>
+          <p>Tanggal</p>
+          <p>Kasir</p>
+          <p>Kode Transaksi</p>
+          <p>Member</p>
+          <div className="table-responsive bg-dark">
+            <table className="table table-responsive table-dark table-hover">
+              <thead>
+                <tr>
+                  <td>No</td>
+                  <td>Produk</td>
+                  <td>Harga</td>
+                  <td>Qty</td>
+                  <td>Total</td>
+                  <td>Aksi</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Pizza</td>
+                  <td>Rp. 2020900202220</td>
+                  <td>100</td>
+                  <td>Rp.1872830000</td>
+                  <td>
+                    <button className="btn btn-danger btn-sm">batal</button>
+                    <button className="btn btn-success btn-sm">update</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div className="columna is-4-tablet is-3-desktop">
-            <div className="card">
-              <div className="card-image has-text-centered px-6">
-                <img src="assets/images/foto.png" alt="" />
-              </div>
-              <div className="card-content">
-                <p>1311333</p>
-                <p className="title is-size-5">aini</p>
-              </div>
-              <footer className="card-footer">
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    lihat
-                  </a>
-                </p>
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    batal
-                  </a>
-                </p>
-              </footer>
-            </div>
-          </div>
-          <div className="columna is-4-tablet is-3-desktop">
-            <div className="card">
-              <div className="card-image has-text-centered px-6">
-                <img src="assets/images/foto.png" alt="" />
-              </div>
-              <div className="card-content">
-                <p>1311333</p>
-                <p className="title is-size-5">aini</p>
-              </div>
-              <footer className="card-footer">
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    lihat
-                  </a>
-                </p>
-                <p className="card-footer-item">
-                  <a href="" className="has-text-gray">
-                    batal
-                  </a>
-                </p>
-              </footer>
-            </div>
-          </div>
+          <p>Total Bayar</p>
+          <p>Disc Member</p>
+          <p>Catatan</p>
+          <p>Tunai</p>
+          <p>Kembali</p>
+          <p>Metode Bayar</p>
+          <button>Proses Pembayaran</button>
         </div>
       </div>
     </div>

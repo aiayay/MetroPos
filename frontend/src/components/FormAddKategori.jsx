@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import "../index.css";
 
 const FormAddKategori = () => {
-  const [nmkategori, setNmkategori] = useState("");
+  const [nama_kategori, setNama_kategori] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ const FormAddKategori = () => {
     e.preventDefault();
     try {
       await axios.post(API_URL + "kategori", {
-        nmkategori: nmkategori,
+        nama_kategori: nama_kategori,
       });
       navigate("/kategori");
     } catch (error) {
@@ -41,7 +41,7 @@ const FormAddKategori = () => {
               <div className="field">
                 <label className="label">Nama Kategori</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="nama kategori" value={nmkategori} onChange={(e) => setNmkategori(e.target.value)} />
+                  <input type="text" className="input" placeholder="nama kategori" value={nama_kategori} onChange={(e) => setNama_kategori(e.target.value)} />
                 </div>
               </div>
 

@@ -1,6 +1,11 @@
 const db = require("../models");
+<<<<<<< HEAD
 const Member = db.Member;  // Pastikan ini menggunakan huruf kapital
 const { Op } = require("sequelize");  // Perbaiki impor `Op`
+=======
+const Member = db.member;
+const { Op } = require("sequelize");
+>>>>>>> 483e15517b0d185c8f6780a43a5035fc2c317aaf
 
 // Get all members
 exports.getAllMembers = async (req, res) => {
