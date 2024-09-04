@@ -1,6 +1,7 @@
 const db = require("../models");
-const Member = db.member;
+const Member = db.Member;
 const { Op } = require("sequelize");
+
 
 // Get all members
 exports.getAllMembers = async (req, res) => {
@@ -48,14 +49,14 @@ exports.getMemberById = async (req, res) => {
 
 // Create a new member
 exports.createMember = async (req, res) => {
-  const { id_member, nmmember, notlp, alamat, jk } = req.body;
+  const { id_member, nama_member, alamat, no_telepon, jk } = req.body;
   try {
     const newMember = await Member.create({
-      id_member: req.body.id_member,
-      nmmember: req.body.nmmember,
-      notlp: req.body.notlp,
-      alamat: req.body.alamat,
-      jk: req.body.jk,
+      id_member, 
+      nama_member, 
+      alamat,  
+      no_telepon,
+      jk
     });
     res.status(201).json({
       success: true,
@@ -74,14 +75,14 @@ exports.createMember = async (req, res) => {
 // Update member by ID
 exports.updateMember = async (req, res) => {
   const { id } = req.params;
-  const { nmmember, notlp, alamat, jk } = req.body;
+  const { nama_member, no_telepon, alamat, jk } = req.body;
   try {
     const member = await Member.findByPk(id);
     if (member) {
-      member.nmmember = nmmember;
-      member.notlp = notlp;
-      member.alamat = alamat;
-      member.jk = jk;
+      member.nama_member = nama_member; // Pastikan nama field sesuai dengan model
+      member.no_telepon = no_telepon;   // Pastikan nama field sesuai dengan model
+      member.alamat = alamat;          // Pastikan nama field sesuai dengan model
+                // Pastikan nama field sesuai dengan model
       await member.save();
       res.status(200).json({
         success: true,
@@ -135,10 +136,10 @@ exports.searchMembers = async (req, res) => {
   try {
     const members = await Member.findAll({
       where: {
-        nmmember: {
-          [Op.like]: `%${query}%`,
-        },
-      },
+        nama_member: { // Pastikan nama field sesuai dengan model
+          [Op.like]: `%${query}%`
+        }
+      }
     });
     res.status(200).json({
       success: true,

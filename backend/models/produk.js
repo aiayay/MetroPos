@@ -1,17 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Produk = sequelize.define('Produk', {
     id_produk: {
-      type: DataTypes.INTEGER, 
+      type: DataTypes.STRING, // Ubah dari INTEGER ke STRING
       primaryKey: true,
-      autoIncrement: true 
     },
     id_kategori: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING, // Ubah dari INTEGER ke STRING
       allowNull: false
     },
     id_pembelian: {
-      type: DataTypes.INTEGER,
-      allowNull: true,  
+      type: DataTypes.STRING, // Ubah dari INTEGER ke STRING
+      allowNull: true
     },
     nmproduk: DataTypes.STRING,
     stok: DataTypes.INTEGER,

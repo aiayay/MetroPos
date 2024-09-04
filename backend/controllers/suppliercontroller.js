@@ -1,69 +1,127 @@
-const Supplier = require('../models/supplier');
+const db = require("../models");
+const Supplier = db.Supplier;
 
-// Mendapatkan semua supplier
+// Get all suppliers
 exports.getAllSuppliers = async (req, res) => {
   try {
     const suppliers = await Supplier.findAll();
-    res.status(200).json(suppliers);
+    res.status(200).json({
+      success: true,
+      message: "Daftar supplier berhasil diambil",
+      data: suppliers,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan saat mengambil data supplier",
+      error: error.message,
+    });
   }
 };
 
-// Mendapatkan supplier berdasarkan ID
+// Get supplier by ID
 exports.getSupplierById = async (req, res) => {
   const { id } = req.params;
   try {
     const supplier = await Supplier.findByPk(id);
-    if (!supplier) {
-      return res.status(404).json({ error: 'Supplier tidak ditemukan' });
+    if (supplier) {
+      res.status(200).json({
+        success: true,
+        message: "Supplier berhasil ditemukan",
+        data: supplier,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Supplier tidak ditemukan",
+      });
     }
-    res.status(200).json(supplier);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan saat mengambil data supplier",
+      error: error.message,
+    });
   }
 };
 
-// Membuat supplier baru
+// Create a new supplier
 exports.createSupplier = async (req, res) => {
-  const { nama, alamat } = req.body;
+  const { id_supplier, nmsupplier, alamat, notlp } = req.body;
   try {
-    const newSupplier = await Supplier.create({ nama, alamat });
-    res.status(201).json(newSupplier);
+    const newSupplier = await Supplier.create({
+      id_supplier,
+      nmsupplier,
+      alamat,
+      notlp,
+    });
+    res.status(201).json({
+      success: true,
+      message: "Supplier berhasil ditambahkan",
+      data: newSupplier,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan saat menambahkan supplier",
+      error: error.message,
+    });
   }
 };
 
-// Memperbarui supplier
+// Update supplier by ID
 exports.updateSupplier = async (req, res) => {
   const { id } = req.params;
-  const { nama, alamat } = req.body;
+  const { nmsupplier, alamat, notlp } = req.body;
   try {
     const supplier = await Supplier.findByPk(id);
-    if (!supplier) {
-      return res.status(404).json({ error: 'Supplier tidak ditemukan' });
+    if (supplier) {
+      supplier.nmsupplier = nmsupplier;
+      supplier.alamat = alamat;
+      supplier.notlp = notlp;
+      await supplier.save();
+      res.status(200).json({
+        success: true,
+        message: "Supplier berhasil diperbarui",
+        data: supplier,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Supplier tidak ditemukan",
+      });
     }
-    supplier.nama = nama;
-    supplier.alamat = alamat;
-    await supplier.save();
-    res.status(200).json(supplier);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan saat memperbarui supplier",
+      error: error.message,
+    });
   }
 };
 
-// Menghapus supplier
+// Delete supplier by ID
 exports.deleteSupplier = async (req, res) => {
   const { id } = req.params;
   try {
     const supplier = await Supplier.findByPk(id);
-    if (!supplier) {
-      return res.status(404).json({ error: 'Supplier tidak ditemukan' });
+    if (supplier) {
+      await supplier.destroy();
+      res.status(200).json({
+        success: true,
+        message: "Supplier berhasil dihapus",
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Supplier tidak ditemukan",
+      });
     }
-    await supplier.destroy();
-    res.status(200).json({ message: 'Supplier berhasil dihapus' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Terjadi kesalahan saat menghapus supplier",
+      error: error.message,
+    });
   }
 };

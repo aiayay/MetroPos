@@ -2,9 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
   const Kategori = sequelize.define('Kategori', {
     id_kategori: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
+      type: DataTypes.STRING, 
+      allowNull: false,
+      primaryKey: true
     },
     nama_kategori: {
       type: DataTypes.STRING,
