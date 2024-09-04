@@ -2,7 +2,7 @@
   background-color: #c081ff;
 }
 .column {
-  background-color: #c081ff;
+  background-color: white;
 }
 
 .label {
@@ -102,4 +102,21 @@
 }
 .h1 {
   color: black !important;
+}
+/* .item-sidebar {
+  background-color: #36dda5;
+  color: white;
+} */
+.menu-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-wrapper .col-md-4 {
+  /* flex-basis: calc(33.333% - 20px); Menyisakan sedikit ruang untuk margin */
+  margin-bottom: 20px;
+}
+.keranjang-wrapper {
+  position: relative;
+  right: 0;
 }
