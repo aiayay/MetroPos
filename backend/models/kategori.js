@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Kategori = sequelize.define('Kategori', {
     id_kategori: {
-      type: DataTypes.STRING, // Ubah ke STRING jika di database adalah VARCHAR
+      type: DataTypes.STRING, 
       allowNull: false,
       primaryKey: true
     },

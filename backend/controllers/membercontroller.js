@@ -1,6 +1,5 @@
 const db = require("../models");
-
-const Member = db.member;
+const Member = db.Member;
 const { Op } = require("sequelize");
 
 
@@ -50,13 +49,14 @@ exports.getMemberById = async (req, res) => {
 
 // Create a new member
 exports.createMember = async (req, res) => {
-  const { id_member, alamat, nama_member, no_telepon } = req.body;
+  const { id_member, nama_member, alamat, no_telepon, jk } = req.body;
   try {
     const newMember = await Member.create({
-      id_member,  // Pastikan sesuai dengan model
-      nama_member, // Pastikan nama field sesuai dengan model
-      alamat,  // Pastikan nama field sesuai dengan model
-      no_telepon // Pastikan nama field sesuai dengan model
+      id_member, 
+      nama_member, 
+      alamat,  
+      no_telepon,
+      jk
     });
     res.status(201).json({
       success: true,
@@ -82,7 +82,7 @@ exports.updateMember = async (req, res) => {
       member.nama_member = nama_member; // Pastikan nama field sesuai dengan model
       member.no_telepon = no_telepon;   // Pastikan nama field sesuai dengan model
       member.alamat = alamat;          // Pastikan nama field sesuai dengan model
-      member.jk = jk;                  // Pastikan nama field sesuai dengan model
+                // Pastikan nama field sesuai dengan model
       await member.save();
       res.status(200).json({
         success: true,
