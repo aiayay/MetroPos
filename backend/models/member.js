@@ -21,17 +21,18 @@
 module.exports = (sequelize, DataTypes) => {
   const Member = sequelize.define('Member', {
     id_member: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+      type: DataTypes.STRING,  // Ubah tipe data menjadi STRING
+      allowNull: false,
+      primaryKey: true
+    },
+    
+    alamat: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     nama_member: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    alamat: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
     no_telepon: {
       type: DataTypes.STRING,

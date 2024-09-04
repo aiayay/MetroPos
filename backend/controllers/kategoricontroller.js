@@ -46,13 +46,14 @@ exports.getCategoryById = async (req, res) => {
     }
 };
 
-// Create a new category
+
 // Create a new category
 exports.createCategory = async (req, res) => {
     console.log(req.body); // Debugging
-    const { nama_kategori } = req.body;
+    const { id_kategori, nama_kategori } = req.body;
     try {
         const newCategory = await Kategori.create({
+            id_kategori,  // Tambahkan id_kategori di sini
             nama_kategori
         });
         res.status(201).json({
@@ -68,6 +69,7 @@ exports.createCategory = async (req, res) => {
         });
     }
 };
+
 
 
 // Update category by ID

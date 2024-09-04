@@ -1,7 +1,6 @@
-// controllers/usercontroller.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.js');
+const { User } = require('../models'); // Periksa apakah `User` diimpor dengan benar
 
 // Register User
 exports.registerUser = async (req, res) => {
