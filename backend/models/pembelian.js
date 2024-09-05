@@ -1,21 +1,25 @@
 module.exports = (sequelize, DataTypes) => {
   const Pembelian = sequelize.define('Pembelian', {
     id_pembelian: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(255),
       primaryKey: true,
-      autoIncrement: true
+      allowNull: false
     },
-    id_supplier: {
-      type: DataTypes.INTEGER,
+    id_produk: {
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     kuantitas: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    id_supplier: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
     tanggal: {
       type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW, // Tanggal otomatis terisi dengan tanggal saat ini
+      allowNull: false
     },
     harga_beli: {
       type: DataTypes.INTEGER,
@@ -27,10 +31,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Pembelian.associate = (models) => {
-    // Relasi many-to-one dengan Supplier
-    Pembelian.belongsTo(models.Supplier, {
-      foreignKey: 'id_supplier',
-      as: 'supplier',
+    Pembelian.belongsTo(models.Produk, {
+      foreignKey: 'id_produk',
+      as: 'produk',
     });
   };
 

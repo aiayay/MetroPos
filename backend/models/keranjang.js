@@ -1,16 +1,18 @@
+
+
 module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define('Keranjang', {
     id_keranjang: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING, // Ubah ke STRING
       primaryKey: true,
-      autoIncrement: true,
+      allowNull: false,
     },
     id_produk: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING, 
       allowNull: false,
     },
     id_member: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     kuantitas: {
@@ -18,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     total_bayar: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.INTEGER, // Ubah ke INTEGER
       allowNull: false,
     }
   }, {
