@@ -1,15 +1,18 @@
+// models/DetailTransaksi.js
+
 module.exports = (sequelize, DataTypes) => {
   const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {
-      type: DataTypes.STRING,  // Sesuaikan dengan tipe VARCHAR(255) di database
+      type: DataTypes.STRING, // Ubah ke STRING
       primaryKey: true,
+      allowNull: false,
     },
     id_transaksi: {
-      type: DataTypes.STRING,  // Sesuaikan dengan tipe VARCHAR(255) di database
+      type: DataTypes.STRING, // Ubah ke STRING sesuai dengan perubahan
       allowNull: false,
     },
     id_produk: {
-      type: DataTypes.STRING,  // Sesuaikan dengan tipe VARCHAR(255) di database
+      type: DataTypes.STRING, // Ubah ke STRING sesuai dengan perubahan
       allowNull: false,
     },
     nmproduk: {
@@ -45,12 +48,13 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  // Definisi relasi
+  // Definisi hubungan
   DetailTransaksi.associate = (models) => {
     DetailTransaksi.belongsTo(models.Transaksi, {
       foreignKey: 'id_transaksi',
       as: 'transaksi',
     });
+    
     DetailTransaksi.belongsTo(models.Produk, {
       foreignKey: 'id_produk',
       as: 'produk',
