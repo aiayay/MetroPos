@@ -5,7 +5,7 @@ import "../index.css";
 const KasirList = () => {
   return (
     <div>
-      <h2>Daftar Menu</h2>
+      <h2 className="text-black">Daftar Menu</h2>
       <hr />
       <Row className="menu-wrapper">
         <Col md={8} xs={12} className="mb-4 mr-4">

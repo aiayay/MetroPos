@@ -8,6 +8,18 @@ const Sidebar = () => {
       <aside className="menu pl-2 pr-2 has-shadow mt-5">
         <ul className="menu-list">
           <li className="item-sidebar">
+            <div id="navbarBasicExample" className="navbar-menu">
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <h1 className="text-white">nur aini pertiwi</h1>
+                    <img src="assets/images/foto.png" width="50" height="28" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li className="item-sidebar">
             <NavLink to={"/dashboard"}>
               <IoHome />
               Dashboard
