@@ -10,7 +10,7 @@ const KasirSidebar = () => {
     <div>
       <Col md={2} mt="2">
         <aside className="menu pl-2 pr-2 has-shadow mt-5">
-          <h1>Daftar Kategori</h1>
+          <h1 className="text-black">Daftar Kategori</h1>
           <hr />
           {/* <ListGroup>
             <ListGroup.Item>
@@ -47,13 +47,13 @@ const KasirSidebar = () => {
           </ListGroup> */}
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={"/dashboard"}>
+              <NavLink to={""}>
                 <GiForkKnifeSpoon />
                 Makanan
               </NavLink>
             </li>
             <li className="item-sidebar">
-              <NavLink to={"/produk"}>
+              <NavLink to={""}>
                 <GiEmptyMetalBucket />
                 Minuman
               </NavLink>
@@ -62,7 +62,7 @@ const KasirSidebar = () => {
 
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={"/member"}>
+              <NavLink to={""}>
                 <GiCoffeeBeans />
                 Kopi
               </NavLink>
@@ -71,7 +71,7 @@ const KasirSidebar = () => {
 
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={"/transaksi"}>
+              <NavLink to={""}>
                 <PiTeaBag />
                 Teh
               </NavLink>
@@ -80,7 +80,7 @@ const KasirSidebar = () => {
 
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={"/kategori"}>
+              <NavLink to={""}>
                 <GiLiquidSoap />
                 Sabun
               </NavLink>
