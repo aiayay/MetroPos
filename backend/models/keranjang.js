@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_member: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     kuantitas: {
       type: DataTypes.INTEGER,

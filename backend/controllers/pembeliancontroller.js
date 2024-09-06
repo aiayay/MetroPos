@@ -54,6 +54,7 @@ exports.createPembelian = async (req, res) => {
             id_produk: req.body.id_produk,
             kuantitas: req.body.kuantitas,
             id_supplier: req.body.id_supplier,
+            tanggal: req.body.tanggal,
             harga_beli: req.body.harga_beli
         });
         res.status(201).json({

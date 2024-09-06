@@ -3,19 +3,21 @@ const Produk = db.Produk; // Pastikan nama ini sesuai dengan nama model yang did
 
 // Fungsi untuk menambahkan produk
 exports.create = (req, res) => {
+  // Validasi input
   if (!req.body.nmproduk) {
     return res.status(400).send({
       message: "Nama produk tidak boleh kosong!"
     });
   }
 
+  // Menyiapkan data produk
   const newProduk = {
-    id_produk: req.body.id_produk,
+    id_produk: req.body.id_produk,  // Pastikan ini sesuai dengan definisi model
     id_kategori: req.body.id_kategori,
     id_pembelian: req.body.id_pembelian,
     nmproduk: req.body.nmproduk,
     stok: req.body.stok,
-     foto_produk: req.file ? req.file.filename : req.body.foto_produk,
+    foto_produk: req.file ? req.file.filename : req.body.foto_produk, // Pastikan ini sesuai dengan file upload
     satuan: req.body.satuan,
     merk: req.body.merk,
     harga_beli: req.body.harga_beli,
@@ -24,14 +26,17 @@ exports.create = (req, res) => {
     keterangan: req.body.keterangan
   };
 
+  // Menyimpan produk ke database
   Produk.create(newProduk)
     .then(data => res.send(data))
     .catch(err => {
+      // Menangani kesalahan
       res.status(500).send({
         message: err.message || "Terjadi kesalahan saat membuat produk."
       });
     });
 };
+
 
 // Fungsi untuk mendapatkan semua produk
 // Untuk mendapatkan semua produk beserta relasi kategori dan pembelian

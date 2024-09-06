@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_pembelian: {
       type: DataTypes.STRING, 
-      allowNull: true
+      allowNull: false
     },
     nmproduk: DataTypes.STRING,
     stok: DataTypes.INTEGER,

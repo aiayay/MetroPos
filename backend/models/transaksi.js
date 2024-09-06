@@ -1,29 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
   const Transaksi = sequelize.define('Transaksi', {
     id_transaksi: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING, // Ganti dengan STRING jika id_transaksi adalah VARCHAR di database
       primaryKey: true,
-      autoIncrement: true,
+      allowNull: false,
     },
     id_member: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    id_user: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING, // Ganti dengan STRING jika id_member adalah VARCHAR di database
       allowNull: false,
       references: {
-        model: 'user', // Pastikan ini sesuai dengan nama model di file user.js
+        model: 'member', // Pastikan nama model adalah 'User' sesuai dengan file user.js
+        key: 'id_member',
+      },
+    },
+    id_user: {
+      type: DataTypes.STRING, // Ganti dengan STRING jika id_user adalah VARCHAR di database
+      allowNull: false,
+      references: {
+        model: 'user', // Pastikan nama model adalah 'User' sesuai dengan file user.js
         key: 'id_user',
       },
     },
     nama_kasir: {
       type: DataTypes.STRING,
-      allowNull: false, // Kolom wajib karena setiap transaksi memiliki kasir
+      allowNull: false,
     },
     nama_member: {
       type: DataTypes.STRING,
-      allowNull: true, // Bisa null karena tidak semua transaksi memiliki member
+      allowNull: true,
     },
     tanggal: {
       type: DataTypes.DATE,
@@ -45,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     // Many-to-One dengan User
     Transaksi.belongsTo(models.User, {
       foreignKey: 'id_user',
-      as: 'user', // Alias untuk mengakses data user dari transaksi
+      as: 'user',
     });
 
     // Many-to-One dengan Member

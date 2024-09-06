@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
   const Pembelian = sequelize.define('Pembelian', {
     id_pembelian: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING,
       primaryKey: true,
-      allowNull: false
+      allowNull: true
     },
     id_produk: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING,
       allowNull: false
     },
     kuantitas: {
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     id_supplier: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING,
       allowNull: false
     },
     tanggal: {

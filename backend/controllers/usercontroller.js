@@ -1,6 +1,7 @@
+// controllers/usercontroller.js
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { User } = require('../models'); // Periksa apakah `User` diimpor dengan benar
+const { User } = require('../models'); // Pastikan import sesuai dengan nama model
 
 // Register User
 exports.registerUser = async (req, res) => {
@@ -60,7 +61,7 @@ exports.loginUser = async (req, res) => {
 // Get User Profile (requires login)
 exports.getUserProfile = async (req, res) => {
   try {
-    const user = await User.findByPk(req.user.id_user);
+    const user = await User.findByPk(req.user.id_user); // Menggunakan req.user.id_user yang diatur oleh middleware
     if (!user) return res.status(404).json({ message: 'User tidak ditemukan' });
 
     res.json({ success: true, data: user });
