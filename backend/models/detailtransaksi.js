@@ -10,10 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     id_transaksi: {
       type: DataTypes.STRING, // Ubah ke STRING sesuai dengan perubahan
       allowNull: false,
+      references: {
+        model: 'transaksi', // Pastikan nama model adalah 'User' sesuai dengan file user.js
+        key: 'id_transaksi',
+      },
     },
     id_produk: {
       type: DataTypes.STRING, // Ubah ke STRING sesuai dengan perubahan
       allowNull: false,
+      references: {
+        model: 'produk', // Pastikan nama model adalah 'User' sesuai dengan file user.js
+        key: 'id_produk',
+      },
     },
     nmproduk: {
       type: DataTypes.STRING,
