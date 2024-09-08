@@ -1,23 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
   const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {
-      type: DataTypes.STRING, // Sesuaikan dengan STRING
+      type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
     },
     id_transaksi: {
-      type: DataTypes.STRING, // Sesuaikan dengan STRING
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
-        model: 'Transaksi', // Sesuaikan dengan nama model yang tepat (PascalCase)
+        model: 'Transaksi', // Sesuaikan dengan nama model yang tepat
         key: 'id_transaksi',
       },
     },
     id_produk: {
-      type: DataTypes.STRING, // Sesuaikan dengan STRING
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
-        model: 'Produk', // Sesuaikan dengan nama model yang tepat (PascalCase)
+        model: 'Produk', // Sesuaikan dengan nama model yang tepat
         key: 'id_produk',
       },
     },
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     }
   }, {
-    tableName: 'detailtransaksi', // Sesuaikan dengan nama tabel di database
+    tableName: 'detailtransaksi',
     timestamps: false,
   });
 

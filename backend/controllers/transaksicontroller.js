@@ -39,7 +39,9 @@ exports.getTransaksiById = async (req, res) => {
 // Membuat transaksi baru
 exports.createTransaksi = async (req, res) => {
   const { id_member, id_user, nama_kasir, nama_member, tanggal, detailTransaksi } = req.body;
+
   try {
+    // Membuat transaksi baru
     const newTransaksi = await Transaksi.create({
       id_member,
       id_user,
@@ -51,12 +53,19 @@ exports.createTransaksi = async (req, res) => {
     // Jika ada detailTransaksi, simpan juga detailnya
     if (detailTransaksi && detailTransaksi.length > 0) {
       for (const detail of detailTransaksi) {
+        // Menyimpan detail transaksi
         await DetailTransaksi.create({
           id_transaksi: newTransaksi.id_transaksi,
           id_produk: detail.id_produk,
           kuantitas: detail.kuantitas,
           total_harga: detail.total_harga,
           potongan: detail.potongan,
+        });
+
+        // Memperbarui stok produk
+        await Produk.decrement('stok', {
+          by: detail.kuantitas,
+          where: { id_produk: detail.id_produk },
         });
       }
     }

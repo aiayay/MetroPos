@@ -35,6 +35,7 @@ exports.getKeranjangById = async (req, res) => {
 };
 
 // Menambahkan item ke keranjang
+
 exports.createKeranjang = async (req, res) => {
   const { id_produk, id_member, kuantitas, total_bayar } = req.body;
   try {
@@ -58,13 +59,15 @@ exports.createKeranjang = async (req, res) => {
       id_produk,
       id_member,
       kuantitas,
-      total_bayar,
+      total_bayar
     });
+
     res.status(201).json(newKeranjang);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Memperbarui item keranjang
 exports.updateKeranjang = async (req, res) => {

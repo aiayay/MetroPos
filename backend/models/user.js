@@ -1,9 +1,12 @@
-// models/user.js
+const { v4: uuidv4 } = require('uuid');
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id_user: {
-      type: DataTypes.STRING, 
+      type: DataTypes.STRING,
+      defaultValue: () => uuidv4(), // Generate UUID for new users
       primaryKey: true,
+      allowNull: false,
     },
     username: {
       type: DataTypes.STRING,

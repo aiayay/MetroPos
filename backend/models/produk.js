@@ -6,11 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_kategori: {
       type: DataTypes.STRING, 
-      allowNull: false
-    },
-    id_pembelian: {
-      type: DataTypes.STRING, 
-      allowNull: true
+      allowNull: false,
     },
     nmproduk: DataTypes.STRING,
     stok: DataTypes.INTEGER,
@@ -38,8 +34,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_kategori',
       as: 'kategori',
     });
-    Produk.belongsTo(models.Pembelian, {
-      foreignKey: 'id_pembelian',
+    // Produk memiliki banyak pembelian
+    Produk.hasMany(models.Pembelian, {
+      foreignKey: 'id_produk',
       as: 'pembelian',
     });
   };

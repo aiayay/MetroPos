@@ -23,5 +23,12 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false
   });
 
+  Member.associate = (models) => {
+    Member.hasMany(models.Keranjang, {
+      foreignKey: 'id_member',
+      as: 'keranjang'  // alias untuk asosiasi
+    });
+  };
+
   return Member;
 };

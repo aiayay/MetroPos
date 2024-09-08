@@ -1,23 +1,26 @@
-module.exports = (sequelize, DataTypes) => {
+const { DataTypes } = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
+
+module.exports = (sequelize) => {
   const Transaksi = sequelize.define('Transaksi', {
     id_transaksi: {
-      type: DataTypes.STRING, // Ganti dengan STRING jika id_transaksi adalah VARCHAR di database
+      type: DataTypes.UUID, 
+      defaultValue: uuidv4, 
       primaryKey: true,
-      allowNull: false,
     },
     id_member: {
-      type: DataTypes.STRING, // Ganti dengan STRING jika id_member adalah VARCHAR di database
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
-        model: 'member', // Pastikan nama model adalah 'User' sesuai dengan file user.js
+        model: 'member',
         key: 'id_member',
       },
     },
     id_user: {
-      type: DataTypes.STRING, // Ganti dengan STRING jika id_user adalah VARCHAR di database
+      type: DataTypes.STRING,
       allowNull: false,
       references: {
-        model: 'user', // Pastikan nama model adalah 'User' sesuai dengan file user.js
+        model: 'user',
         key: 'id_user',
       },
     },
@@ -38,21 +41,15 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  // Definisi hubungan
   Transaksi.associate = (models) => {
-    // One-to-Many dengan DetailTransaksi
     Transaksi.hasMany(models.DetailTransaksi, {
       foreignKey: 'id_transaksi',
       as: 'detailTransaksi',
     });
-
-    // Many-to-One dengan User
     Transaksi.belongsTo(models.User, {
       foreignKey: 'id_user',
       as: 'user',
     });
-
-    // Many-to-One dengan Member
     Transaksi.belongsTo(models.Member, {
       foreignKey: 'id_member',
       as: 'member',

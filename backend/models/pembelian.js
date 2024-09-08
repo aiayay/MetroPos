@@ -1,30 +1,39 @@
-module.exports = (sequelize, DataTypes) => {
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   const Pembelian = sequelize.define('Pembelian', {
     id_pembelian: {
       type: DataTypes.STRING,
       primaryKey: true,
-      allowNull: true
     },
     id_produk: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'produk',
+        key: 'id_produk',
+      },
     },
     kuantitas: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     id_supplier: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'supplier',
+        key: 'id_supplier',
+      },
     },
     tanggal: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
+      type: DataTypes.DATE,
+      allowNull: false,
     },
     harga_beli: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+    },
   }, {
     tableName: 'pembelian',
     timestamps: false,
@@ -34,6 +43,10 @@ module.exports = (sequelize, DataTypes) => {
     Pembelian.belongsTo(models.Produk, {
       foreignKey: 'id_produk',
       as: 'produk',
+    });
+    Pembelian.belongsTo(models.Supplier, {
+      foreignKey: 'id_supplier',
+      as: 'supplier',
     });
   };
 
