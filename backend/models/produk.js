@@ -1,8 +1,11 @@
+const { v4: uuidv4 } = require('uuid'); // Mengimpor uuid
+
 module.exports = (sequelize, DataTypes) => {
   const Produk = sequelize.define('Produk', {
     id_produk: {
-      type: DataTypes.STRING, 
+      type: DataTypes.STRING,
       primaryKey: true,
+      defaultValue: uuidv4(),  // Menghasilkan UUID otomatis
     },
     id_kategori: {
       type: DataTypes.STRING, 
@@ -34,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_kategori',
       as: 'kategori',
     });
-    // Produk memiliki banyak pembelian
     Produk.hasMany(models.Pembelian, {
       foreignKey: 'id_produk',
       as: 'pembelian',

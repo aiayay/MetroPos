@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -5,6 +6,7 @@ module.exports = (sequelize) => {
     id_pembelian: {
       type: DataTypes.STRING,
       primaryKey: true,
+      defaultValue: uuidv4(),
     },
     id_produk: {
       type: DataTypes.STRING,

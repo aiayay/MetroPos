@@ -1,5 +1,5 @@
-const Pembelian = require('../config/dbconfig.js');
-const { Op } = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
+const { Pembelian } = require('../models'); // Pastikan path ini benar
 
 // Mendapatkan semua pembelian
 exports.getAllPembelian = async (req, res) => {
@@ -46,16 +46,26 @@ exports.getPembelianById = async (req, res) => {
 };
 
 // Menambahkan pembelian baru
+// Menambahkan pembelian baru
 exports.createPembelian = async (req, res) => {
-    const { id_pembelian, id_produk, kuantitas, id_supplier, tanggal, harga_beli } = req.body;
+    const { id_produk, kuantitas, id_supplier, tanggal, harga_beli } = req.body;
+    
+    // Cek jika id_produk dan id_supplier ada
+    if (!id_produk || !id_supplier) {
+        return res.status(400).json({
+            success: false,
+            message: 'id_produk dan id_supplier harus ada',
+        });
+    }
+    
     try {
         const newPembelian = await Pembelian.create({
-            id_pembelian: req.body.id_pembelian,
-            id_produk: req.body.id_produk,
-            kuantitas: req.body.kuantitas,
-            id_supplier: req.body.id_supplier,
-            tanggal: req.body.tanggal,
-            harga_beli: req.body.harga_beli
+            id_pembelian: uuidv4(), // UUID otomatis
+            id_produk,
+            kuantitas,
+            id_supplier,
+            tanggal,
+            harga_beli
         });
         res.status(201).json({
             success: true,

@@ -1,9 +1,12 @@
+const { v4: uuidv4 } = require('uuid'); 
+
 module.exports = (sequelize, DataTypes) => {
   const Member = sequelize.define('Member', {
     id_member: {
-      type: DataTypes.STRING,  // VARCHAR dari database
+      type: DataTypes.STRING,  
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      defaultValue: uuidv4(),  // Menghasilkan UUID otomatis ya ges yak
     },
     nama_member: {
       type: DataTypes.STRING,

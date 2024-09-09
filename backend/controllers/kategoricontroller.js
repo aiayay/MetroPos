@@ -48,28 +48,27 @@ exports.getCategoryById = async (req, res) => {
 
 
 // Create a new category
+// Create a new category
 exports.createCategory = async (req, res) => {
-    console.log(req.body); // Debugging
-    const { id_kategori, nama_kategori } = req.body;
+    const { nama_kategori } = req.body;
     try {
-        const newCategory = await Kategori.create({
-            id_kategori,  // Tambahkan id_kategori di sini
-            nama_kategori
-        });
-        res.status(201).json({
-            success: true,
-            message: 'Kategori berhasil ditambahkan',
-            data: newCategory
-        });
+      const newCategory = await Kategori.create({
+        nama_kategori
+      });
+      res.status(201).json({
+        success: true,
+        message: 'Kategori berhasil ditambahkan',
+        data: newCategory
+      });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Terjadi kesalahan saat menambahkan kategori',
-            error: error.message
-        });
+      res.status(500).json({
+        success: false,
+        message: 'Terjadi kesalahan saat menambahkan kategori',
+        error: error.message
+      });
     }
-};
-
+  };
+  
 
 
 // Update category by ID

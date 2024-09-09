@@ -12,7 +12,6 @@ exports.create = (req, res) => {
 
   // Menyiapkan data produk
   const newProduk = {
-    id_produk: req.body.id_produk,  // Pastikan ini sesuai dengan definisi model
     id_kategori: req.body.id_kategori,
     id_pembelian: req.body.id_pembelian,
     nmproduk: req.body.nmproduk,
@@ -37,7 +36,6 @@ exports.create = (req, res) => {
     });
 };
 
-
 // Fungsi untuk mendapatkan semua produk
 // Untuk mendapatkan semua produk beserta relasi kategori dan pembelian
 exports.findAll = (req, res) => {
@@ -60,7 +58,6 @@ exports.findAll = (req, res) => {
     });
   });
 };
-
 
 // Fungsi untuk mendapatkan produk berdasarkan ID
 // Mendapatkan satu produk berdasarkan id beserta dan relasi di tambahkan id relasi nya
