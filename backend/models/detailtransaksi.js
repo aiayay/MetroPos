@@ -1,9 +1,12 @@
+const { v4: uuidv4 } = require('uuid'); // Mengimpor uuid
+
 module.exports = (sequelize, DataTypes) => {
   const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
+      defaultValue: () => uuidv4(), // Menggunakan UUID secara otomatis
     },
     id_transaksi: {
       type: DataTypes.STRING,
