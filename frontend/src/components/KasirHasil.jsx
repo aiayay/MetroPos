@@ -72,7 +72,7 @@ const KasirHasil = () => {
           <p className="text-black">Tunai</p>
           <p className="text-black">Kembali</p>
           <p className="text-black">Metode Bayar</p>
-          <button type="submit" className="btn is-success">
+          <button type="submit" className="button is-success">
             Proses Pembayaran
           </button>
         </div>

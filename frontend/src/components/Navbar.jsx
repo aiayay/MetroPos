@@ -23,7 +23,7 @@ const Navbar = () => {
             <div className="navbar-item">
               <div className="buttons">
                 <h1>nama</h1>
-                <img src={logo} width="50" height="28" alt="" />
+                <img src={logo} width="50" height="28" alt="" className="profile-pic" />
               </div>
             </div>
           </div>

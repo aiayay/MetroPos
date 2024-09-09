@@ -11,7 +11,7 @@ const KasirList = () => {
         <Col md={8} xs={12} className="mb-4 mr-4">
           <Card className="flex-container">
             <Card.Img variant="top" src="assets/images/foto.png" width="200px" />
-            <Card.Body>
+            <Card.Body className="card-body">
               <Card.Title>Menu 1</Card.Title>
               <Card.Text>Rp.4000</Card.Text>
             </Card.Body>
@@ -20,7 +20,7 @@ const KasirList = () => {
         <Col md={8} xs={12} className="mb-4 mr-4">
           <Card className="flex-container">
             <Card.Img variant="top" src="assets/images/foto.png" width="200px" />
-            <Card.Body>
+            <Card.Body className="card-body">
               <Card.Title>Menu 2</Card.Title>
               <Card.Text>Rp.4000</Card.Text>
             </Card.Body>
@@ -29,7 +29,7 @@ const KasirList = () => {
         <Col md={8} xs={12} className="mb-4 mr-4">
           <Card className="flex-container">
             <Card.Img variant="top" src="assets/images/foto.png" width="200px" />
-            <Card.Body>
+            <Card.Body className="card-body">
               <Card.Title>Menu 3</Card.Title>
               <Card.Text>Rp.4000</Card.Text>
             </Card.Body>
@@ -38,7 +38,7 @@ const KasirList = () => {
         <Col md={8} xs={12} className="mb-4 mr-4">
           <Card className="flex-container">
             <Card.Img variant="top" src="assets/images/foto.png" width="200px" />
-            <Card.Body>
+            <Card.Body className="card-body">
               <Card.Title>Menu 4</Card.Title>
               <Card.Text>Rp.4000</Card.Text>
             </Card.Body>
@@ -47,7 +47,7 @@ const KasirList = () => {
         <Col md={8} xs={12} className="mb-4 mr-4">
           <Card className="flex-container">
             <Card.Img variant="top" src="assets/images/foto.png" width="200px" />
-            <Card.Body>
+            <Card.Body className="card-body">
               <Card.Title>Menu 5</Card.Title>
               <Card.Text>Rp.4000</Card.Text>
             </Card.Body>
@@ -56,7 +56,7 @@ const KasirList = () => {
         <Col md={8} xs={12} className="mb-4 mr-4">
           <Card className="flex-container">
             <Card.Img variant="top" src="assets/images/foto.png" width="200px" />
-            <Card.Body>
+            <Card.Body className="card-body">
               <Card.Title>Menu 6</Card.Title>
               <Card.Text>Rp.4000</Card.Text>
             </Card.Body>
