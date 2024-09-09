@@ -48,29 +48,11 @@ fs.readdirSync(__dirname)
 
 //Memanggil fungsi associate jika ada
 
-if (db['Keranjang'] && db['Keranjang'].associate) {
-  db['Keranjang'].associate(db);
-}
-
-if (db['Member'] && db['Member'].associate) {
-  db['Member'].associate(db);
-}
-
-if (db['Produk'] && db['Produk'].associate) {
-  db['Produk'].associate(db);
-}
-
-if (db['Transaksi'] && db['Transaksi'].associate) {
-  db['Transaksi'].associate(db);
-}
-
-if (db['User'] && db['User'].associate) {
-  db['User'].associate(db);
-}
-
-if (db['Kategori'] && db['Kategori'].associate) {
-  db['Kategori'].associate(db);
-}
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 // Sinkronisasi database
 db.sequelize.sync({ force: false })
   .then(() => {
