@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
     id_produk: {
       type: DataTypes.STRING,
       primaryKey: true,
-      defaultValue: uuidv4(),  // Menghasilkan UUID otomatis
+      defaultValue: uuidv4(),  
     },
     id_kategori: {
-      type: DataTypes.STRING, 
+      type: DataTypes.UUID, 
       allowNull: false,
     },
     nmproduk: DataTypes.STRING,

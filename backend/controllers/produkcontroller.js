@@ -2,39 +2,50 @@ const db = require("../models");
 const Produk = db.Produk; // Pastikan nama ini sesuai dengan nama model yang didefinisikan di file model
 
 // Fungsi untuk menambahkan produk
-exports.create = (req, res) => {
-  // Validasi input
-  if (!req.body.nmproduk) {
+exports.create = async (req, res) => {
+  const { id_kategori, nmproduk, stok, foto_produk, satuan, merk, harga_beli, harga_jual, diskon } = req.body;
+
+  if (!nmproduk || !id_kategori) {
     return res.status(400).send({
-      message: "Nama produk tidak boleh kosong!"
+      message: "Nama produk dan ID kategori harus diisi!"
     });
   }
 
-  // Menyiapkan data produk
-  const newProduk = {
-    id_kategori: req.body.id_kategori,
-    id_pembelian: req.body.id_pembelian,
-    nmproduk: req.body.nmproduk,
-    stok: req.body.stok,
-    foto_produk: req.file ? req.file.filename : req.body.foto_produk, // Pastikan ini sesuai dengan file upload
-    satuan: req.body.satuan,
-    merk: req.body.merk,
-    harga_beli: req.body.harga_beli,
-    harga_jual: req.body.harga_jual,
-    diskon: req.body.diskon,
-    keterangan: req.body.keterangan
-  };
-
-  // Menyimpan produk ke database
-  Produk.create(newProduk)
-    .then(data => res.send(data))
-    .catch(err => {
-      // Menangani kesalahan
-      res.status(500).send({
-        message: err.message || "Terjadi kesalahan saat membuat produk."
+  try {
+    // Memastikan ID kategori yang diberikan valid
+    const kategori = await db.Kategori.findByPk(id_kategori);
+    if (!kategori) {
+      return res.status(400).send({
+        message: "ID kategori tidak valid atau tidak ditemukan."
       });
+    }
+
+    // Menyiapkan data produk
+    const newProduk = {
+      id_kategori,
+      nmproduk,
+      stok,
+      foto_produk: req.file ? req.file.filename : foto_produk,
+      satuan,
+      merk,
+      harga_beli,
+      harga_jual,
+      diskon
+    };
+
+    // Menyimpan produk ke database
+    const produk = await Produk.create(newProduk);
+    res.status(201).send({
+      message: "Produk berhasil dibuat.",
+      data: produk
     });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Terjadi kesalahan saat membuat produk."
+    });
+  }
 };
+
 
 // Fungsi untuk mendapatkan semua produk
 // Untuk mendapatkan semua produk beserta relasi kategori dan pembelian
@@ -42,12 +53,8 @@ exports.findAll = (req, res) => {
   Produk.findAll({
     include: [
       {
-        model: db.Kategori, // Relasi dengan tabel kategori
+        model: db.Kategori,
         as: 'kategori',
-      },
-      {
-        model: db.Pembelian, // Relasi dengan tabel pembelian
-        as: 'pembelian'
       }
     ]
   })
