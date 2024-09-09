@@ -12,7 +12,11 @@ const MemberList = () => {
   }, []);
   const getMember = async () => {
     const response = await axios.get(API_URL + "member");
-    setMember(response.data);
+    if (response.data && Array.isArray(response.data.data)) {
+      setMember(response.data.data);
+    } else {
+      setMember([]);
+    }
   };
 
   //metod delete member

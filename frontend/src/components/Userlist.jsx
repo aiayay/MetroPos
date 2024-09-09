@@ -12,7 +12,11 @@ const Userlist = () => {
   }, []);
   const getUser = async () => {
     const response = await axios.get(API_URL + "user");
-    setUser(response.data);
+    if (response.data && Array.isArray(response.data.data)) {
+      setUser(response.data.data);
+    } else {
+      setUser([]);
+    }
   };
 
   //metod delete user

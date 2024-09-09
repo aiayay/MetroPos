@@ -12,7 +12,11 @@ const SupplierList = () => {
   }, []);
   const getSupplier = async () => {
     const response = await axios.get(API_URL + "supplier");
-    setSupplier(response.data);
+    if (response.data && Array.isArray(response.data.data)) {
+      setSupplier(response.data.data);
+    } else {
+      setSupplier([]);
+    }
   };
 
   //metod delete supplier
@@ -56,7 +60,7 @@ const SupplierList = () => {
         </div>
       </div>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>

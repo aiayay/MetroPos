@@ -57,7 +57,7 @@ const ProductList = () => {
         </div>
       </div>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>

@@ -11,8 +11,11 @@ const PembelianList = () => {
   }, []);
   const getPembelian = async () => {
     const response = await axios.get(API_URL + "pembelian");
-    console.log(response.data); // Tambahkan ini untuk cek data
-    setPembelian(response.data);
+    if (response.data && Array.isArray(response.data.data)) {
+      setPembelian(response.data.data);
+    } else {
+      setPembelian([]);
+    }
   };
 
   //metod delete pembelian
