@@ -12,7 +12,11 @@ const KategoriList = () => {
   }, []);
   const getKategori = async () => {
     const response = await axios.get(API_URL + "kategori");
-    setKategori(response.data);
+    if (response.data && Array.isArray(response.data.data)) {
+      setKategori(response.data.data);
+    } else {
+      setKategori([]);
+    }
   };
 
   //metod delete kategori
