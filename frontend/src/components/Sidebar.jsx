@@ -12,13 +12,14 @@ const Sidebar = () => {
               <div className="navbar-end">
                 <div className="navbar-item">
                   <div className="buttons">
+                    <img src="assets/images/foto.png" width="50" height="28" alt="" className="profile-pic" />
                     <h1 className="text-white">nur aini pertiwi</h1>
-                    <img src="assets/images/foto.png" width="50" height="28" alt="" />
                   </div>
                 </div>
               </div>
             </div>
           </li>
+
           <li className="item-sidebar">
             <NavLink to={"/dashboard"}>
               <IoHome />

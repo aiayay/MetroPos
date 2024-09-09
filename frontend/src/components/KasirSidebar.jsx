@@ -10,68 +10,33 @@ const KasirSidebar = () => {
     <div>
       <Col md={2} mt="2">
         <aside className="menu pl-2 pr-2 has-shadow mt-5">
-          <h1 className="text-black">Daftar Kategori</h1>
+          <h1 className="text-white">Daftar Kategori</h1>
           <hr />
-          {/* <ListGroup>
-            <ListGroup.Item>
-              <NavLink to={"/dashboard"}>
-                <GiForkKnifeSpoon />
-                Makanan
-              </NavLink>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <NavLink to={"/produk"}>
-                <GiEmptyMetalBucket />
-                Minuman
-              </NavLink>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <NavLink to={"/member"}>
-                <GiCoffeeBeans />
-                Kopi
-              </NavLink>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              {" "}
-              <NavLink to={"/transaksi"}>
-                <PiTeaBag />
-                Teh
-              </NavLink>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <NavLink to={"/kategori"}>
-                <GiLiquidSoap />
-                Sabun
-              </NavLink>
-            </ListGroup.Item>
-          </ListGroup> */}
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={""}>
+              <NavLink>
                 <GiForkKnifeSpoon />
                 Makanan
               </NavLink>
             </li>
             <li className="item-sidebar">
-              <NavLink to={""}>
+              <NavLink>
                 <GiEmptyMetalBucket />
                 Minuman
               </NavLink>
             </li>
           </ul>
-
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={""}>
+              <NavLink>
                 <GiCoffeeBeans />
                 Kopi
               </NavLink>
             </li>
           </ul>
-
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={""}>
+              <NavLink>
                 <PiTeaBag />
                 Teh
               </NavLink>
@@ -80,7 +45,7 @@ const KasirSidebar = () => {
 
           <ul className="menu-list">
             <li className="item-sidebar">
-              <NavLink to={""}>
+              <NavLink>
                 <GiLiquidSoap />
                 Sabun
               </NavLink>
