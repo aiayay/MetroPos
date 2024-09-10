@@ -60,7 +60,7 @@ const Userlist = () => {
         </div>
       </div>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>
@@ -86,7 +86,7 @@ const Userlist = () => {
                 <td>{user.level}</td>
                 <td>{user.foto}</td>
                 <td>
-                  <Link to={`/user/edit/${user.id_user}`} className="button is-small is-info">
+                  <Link to={`/users/edit/${user.id_user}`} className="button is-small is-info">
                     Edit
                   </Link>
                   <button onClick={() => deleteUser(user.id_user)} className="button is-small is-danger">

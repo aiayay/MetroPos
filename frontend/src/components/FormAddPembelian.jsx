@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { API_URL } from "../features/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,20 +7,46 @@ import "../index.css";
 
 const FormAddPembelian = () => {
   const [nmproduk, setNmproduk] = useState("");
-  const [nmsupplier, setNmsupplier] = useState("");
+  const [supplier, setSupplier] = useState("");
   const [stok, setStok] = useState("");
   const [harga_beli, setHarga_beli] = useState("");
   const [kuantitas, setKuantitas] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [msg, setMsg] = useState("");
+  const [supplierList, setSupplierList] = useState([]);
+  const [produkList, setProdukList] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getSupplier = async () => {
+      try {
+        const response = await axios.get(API_URL + "supplier");
+        setSupplierList(response.data.data);
+      } catch (error) {
+        console.error("erro fetching supplier", error);
+      }
+    };
+    getSupplier();
+  }, []);
+
+  useEffect(() => {
+    const getProduk = async () => {
+      try {
+        const response = await axios.get(API_URL + "produk");
+        setProdukList(response.data.data || []); // Default ke array kosong jika data tidak ada
+      } catch (error) {
+        console.error("Error fetching produk", error);
+      }
+    };
+    getProduk();
+  }, []);
 
   const simpanPembelian = async (e) => {
     e.preventDefault();
     try {
       await axios.post(API_URL + "pembelian", {
         nmproduk: nmproduk,
-        nmsupplier: nmsupplier,
+        nmsupplier: supplier,
         stok: stok,
         harga_beli: harga_beli,
         kuantitas: kuantitas,
@@ -54,8 +80,11 @@ const FormAddPembelian = () => {
                   <div className="select is-fullwidth">
                     <select value={nmproduk} onChange={(e) => setNmproduk(e.target.value)}>
                       <option value="">Pilih Produk</option>
-                      <option value="id_kategori">Makanan</option>
-                      <option value="id_kategori">Minuman</option>
+                      {produkList.map((produk) => (
+                        <option key={produk.id_produk} value={produk.id_produk}>
+                          {produk.nmproduk}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -64,10 +93,13 @@ const FormAddPembelian = () => {
                 <label className="label">Nama Supplier</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nmsupplier} onChange={(e) => setNmsupplier(e.target.value)}>
-                      <option value="">Pilih Supplier</option>
-                      <option value="id_kategori">Makanan</option>
-                      <option value="id_kategori">Minuman</option>
+                    <select value={supplier} onChange={(e) => setSupplier(e.target.value)}>
+                      <option value="">Pilih supplier</option>
+                      {supplierList.map((supplier) => (
+                        <option key={supplier.id_supplier} value={supplier.id_supplier}>
+                          {supplier.nmsupplier}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
