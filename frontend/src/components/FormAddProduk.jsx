@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { API_URL } from "../features/constants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +12,24 @@ const FormAddProduk = () => {
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
-  const [kategori, setKategori] = useState("");
+  const [nama_kategori, setKategori] = useState("");
   const [foto_produk, setFoto_produk] = useState("");
   const [diskon, setDiskon] = useState("");
   const [msg, setMsg] = useState("");
+  const [kategoriList, setKategoriList] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getKategori = async () => {
+      try {
+        const response = await axios.get(API_URL + "kategori");
+        setKategoriList(response.data.data); // Set daftar kategori dari response API
+      } catch (error) {
+        console.error("Error fetching categories", error);
+      }
+    };
+    getKategori();
+  }, []);
 
   const simpanProduk = async (e) => {
     e.preventDefault();
@@ -28,7 +41,7 @@ const FormAddProduk = () => {
         stok: stok,
         satuan: satuan,
         merk: merk,
-        kategori: kategori,
+        nama_kategori: nama_kategori,
         foto_produk: foto_produk,
         diskon: diskon,
       });
@@ -94,10 +107,13 @@ const FormAddProduk = () => {
                 <label className="label">Kategori</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={kategori} onChange={(e) => setKategori(e.target.value)}>
+                    <select value={nama_kategori} onChange={(e) => setKategori(e.target.value)}>
                       <option value="">Pilih Kategori</option>
-                      <option value="id_kategori">Makanan</option>
-                      <option value="id_kategori">Minuman</option>
+                      {kategoriList.map((kat) => (
+                        <option key={kat.id_kategori} value={kat.id_kategori}>
+                          {kat.nama_kategori}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

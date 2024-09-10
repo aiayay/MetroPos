@@ -77,12 +77,12 @@ const FormAddUser = () => {
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk} onChange={(e) => setJk(e.target.value)}>
-                    <input type="radio" name="jk" value="Laki-laki" />
+                  <label className="radio">
+                    <input type="radio" name="jk" value="Laki-laki" checked={jk === "Laki-laki"} onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="Perempuan" />
+                    <input type="radio" name="jk" value="Perempuan" checked={jk === "Perempuan"} onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>

@@ -61,7 +61,7 @@ const KategoriList = () => {
         </div>
       </div>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>
@@ -75,7 +75,7 @@ const KategoriList = () => {
               <tr key={kategori.id_kategori}>
                 <td>{index + 1}</td>
                 <td>{kategori.id_kategori}</td>
-                <td>{kategori.nmkategori}</td>
+                <td>{kategori.nama_kategori}</td>
                 <td>
                   <Link to={`/kategori/edit/${kategori.id_kategori}`} className="button is-small is-info">
                     Edit
