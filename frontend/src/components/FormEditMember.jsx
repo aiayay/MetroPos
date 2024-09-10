@@ -17,11 +17,12 @@ const FormEditMember = () => {
   useEffect(() => {
     const getMemberById = async () => {
       try {
-        const response = await axios.get(API_URL + "member" + id_member);
+        const response = await axios.get(API_URL + "member/" + id_member);
         setNama_member(response.data.nama_member);
         setAlamat(response.data.alamat);
         setJk(response.data.jk);
         setNo_telepon(response.data.no_telepon);
+        console.log(id_member);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -34,7 +35,7 @@ const FormEditMember = () => {
   const editMember = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "member", {
+      await axios.put(API_URL + "member/", {
         nama_member: nama_member,
         alamat: alamat,
         jk: jk,

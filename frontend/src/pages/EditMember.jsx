@@ -1,11 +1,11 @@
 import React from "react";
 import Layout from "./Layout";
-import FormEditKategori from "../components/FormEditKategori";
+import FormEditMember from "../components/FormEditMember";
 
 const EditKategori = () => {
   return (
     <Layout>
-      <FormEditKategori />
+      <FormEditMember />
     </Layout>
   );
 };

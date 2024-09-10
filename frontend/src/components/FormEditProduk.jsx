@@ -37,7 +37,7 @@ const FormEditProduk = () => {
           setMsg(error.response.data.msg);
         }
       }
-    };
+    }; 
     getProdukById();
   }, [id_produk]);
 
