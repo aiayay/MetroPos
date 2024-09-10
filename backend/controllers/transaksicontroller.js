@@ -6,8 +6,12 @@ exports.getAllTransaksi = async (req, res) => {
     const transaksi = await Transaksi.findAll({
       include: [
         { model: DetailTransaksi, as: 'detailTransaksi' },
-        { model: User, as: 'user' },
-        { model: Member, as: 'member' },
+        { 
+          model: User, 
+          as: 'user',
+          attributes: { exclude: ['password'] } // Mengecualikan password
+        },
+        { model: Member, as: 'member' }
       ]
     });
     res.status(200).json(transaksi);
@@ -15,7 +19,6 @@ exports.getAllTransaksi = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 // Mendapatkan transaksi berdasarkan ID
 exports.getTransaksiById = async (req, res) => {
   const { id } = req.params;
@@ -23,8 +26,12 @@ exports.getTransaksiById = async (req, res) => {
     const transaksi = await Transaksi.findByPk(id, {
       include: [
         { model: DetailTransaksi, as: 'detailTransaksi' },
-        { model: User, as: 'user' },
-        { model: Member, as: 'member' },
+        { 
+          model: User, 
+          as: 'user',
+          attributes: { exclude: ['password'] } // Mengecualikan password
+        },
+        { model: Member, as: 'member' }
       ]
     });
     if (!transaksi) {
