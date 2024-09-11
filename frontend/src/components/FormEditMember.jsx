@@ -15,14 +15,22 @@ const FormEditMember = () => {
   const { id_member } = useParams();
 
   useEffect(() => {
+    // console.log(id_member); // Pastikan id_supplier tidak undefined
     const getMemberById = async () => {
       try {
         const response = await axios.get(API_URL + "member/" + id_member);
-        setNama_member(response.data.nama_member);
-        setAlamat(response.data.alamat);
-        setJk(response.data.jk);
-        setNo_telepon(response.data.no_telepon);
-        console.log(id_member);
+        // console.log(response.data); // Tambahkan log ini
+        setNama_member(response.data.data.nama_member);
+        setAlamat(response.data.data.alamat);
+        setJk(response.data.data.jk);
+        setNo_telepon(response.data.data.no_telepon);
+
+        // Tambahkan log setelah setState
+        // console.log("Nama member:", response.data.nama_member);
+        // console.log("alamat:", response.data.alamat);
+        // console.log("jk:", response.data.jk);
+        // console.log("notelp:", response.data.no_telepon);
+        // console.log(id_supplier);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -35,7 +43,7 @@ const FormEditMember = () => {
   const editMember = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(API_URL + "member/", {
+      await axios.put(API_URL + "member/" + id_member, {
         nama_member: nama_member,
         alamat: alamat,
         jk: jk,
@@ -66,25 +74,25 @@ const FormEditMember = () => {
               <div className="field">
                 <label className="label">Nama Member</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="Nama Member" value={nama_member} onChange={(e) => setNama_member(e.target.value)} />
+                  <input type="text" className="input" placeholder="Nama Member" value={nama_member || ""} onChange={(e) => setNama_member(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Nomor Telepon</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="Nomor Telepon" value={no_telepon} onChange={(e) => setNo_telepon(e.target.value)} />
+                  <input type="number" className="input" placeholder="Nomor Telepon" value={no_telepon || ""} onChange={(e) => setNo_telepon(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Alamat</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="Alamat" value={alamat} onChange={(e) => setAlamat(e.target.value)} />
+                  <input type="text" className="input" placeholder="Alamat" value={alamat || ""} onChange={(e) => setAlamat(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk} onChange={(e) => setJk(e.target.value)}>
+                  <label className="radio" value={jk || ""} onChange={(e) => setJk(e.target.value)}>
                     <input type="radio" name="jk" value="Laki-laki" />
                     Laki-laki
                   </label>

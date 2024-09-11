@@ -14,13 +14,20 @@ const FormEditSupplier = () => {
   const { id_supplier } = useParams();
 
   useEffect(() => {
+    // console.log(id_supplier); // Pastikan id_supplier tidak undefined
     const getSupplierById = async () => {
       try {
         const response = await axios.get(API_URL + "supplier/" + id_supplier);
-        setNmsupplier(response.data.nmsupplier);
-        setNotlp(response.data.notlp);
-        setAlamat(response.data.alamat);
-        console.log(id_supplier);
+        // console.log(response.data); // Tambahkan log ini
+        setNmsupplier(response.data.data.nmsupplier);
+        setNotlp(response.data.data.notlp);
+        setAlamat(response.data.data.alamat);
+
+        // Tambahkan log setelah setState
+        // console.log("Nama Supplier:", response.data.nmsupplier);
+        // console.log("Nomor Telepon:", response.data.notlp);
+        // console.log("Alamat:", response.data.alamat);
+        // console.log(id_supplier);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -63,19 +70,19 @@ const FormEditSupplier = () => {
               <div className="field">
                 <label className="label">Nama Supplier</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="Nama Supplier" value={nmsupplier} onChange={(e) => setNmsupplier(e.target.value)} />
+                  <input type="text" className="input" placeholder="Nama Supplier" value={nmsupplier || ""} onChange={(e) => setNmsupplier(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Nomor Telepon</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="Nomor Telepon" value={notlp} onChange={(e) => setNotlp(e.target.value)} />
+                  <input type="number" className="input" placeholder="Nomor Telepon" value={notlp || ""} onChange={(e) => setNotlp(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Alamat</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="Alamat" value={alamat} onChange={(e) => setAlamat(e.target.value)} />
+                  <input type="text" className="input" placeholder="Alamat" value={alamat || ""} onChange={(e) => setAlamat(e.target.value)} />
                 </div>
               </div>
               <div className="field">
