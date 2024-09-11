@@ -6,38 +6,59 @@ import { Link } from "react-router-dom";
 import "../index.css";
 
 const FormEditKategori = () => {
-  const [nmkategori, setNmkategori] = useState("");
+  const [nama_kategori, setNama_kategori] = useState("");
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id_kategori } = useParams();
 
   useEffect(() => {
-    const getKategoriById = async () => {
-      try {
-        const response = await axios.get(API_URL + "kategori" + id_kategori);
-        setNmkategori(response.data.nmkategori);
-      } catch (error) {
-        if (error.response) {
-          setMsg(error.response.data.msg);
-        }
-      }
-    };
     getKategoriById();
-  }, [id_kategori]);
+  }, []);
 
   const editKategori = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "kategori", {
-        nmkategori: nmkategori,
+      await axios.patch(API_URL + "kategori" + id_kategori, {
+        nama_kategori,
       });
-      navigate("/kategori");
+      navigate("/");
     } catch (error) {
-      if (error.response) {
-        setMsg(error.response.data.msg);
-      }
+      console.log(error);
     }
   };
+  const getKategoriById = async () => {
+    const response = await axios.get(API_URL + "kategori" + id_kategori);
+    setNama_kategori(response.data.nama_kategori);
+  };
+
+  // useEffect(() => {
+  //   const getKategoriById = async () => {
+  //     try {
+  //       const response = await axios.get(API_URL + "kategori" + id_kategori);
+  //       setNama_kategori(response.data.nama_kategori);
+  //       console.log("ID Kategori:", id_kategori);
+  //     } catch (error) {
+  //       if (error.response) {
+  //         setMsg(error.response.data.msg);
+  //       }
+  //     }
+  //   };
+  //   getKategoriById();
+  // }, [id_kategori]);
+
+  // const editKategori = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await axios.patch(API_URL + "kategori" + id_kategori, {
+  //       nama_kategori: nama_kategori,
+  //     });
+  //     navigate("/kategori");
+  //   } catch (error) {
+  //     if (error.response) {
+  //       setMsg(error.response.data.msg);
+  //     }
+  //   }
+  // };
   return (
     <div>
       <h1 className="title">Kategori</h1>
@@ -56,7 +77,7 @@ const FormEditKategori = () => {
               <div className="field">
                 <label className="label">Nama Kategori</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="nama kategori" value={nmkategori} onChange={(e) => setNmkategori(e.target.value)} />
+                  <input type="text" className="input" placeholder="nama kategori" value={nama_kategori} onChange={(e) => setNama_kategori(e.target.value)} />
                 </div>
               </div>
 

@@ -16,10 +16,11 @@ const FormEditSupplier = () => {
   useEffect(() => {
     const getSupplierById = async () => {
       try {
-        const response = await axios.get(API_URL + "supplier" + id_supplier);
+        const response = await axios.get(API_URL + "supplier/" + id_supplier);
         setNmsupplier(response.data.nmsupplier);
         setNotlp(response.data.notlp);
         setAlamat(response.data.alamat);
+        console.log(id_supplier);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -32,7 +33,7 @@ const FormEditSupplier = () => {
   const editSupplier = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "supplier", {
+      await axios.put(API_URL + "supplier/" + id_supplier, {
         nmsupplier: nmsupplier,
         notlp: notlp,
         alamat: alamat,

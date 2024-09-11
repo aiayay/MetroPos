@@ -38,24 +38,24 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/add" element={<AddUser />} />
-          <Route path="/users/edit/:id" element={<EditUser />} />
+          <Route path="/users/edit/:id_user" element={<EditUser />} />
           <Route path="/kategori" element={<Kategori />} />
           <Route path="/kategori/add" element={<AddKategori />} />
-          <Route path="/kategori/edit/:id" element={<EditKategori />} />
+          <Route path="/kategori/edit/:id_kategori" element={<EditKategori />} />
           <Route path="/member" element={<Member />} />
           <Route path="/member/add" element={<AddMember />} />
-          <Route path="/member/edit/:id" element={<EditMember />} />
+          <Route path="/member/edit/:id_member" element={<EditMember />} />
           <Route path="/pembelian" element={<Pembelian />} />
           <Route path="/pembelian/add" element={<AddPembelian />} />
-          <Route path="/pembelian/edit/:id" element={<EditPembelian />} />
+          <Route path="/pembelian/edit/:id_pembelian" element={<EditPembelian />} />
           <Route path="/produk" element={<Produk />} />
           <Route path="/produk/add" element={<AddProduk />} />
-          <Route path="/produk/edit/:id" element={<EditProduk />} />
+          <Route path="/produk/edit/:id_produk" element={<EditProduk />} />
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/supplier/add" element={<AddSupplier />} />
-          <Route path="/supplier/edit/:id" element={<EditSupplier />} />
+          <Route path="/supplier/edit/:id_supplier" element={<EditSupplier />} />
           <Route path="/transaksi" element={<Transaksi />} />
-          <Route path="/transaksi/detail/:id" element={<TransaksiDetail />} />
+          <Route path="/transaksi/detail/:id_transaksi" element={<TransaksiDetail />} />
         </Routes>
       </BrowserRouter>
     </div>
