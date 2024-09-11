@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true, // Menambahkan unique untuk username
     },
     password: {
       type: DataTypes.STRING,

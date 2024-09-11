@@ -1,6 +1,4 @@
-// middlewares/authMiddleware.js
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.js');
 
 module.exports = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1]; // Ambil token dari header Authorization
