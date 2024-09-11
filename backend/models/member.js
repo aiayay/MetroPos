@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,  
       allowNull: false,
       primaryKey: true,
-      defaultValue: uuidv4(),  // Menghasilkan UUID otomatis ya ges yak
+      defaultValue: uuidv4(),  // Menghasilkan UUID otomatis
     },
     nama_member: {
       type: DataTypes.STRING,
@@ -20,7 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true
     },
-    
+    jk: {  
+      type: DataTypes.ENUM('L', 'P'),  
+      allowNull: false
+    },
   }, {
     tableName: 'member',
     timestamps: false
