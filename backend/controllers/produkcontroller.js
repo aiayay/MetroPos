@@ -1,51 +1,37 @@
 const db = require("../models");
-const Produk = db.Produk; // Pastikan nama ini sesuai dengan nama model yang didefinisikan di file model
+const { Produk, Kategori } = require('../models');
 
 // Fungsi untuk menambahkan produk
 exports.create = async (req, res) => {
-  const { id_kategori, nmproduk, stok, foto_produk, satuan, merk, harga_beli, harga_jual, diskon } = req.body;
-
-  if (!nmproduk || !id_kategori) {
-    return res.status(400).send({
-      message: "Nama produk dan ID kategori harus diisi!"
-    });
-  }
+  const { nmproduk, stok, foto_produk, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
 
   try {
-    // Memastikan ID kategori yang diberikan valid
-    const kategori = await db.Kategori.findByPk(id_kategori);
+    // Cari id_kategori berdasarkan nama kategori
+    const kategori = await Kategori.findOne({ where: { nama_kategori } });
+
+    // Jika kategori tidak ditemukan, return error
     if (!kategori) {
-      return res.status(400).send({
-        message: "ID kategori tidak valid atau tidak ditemukan."
-      });
+      return res.status(404).json({ error: 'Kategori tidak ditemukan' });
     }
 
-    // Menyiapkan data produk
-    const newProduk = {
-      id_kategori,
+    // Buat produk baru dengan id_kategori yang ditemukan
+    const newProduk = await Produk.create({
       nmproduk,
       stok,
-      foto_produk: req.file ? req.file.filename : foto_produk,
+      foto_produk,
       satuan,
       merk,
       harga_beli,
       harga_jual,
-      diskon
-    };
+      diskon,
+      id_kategori: kategori.id_kategori
+    });
 
-    // Menyimpan produk ke database
-    const produk = await Produk.create(newProduk);
-    res.status(201).send({
-      message: "Produk berhasil dibuat.",
-      data: produk
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: err.message || "Terjadi kesalahan saat membuat produk."
-    });
+    res.status(201).json(newProduk);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
-
 
 // Fungsi untuk mendapatkan semua produk
 // Untuk mendapatkan semua produk beserta relasi kategori dan pembelian
