@@ -15,6 +15,8 @@ const FormAddMember = () => {
 
   const simpanMember = async (e) => {
     e.preventDefault();
+    console.log("Form submitted");
+    console.log({ nama_member, alamat, jk, no_telepon });
     try {
       await axios.post(API_URL + "member", {
         nama_member: nama_member,
@@ -65,12 +67,12 @@ const FormAddMember = () => {
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk} onChange={(e) => setJk(e.target.value)}>
-                    <input type="radio" name="jk" value="Laki-laki" />
+                  <label className="radio">
+                    <input type="radio" name="jk" value="Laki-laki" onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="Perempuan" />
+                    <input type="radio" name="jk" value="Perempuan" onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>

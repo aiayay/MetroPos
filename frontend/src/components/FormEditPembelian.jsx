@@ -19,7 +19,7 @@ const FormEditPembelian = () => {
   useEffect(() => {
     const getPembelianById = async () => {
       try {
-        const response = await axios.get(API_URL + "pembelian" + id_pembelian);
+        const response = await axios.get(API_URL + "pembelian/" + id_pembelian);
         setNmproduk(response.data.nmproduk);
         setNmsupplier(response.data.nmsupplier);
         setStok(response.data.stok);
@@ -38,7 +38,7 @@ const FormEditPembelian = () => {
   const editPembelian = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "pembelian", {
+      await axios.post(API_URL + "pembelian/" + id_pembelian, {
         nmproduk: nmproduk,
         nmsupplier: nmsupplier,
         stok: stok,
@@ -65,14 +65,14 @@ const FormEditPembelian = () => {
               <div className="field">
                 <label className="label">Kode Pembelian</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_pembelian || ""} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Nama Produk</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nmproduk} onChange={(e) => setNmproduk(e.target.value)}>
+                    <select value={nmproduk || ""} onChange={(e) => setNmproduk(e.target.value)}>
                       <option value="">Pilih Produk</option>
                       <option value="id_kategori">Makanan</option>
                       <option value="id_kategori">Minuman</option>
@@ -84,7 +84,7 @@ const FormEditPembelian = () => {
                 <label className="label">Nama Supplier</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nmsupplier} onChange={(e) => setNmsupplier(e.target.value)}>
+                    <select value={nmsupplier || ""} onChange={(e) => setNmsupplier(e.target.value)}>
                       <option value="">Pilih Supplier</option>
                       <option value="id_kategori">Makanan</option>
                       <option value="id_kategori">Minuman</option>
@@ -95,25 +95,25 @@ const FormEditPembelian = () => {
               <div className="field">
                 <label className="label">Stok Awal</label>
                 <div className="control">
-                  <input type="number" className="input" readOnly value={stok} onChange={(e) => setStok(e.target.value)} />
+                  <input type="number" className="input" readOnly value={stok || ""} onChange={(e) => setStok(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Harga Beli</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="Harga Beli" value={harga_beli} onChange={(e) => setHarga_beli(e.target.value)} />
+                  <input type="number" className="input" placeholder="Harga Beli" value={harga_beli || ""} onChange={(e) => setHarga_beli(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Kuantitas</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="kuantitas" value={kuantitas} onChange={(e) => setKuantitas(e.target.value)} />
+                  <input type="number" className="input" placeholder="kuantitas" value={kuantitas || ""} onChange={(e) => setKuantitas(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Tanggal</label>
                 <div className="control">
-                  <input type="date" className="input" placeholder="tanggal" value={tanggal} onChange={(e) => setTanggal(e.target.value)} />
+                  <input type="date" className="input" placeholder="tanggal" value={tanggal || ""} onChange={(e) => setTanggal(e.target.value)} />
                 </div>
               </div>
 

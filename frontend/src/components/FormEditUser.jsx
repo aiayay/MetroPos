@@ -20,7 +20,7 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const response = await axios.get(API_URL + "user" + id_user);
+        const response = await axios.get(API_URL + "user/" + id_user);
         setUsername(response.data.username);
         setPassword(response.data.password);
         setNama_lengkap(response.data.nama_lengkap);
@@ -40,7 +40,7 @@ const FormEditUser = () => {
   const editUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "user", {
+      await axios.post(API_URL + "user/" + id_user, {
         username: username,
         password: password,
         nama_lengkap: nama_lengkap,
@@ -68,37 +68,31 @@ const FormEditUser = () => {
               <div className="field">
                 <label className="label">Kode User</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_user || ""} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Username</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Password</label>
-                <div className="control">
-                  <input type="password" className="input" placeholder="*****" value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <input type="text" className="input" placeholder="username" value={username || ""} onChange={(e) => setUsername(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Nama Lengkap</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="Nama Lengkap" value={nama_lengkap} onChange={(e) => setNama_lengkap(e.target.value)} />
+                  <input type="text" className="input" placeholder="Nama Lengkap" value={nama_lengkap || ""} onChange={(e) => setNama_lengkap(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Nomor Telepon</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="Nomor Telepon" value={notlp} onChange={(e) => setNotlp(e.target.value)} />
+                  <input type="number" className="input" placeholder="Nomor Telepon" value={notlp || ""} onChange={(e) => setNotlp(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk} onChange={(e) => setJk(e.target.value)}>
+                  <label className="radio" value={jk || ""} onChange={(e) => setJk(e.target.value)}>
                     <input type="radio" name="jk" value="Laki-laki" />
                     Laki-laki
                   </label>
@@ -112,7 +106,7 @@ const FormEditUser = () => {
                 <label className="label">Level</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={level} onChange={(e) => setLevel(e.target.value)}>
+                    <select value={level || ""} onChange={(e) => setLevel(e.target.value)}>
                       <option value="">Pilih Level</option>
                       <option value="admin">Admin</option>
                       <option value="kasir">Kasir</option>
@@ -123,7 +117,7 @@ const FormEditUser = () => {
               <div className="field">
                 <label className="label">Foto</label>
                 <div className="control">
-                  <input type="file" className="input" placeholder="foto" value={foto} onChange={(e) => setFoto(e.target.value)} />
+                  <input type="file" className="input" placeholder="foto" value={foto || ""} onChange={(e) => setFoto(e.target.value)} />
                 </div>
               </div>
 
