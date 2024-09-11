@@ -74,7 +74,7 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Kode Produk</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_produk || ""} />
                 </div>
               </div>
               <div className="field">

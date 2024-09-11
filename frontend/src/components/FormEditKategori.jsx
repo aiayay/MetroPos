@@ -71,7 +71,7 @@ const FormEditKategori = () => {
               <div className="field">
                 <label className="label">Kode Kategori</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_kategori || ""} />
                 </div>
               </div>
               <div className="field">

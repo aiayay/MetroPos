@@ -64,7 +64,7 @@ const FormEditSupplier = () => {
               <div className="field">
                 <label className="label">Kode Supplier</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_supplier || ""} />
                 </div>
               </div>
               <div className="field">

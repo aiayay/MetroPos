@@ -65,7 +65,7 @@ const FormEditPembelian = () => {
               <div className="field">
                 <label className="label">Kode Pembelian</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_pembelian || ""} />
                 </div>
               </div>
               <div className="field">

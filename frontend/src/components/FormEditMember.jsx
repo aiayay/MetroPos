@@ -68,7 +68,7 @@ const FormEditMember = () => {
               <div className="field">
                 <label className="label">Kode Member</label>
                 <div className="control">
-                  <input type="text" className="input" readOnly />
+                  <input type="text" className="input" readOnly value={id_member || ""} />
                 </div>
               </div>
               <div className="field">
