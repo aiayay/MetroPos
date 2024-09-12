@@ -16,8 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     foto_produk: DataTypes.STRING,
     satuan: DataTypes.STRING,
     merk: DataTypes.STRING,
-    harga_beli: DataTypes.INTEGER,
-    harga_jual: DataTypes.INTEGER,
+    harga_jual: DataTypes.INTEGER, // harga_beli telah dihapus
     diskon: DataTypes.INTEGER,
   }, {
     tableName: 'produk',
