@@ -1,6 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { Pembelian } = require('../models'); // Pastikan path ini benar
-
+const { Pembelian, Produk } = require('../models');
 // Mendapatkan semua pembelian
 exports.getAllPembelian = async (req, res) => {
     try {
@@ -48,39 +47,40 @@ exports.getPembelianById = async (req, res) => {
 // Menambahkan pembelian baru
 // Menambahkan pembelian baru
 exports.createPembelian = async (req, res) => {
-    const { id_produk, kuantitas, id_supplier, tanggal, harga_beli } = req.body;
-    
-    // Cek jika id_produk dan id_supplier ada
-    if (!id_produk || !id_supplier) {
-        return res.status(400).json({
-            success: false,
-            message: 'id_produk dan id_supplier harus ada',
-        });
-    }
-    
+    const { id_produk, kuantitas, harga_beli, id_supplier ,tanggal } = req.body;
+  
     try {
-        const newPembelian = await Pembelian.create({
-            id_pembelian: uuidv4(), // UUID otomatis
-            id_produk,
-            kuantitas,
-            id_supplier,
-            tanggal,
-            harga_beli
-        });
-        res.status(201).json({
-            success: true,
-            message: 'Pembelian berhasil ditambahkan',
-            data: newPembelian
-        });
+      // Buat entri pembelian baru
+      const pembelian = await Pembelian.create({
+        id_produk,
+        kuantitas,
+        harga_beli,
+        id_supplier,
+        tanggal,
+      });
+  
+      // Cari produk yang dibeli berdasarkan id_produk
+      const produk = await Produk.findByPk(id_produk);
+  
+      if (!produk) {
+        return res.status(404).json({ success: false, message: 'Produk tidak ditemukan' });
+      }
+  
+      // Update stok produk dengan menambahkan kuantitas baru
+      produk.stok += kuantitas;
+  
+      // Simpan perubahan pada produk
+      await produk.save();
+  
+      res.status(201).json({
+        success: true,
+        message: 'Pembelian berhasil dan stok produk diperbarui',
+        data: pembelian,
+      });
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Terjadi kesalahan saat menambahkan pembelian',
-            error: error.message
-        });
+      res.status(500).json({ success: false, message: 'Gagal menambahkan pembelian', error: error.message });
     }
-};
-
+  };
 // Mengedit pembelian
 exports.updatePembelian = async (req, res) => {
     const { id } = req.params;

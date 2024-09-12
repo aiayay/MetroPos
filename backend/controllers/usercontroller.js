@@ -69,3 +69,18 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ success: false, message: 'Gagal mendapatkan profil user', error: error.message });
   }
 };
+
+// Get all users (without token verification)
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id_user', 'username', 'nama_lengkap', 'notlp', 'jk', 'level', 'foto'] // Batasi field yang dikembalikan
+    });
+    res.json({
+      success: true,
+      data: users
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
