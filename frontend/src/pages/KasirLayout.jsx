@@ -23,7 +23,7 @@ export default class KasirLayout extends Component {
     axios
       .get(API_URL + "produk?kategori.nama_kategori=" + kategori)
       .then((res) => {
-        console.log("Response : ", res);
+        // console.log("Response : ", res);
         const menus = res.data;
         this.setState({ menus });
       })
