@@ -8,7 +8,7 @@ const Menus = ({ menu, masukKeranjang }) => {
     <div>
       <Col md={8} xs={12} className="mb-4 mr-4">
         <Card className="flex-container" onClick={() => masukKeranjang(menu)}>
-          <Card.Img variant="top" src={"assets/images/" + menu.kategori.nama_kategori.toLowerCase() + "/" + menu.foto_produk} nama width="200px" />
+          <Card.Img variant="top" src={"assets/images/" + menu.kategori.nama_kategori.toLowerCase() + "/" + menu.foto_produk} width="200px" />
           <Card.Body className="card-body">
             <Card.Title>
               <strong>{menu.nmproduk}</strong>
