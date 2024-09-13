@@ -20,7 +20,7 @@ export default class KasirSidebar extends Component {
     axios
       .get(API_URL + "kategori")
       .then((res) => {
-        console.log("Response : ", res.data);
+        // console.log("Response : ", res.data);
         const kategories = res.data.data;
         this.setState({ kategories });
       })
@@ -32,7 +32,7 @@ export default class KasirSidebar extends Component {
   render() {
     const { kategories } = this.state;
     const { changeKategori, kategoriYangDipilih } = this.props;
-    console.log("kategori : ", this.state.kategories);
+    // console.log("kategori : ", this.state.kategories);
     return (
       <div>
         <Col md={2} mt="2">
