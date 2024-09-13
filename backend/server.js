@@ -5,31 +5,22 @@ require('dotenv').config();
 // Inisialisasi Express
 const app = express();
 
-<<<<<<<<< Temporary merge branch 1
-var corsOptions = {
-    origin: 'http://localhost:8081'
-}
-
-// middleware
-app.use(cors(corsOptions))
-=========
 // Konfigurasi CORS
 const corsOptions = {
   origin: 'http://localhost:3000',
   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
   credentials: true,
 };
->>>>>>>>> Temporary merge branch 2
 
 // Middleware
 app.use(cors(corsOptions));
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
-//   res.header('Access-Control-Allow-Credentials', true);
-//   res.header('Access-Control-Allow-Headers', '*');
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', '*');
+  next();
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
