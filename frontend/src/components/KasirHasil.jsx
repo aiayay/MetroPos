@@ -12,7 +12,7 @@ const KasirHasil = () => {
           <p className="text-black">Kasir : Aini</p>
           <p className="text-black">Kode Transaksi : 085265</p>
           <p className="text-black">Member : Aini</p>
-          <ListGroup variant="flush">
+          {/* <ListGroup variant="flush">
             <ListGroup.Item>
               <Row>
                 <Col xs={2}>
@@ -26,46 +26,7 @@ const KasirHasil = () => {
                 </Col>
               </Row>
             </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col xs={2}>
-                  <h4 className="text-black">
-                    <Badge pill variant="success"></Badge>
-                  </h4>
-                </Col>
-                <Col>
-                  <h4 className="text-black">Milo 1 kg</h4>
-                  <p className="text-black">Rp.4000</p>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col xs={2}>
-                  <h4 className="text-black">
-                    <Badge pill variant="success"></Badge>
-                  </h4>
-                </Col>
-                <Col>
-                  <h4 className="text-black">Aqua Besar 1L</h4>
-                  <p className="text-black">Rp.4000</p>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Row>
-                <Col xs={2}>
-                  <h4 className="text-black">
-                    <Badge pill variant="success"></Badge>
-                  </h4>
-                </Col>
-                <Col>
-                  <h4 className="text-black">Mie Indomie</h4>
-                  <p className="text-black">Rp.4000</p>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          </ListGroup>
+          </ListGroup> */}
           <p className="text-black">Total Bayar</p>
           <p className="text-black">Disc Member</p>
           <p className="text-black">Catatan</p>

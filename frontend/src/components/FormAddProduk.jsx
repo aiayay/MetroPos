@@ -8,7 +8,6 @@ import "../index.css";
 const FormAddProduk = () => {
   const [nmproduk, setNmproduk] = useState("");
   const [harga_jual, setHarga_jual] = useState("");
-  const [harga_beli, setHarga_beli] = useState("");
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
@@ -37,7 +36,6 @@ const FormAddProduk = () => {
       await axios.post(API_URL + "produk", {
         nmproduk: nmproduk,
         harga_jual: harga_jual,
-        harga_beli: harga_beli,
         stok: stok,
         satuan: satuan,
         merk: merk,
@@ -77,12 +75,6 @@ const FormAddProduk = () => {
                 <label className="label">Harga Jual</label>
                 <div className="control">
                   <input type="number" className="input" placeholder="Harga Jual" value={harga_jual} onChange={(e) => setHarga_jual(e.target.value)} />
-                </div>
-              </div>
-              <div className="field">
-                <label className="label">Harga Beli</label>
-                <div className="control">
-                  <input type="number" className="input" placeholder="Harga Beli" value={harga_beli} onChange={(e) => setHarga_beli(e.target.value)} />
                 </div>
               </div>
               <div className="field">
