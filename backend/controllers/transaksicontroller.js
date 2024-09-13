@@ -1,4 +1,4 @@
-const { Transaksi, DetailTransaksi, User, Member } = require('../models');
+const { Transaksi, DetailTransaksi, User, Member, Produk } = require('../models');
 
 // Mendapatkan semua transaksi
 exports.getAllTransaksi = async (req, res) => {
@@ -12,6 +12,7 @@ exports.getAllTransaksi = async (req, res) => {
           attributes: { exclude: ['password'] } // Mengecualikan password
         },
         { model: Member, as: 'member' }
+        
       ]
     });
     res.status(200).json(transaksi);
@@ -60,6 +61,16 @@ exports.createTransaksi = async (req, res) => {
     // Jika ada detailTransaksi, simpan juga detailnya
     if (detailTransaksi && detailTransaksi.length > 0) {
       for (const detail of detailTransaksi) {
+        // Cek stok produk sebelum mengurangi
+        const produk = await Produk.findByPk(detail.id_produk);
+        if (!produk) {
+          return res.status(404).json({ error: `Produk dengan ID ${detail.id_produk} tidak ditemukan` });
+        }
+
+        if (produk.stok < detail.kuantitas) {
+          return res.status(400).json({ error: `Stok produk ${produk.nmproduk} tidak mencukupi` });
+        }
+
         // Menyimpan detail transaksi
         await DetailTransaksi.create({
           id_transaksi: newTransaksi.id_transaksi,
@@ -77,7 +88,10 @@ exports.createTransaksi = async (req, res) => {
       }
     }
 
-    res.status(201).json(newTransaksi);
+    res.status(201).json({
+      message: "Transaksi berhasil dibuat dan stok produk diperbarui",
+      transaksi: newTransaksi,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
