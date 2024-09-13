@@ -12,4 +12,6 @@ router.post('/login', userController.loginUser);
 // Protected route (must be logged in)
 router.get('/profile', authMiddleware, userController.getUserProfile);
 
+router.get('/users', userController.getAllUsers);
+
 module.exports = router;
