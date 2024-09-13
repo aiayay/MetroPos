@@ -36,7 +36,7 @@ exports.getKeranjangById = async (req, res) => {
 
 // Menambahkan item ke keranjang
 exports.createKeranjang = async (req, res) => {
-  const { id_produk, id_member, kuantitas, total_bayar } = req.body;
+  const { id_produk, id_member=null, kuantitas, total_bayar } = req.body;
   try {
     // Validasi input
     if (!id_produk || !kuantitas || !total_bayar) {

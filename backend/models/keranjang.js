@@ -4,13 +4,13 @@ module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define('Keranjang', {
     id_keranjang: {
       type: DataTypes.UUID,
-      defaultValue: uuidv4(), // Otomatis generate UUID jika tidak diisi
+      defaultValue: uuidv4(), 
       primaryKey: true,
       allowNull: false
     },
     id_member: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     id_produk: {
       type: DataTypes.STRING,
