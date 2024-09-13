@@ -81,7 +81,7 @@ const ProductList = () => {
                 <td>{produk.id_produk}</td>
                 <td>{produk.nmproduk}</td>
                 <td>{produk.nmproduk}</td>
-                <td>{produk.harga_beli}</td>
+
                 <td>{produk.harga_jual}</td>
                 <td>{produk.merk}</td>
                 <td>{produk.stok}</td>

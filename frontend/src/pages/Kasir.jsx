@@ -50,32 +50,34 @@ export default class Kasir extends Component {
   };
 
   masukKeranjang = (value) => {
-    // console.log("menu :", value);
-    const keranjang = {
-      id_produk: value.id_produk,
-      // id_member: id_member || null, // Ganti dengan ID member yang sesuai atau null
-      kuantitas: 1,
-      total_bayar: value.harga,
-    };
+  console.log("menu :", value);
 
-    axios
-      .post(API_URL + "keranjang", keranjang)
-      .then((res) => {
-        // console.log("Response : ", res);
-        swal({
-          title: "Sukses Masuk Keranjang",
-          text: "Sukses Masuk Keranjang" + keranjang.produk.nmproduk,
-          icon: "success",
-          button: false,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const keranjang = {
+    id_produk: value.id_produk,  // Pastikan id_produk dikirim dengan benar
+    kuantitas: 1,               // Default kuantitas, bisa diubah sesuai kebutuhan
+    total_bayar: value.harga_jual,  // Pastikan ini sesuai dengan yang diharapkan server
   };
 
+  axios
+    .post(API_URL + "keranjang", keranjang)
+    .then((res) => {
+      swal({
+        title: "Sukses Masuk Keranjang",
+        text: "Sukses Masuk Keranjang: " + value.nmproduk,
+        icon: "success",
+        button: false,
+      });
+    })
+    .catch((error) => {
+      console.log("Error Data:", error.response ? error.response.data : error.message);
+      console.log("Error Status:", error.response ? error.response.status : "No status");
+      console.log("Error Headers:", error.response ? error.response.headers : "No headers");
+    });
+};
+
+
   render() {
-    const { menus, kategoriYangDipilih } = this.state;
+    const { menus } = this.state;
     return (
       <div>
         <KasirLayout>
