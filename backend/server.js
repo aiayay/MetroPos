@@ -5,12 +5,21 @@ require('dotenv').config();
 // Inisialisasi Express
 const app = express();
 
-// Konfigurasi CORS
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-  credentials: true,
-};
+// <<<<<<< HEAD
+// // Konfigurasi CORS
+// const corsOptions = {
+//   origin: 'http://localhost:3000',
+//   methods: 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+//   credentials: true,
+// };
+// =======
+var corsOptions = {
+    origin: 'http://localhost:8081'
+}
+
+// // middleware
+// app.use(cors(corsOptions))
+// >>>>>>> b59f0c785371877728cbf905c4cbcbab95350ad1
 
 // Middleware
 app.use(cors(corsOptions));
