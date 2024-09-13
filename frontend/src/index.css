@@ -160,3 +160,7 @@
 .tbody {
   background-color: white !important;
 }
+.kategori-aktif {
+  background-color: #36dda5;
+  color: white;
+}

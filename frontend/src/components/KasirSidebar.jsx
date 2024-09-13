@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../index.css";
 import axios from "axios";
 import { API_URL } from "../features/constants";
-import { Col, ListGroup } from "react-bootstrap";
+import { Col, ListGroup, ListGroupItem } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { GiForkKnifeSpoon, GiCoffeeBeans, GiLiquidSoap, GiEmptyMetalBucket } from "react-icons/gi";
 import { PiTeaBag } from "react-icons/pi";
@@ -31,6 +31,7 @@ export default class KasirSidebar extends Component {
 
   render() {
     const { kategories } = this.state;
+    const { changeKategori, kategoriYangDipilih } = this.props;
     console.log("kategori : ", this.state.kategories);
     return (
       <div>
@@ -38,14 +39,22 @@ export default class KasirSidebar extends Component {
           <aside className="menu pl-2 pr-2 has-shadow mt-5">
             <h1 className="text-white">Daftar Kategori</h1>
             <hr />
-            <ul className="menu-list">
+            <ListGroup>
               {kategories &&
                 kategories.map((kategori) => (
-                  <li key={kategori.id_kategori} className="item-sidebar">
+                  <ListGroupItem key={kategori.id_kategori} className={kategoriYangDipilih === kategori.nama_kategori && "kategori-aktif"} onClick={() => changeKategori(kategori.nama_kategori)}>
+                    <h5>{kategori.nama_kategori}</h5>
+                  </ListGroupItem>
+                ))}
+            </ListGroup>
+            {/* <ul className="menu-list">
+              {kategories &&
+                kategories.map((kategori) => (
+                  <li key={kategori.id_kategori} className={kategoriYangDipilih === kategori.nama_kategori && "kategori-aktif"} onClick={() => changeKategori(kategori.nama_kategori)}>
                     {kategori.nama_kategori}
                   </li>
                 ))}
-            </ul>
+            </ul> */}
           </aside>
         </Col>
       </div>
