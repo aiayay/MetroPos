@@ -52,10 +52,9 @@ export default class Kasir extends Component {
   masukKeranjang = (value) => {
     // console.log("menu :", value);
     const keranjang = {
-      id_produk: value.id_produk,
-      // id_member: id_member || null, // Ganti dengan ID member yang sesuai atau null
-      kuantitas: 1,
-      total_bayar: value.harga,
+      jumlah: 1,
+      total_harga: value.harga_jual,
+      produk: value,
     };
 
     axios
