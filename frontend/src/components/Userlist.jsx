@@ -11,9 +11,10 @@ const Userlist = () => {
     getUser();
   }, []);
   const getUser = async () => {
-    const response = await axios.get(API_URL + "user");
-    if (response.data && Array.isArray(response.data.data)) {
-      setUser(response.data.data);
+    const response = await axios.get(API_URL + "user/users");
+    // console.log("Data received:", response.data); // Log response data
+    if (response.data && Array.isArray(response.data)) {
+      setUser(response.data);
     } else {
       setUser([]);
     }
@@ -22,7 +23,7 @@ const Userlist = () => {
   //metod delete user
 
   const deleteUser = async (id_user) => {
-    await axios.delete(API_URL + "user/" + id_user);
+    await axios.delete(API_URL + "user/users/" + id_user);
     getUser();
   };
   return (

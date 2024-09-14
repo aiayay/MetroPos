@@ -20,9 +20,8 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const response = await axios.get(API_URL + "user/" + id_user);
+        const response = await axios.get(API_URL + "user/users" + id_user);
         setUsername(response.data.username);
-        setPassword(response.data.password);
         setNama_lengkap(response.data.nama_lengkap);
         setNotlp(response.data.notlp);
         setJk(response.data.jk);
@@ -40,9 +39,8 @@ const FormEditUser = () => {
   const editUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "user/" + id_user, {
+      await axios.post(API_URL + "user/users/" + id_user, {
         username: username,
-        password: password,
         nama_lengkap: nama_lengkap,
         notlp: notlp,
         jk: jk,
