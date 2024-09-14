@@ -21,10 +21,10 @@ const FormEditProduk = () => {
   const { id_produk } = useParams();
 
   useEffect(() => {
-    const fetchKategori = async () => {
+    const getKategori = async () => {
       try {
         const response = await axios.get(API_URL + "kategori");
-        console.log(response.data.data); // Periksa data di sini
+        // console.log(response.data.data); // Periksa data di sini
         const data = Array.isArray(response.data.data) ? response.data.data : [];
         setDaftarKategori(data);
       } catch (error) {
@@ -32,7 +32,7 @@ const FormEditProduk = () => {
       }
     };
 
-    fetchKategori();
+    getKategori();
   }, []);
 
   useEffect(() => {
@@ -69,10 +69,9 @@ const FormEditProduk = () => {
         foto_produk: foto_produk,
         diskon: diskon,
       });
-      console.log("Respon dari server:", response.data);
+      // console.log("Respon dari server:", response.data);
       navigate("/produk");
     } catch (error) {
-      console.error("Error editing product:", error);
       if (error.response) {
         setMsg(error.response.data.msg);
       }

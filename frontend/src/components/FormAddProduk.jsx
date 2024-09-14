@@ -11,7 +11,7 @@ const FormAddProduk = () => {
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
-  const [nama_kategori, setKategori] = useState("");
+  const [id_kategori, setKategori] = useState("");
   const [foto_produk, setFoto_produk] = useState("");
   const [diskon, setDiskon] = useState("");
   const [msg, setMsg] = useState("");
@@ -39,7 +39,7 @@ const FormAddProduk = () => {
         stok: stok,
         satuan: satuan,
         merk: merk,
-        nama_kategori: nama_kategori,
+        id_kategori: id_kategori, // Mengirim id_kategori
         foto_produk: foto_produk,
         diskon: diskon,
       });
@@ -99,7 +99,7 @@ const FormAddProduk = () => {
                 <label className="label">Kategori</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nama_kategori} onChange={(e) => setKategori(e.target.value)}>
+                    <select value={id_kategori} onChange={(e) => setKategori(e.target.value)}>
                       <option value="">Pilih Kategori</option>
                       {kategoriList.map((kat) => (
                         <option key={kat.id_kategori} value={kat.id_kategori}>
