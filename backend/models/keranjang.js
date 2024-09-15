@@ -13,17 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     id_produk: {
-      type: DataTypes.STRING,
+      type: DataTypes.JSON,
       allowNull: false
     },
     kuantitas: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    total_bayar: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+    
   }, {});
 
   Keranjang.associate = (models) => {

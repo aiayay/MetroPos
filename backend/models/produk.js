@@ -41,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'pembelian',
     });
   };
+  
 
   return Produk;
 };

@@ -36,10 +36,10 @@ exports.getKeranjangById = async (req, res) => {
 
 // Menambahkan item ke keranjang
 exports.createKeranjang = async (req, res) => {
-  const { id_produk, id_member=null, kuantitas, total_bayar } = req.body;
+  const { id_produk, id_member=null, kuantitas,  } = req.body;
   try {
     // Validasi input
-    if (!id_produk || !kuantitas || !total_bayar) {
+    if (!id_produk || !kuantitas) {
       return res.status(400).json({ error: 'Data tidak lengkap' });
     }
 
@@ -58,7 +58,7 @@ exports.createKeranjang = async (req, res) => {
       id_produk,
       id_member,
       kuantitas,
-      total_bayar,
+      
     });
     res.status(201).json(newKeranjang);
   } catch (error) {
@@ -69,7 +69,7 @@ exports.createKeranjang = async (req, res) => {
 // Memperbarui item keranjang
 exports.updateKeranjang = async (req, res) => {
   const { id } = req.params;
-  const { id_produk, id_member, kuantitas, total_bayar } = req.body;
+  const { id_produk, id_member, kuantitas, } = req.body;
   try {
     const keranjang = await Keranjang.findByPk(id);
     if (!keranjang) {
@@ -77,7 +77,7 @@ exports.updateKeranjang = async (req, res) => {
     }
 
     // Validasi input
-    if (!id_produk || !kuantitas || !total_bayar) {
+    if (!id_produk || !kuantitas) {
       return res.status(400).json({ error: 'Data tidak lengkap' });
     }
 
@@ -96,7 +96,6 @@ exports.updateKeranjang = async (req, res) => {
     keranjang.id_produk = id_produk;
     keranjang.id_member = id_member;
     keranjang.kuantitas = kuantitas;
-    keranjang.total_bayar = total_bayar;
 
     await keranjang.save();
     res.status(200).json(keranjang);
