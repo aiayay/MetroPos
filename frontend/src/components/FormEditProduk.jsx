@@ -8,16 +8,32 @@ import "../index.css";
 const FormEditProduk = () => {
   const [nmproduk, setNmproduk] = useState("");
   const [harga_jual, setHarga_jual] = useState("");
-  const [harga_beli, setHarga_beli] = useState("");
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
-  const [kategori, setKategori] = useState("");
-  const [foto_produk, setFoto_produk] = useState("");
+  const [id_kategori, setKategori] = useState("");
+  const [foto_produk, setFoto_produk] = useState(""); // Gunakan string untuk URL foto
+  const [fileFoto, setFileFoto] = useState(null); // State untuk file foto
   const [diskon, setDiskon] = useState("");
+  const [daftarKategori, setDaftarKategori] = useState([]);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id_produk } = useParams();
+
+  useEffect(() => {
+    const getKategori = async () => {
+      try {
+        const response = await axios.get(API_URL + "kategori");
+        // console.log(response.data.data); // Periksa data di sini
+        const data = Array.isArray(response.data.data) ? response.data.data : [];
+        setDaftarKategori(data);
+      } catch (error) {
+        console.error("Gagal mengambil kategori:", error);
+      }
+    };
+
+    getKategori();
+  }, []);
 
   useEffect(() => {
     const getProdukById = async () => {
@@ -25,11 +41,10 @@ const FormEditProduk = () => {
         const response = await axios.get(API_URL + "produk/" + id_produk);
         setNmproduk(response.data.nmproduk);
         setHarga_jual(response.data.harga_jual);
-        setHarga_beli(response.data.harga_beli);
         setStok(response.data.stok);
         setSatuan(response.data.satuan);
         setMerk(response.data.merk);
-        setKategori(response.data.kategori);
+        setKategori(response.data.id_kategori);
         setFoto_produk(response.data.foto_produk);
         setDiskon(response.data.diskon);
       } catch (error) {
@@ -37,24 +52,24 @@ const FormEditProduk = () => {
           setMsg(error.response.data.msg);
         }
       }
-    }; 
+    };
     getProdukById();
   }, [id_produk]);
 
   const editProduk = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(API_URL + "produk/" + id_produk, {
+      const response = await axios.put(API_URL + "produk/" + id_produk, {
         nmproduk: nmproduk,
         harga_jual: harga_jual,
-        harga_beli: harga_beli,
         stok: stok,
         satuan: satuan,
         merk: merk,
-        kategori: kategori,
+        id_kategori: id_kategori, // Mengirim id_kategori
         foto_produk: foto_produk,
         diskon: diskon,
       });
+      // console.log("Respon dari server:", response.data);
       navigate("/produk");
     } catch (error) {
       if (error.response) {
@@ -62,6 +77,11 @@ const FormEditProduk = () => {
       }
     }
   };
+
+  const handleFileChange = (e) => {
+    setFileFoto(e.target.files[0]); // Ambil file yang dipilih
+  };
+
   return (
     <div>
       <h1 className="title">Produk</h1>
@@ -90,12 +110,6 @@ const FormEditProduk = () => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Harga Beli</label>
-                <div className="control">
-                  <input type="number" className="input" placeholder="Harga Beli" value={harga_beli || ""} onChange={(e) => setHarga_beli(e.target.value)} />
-                </div>
-              </div>
-              <div className="field">
                 <label className="label">Stok</label>
                 <div className="control">
                   <input type="number" className="input" placeholder="stok" value={stok || ""} onChange={(e) => setStok(e.target.value)} />
@@ -117,10 +131,13 @@ const FormEditProduk = () => {
                 <label className="label">Kategori</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={kategori || ""} onChange={(e) => setKategori(e.target.value)}>
+                    <select value={id_kategori || ""} onChange={(e) => setKategori(e.target.value)}>
                       <option value="">Pilih Kategori</option>
-                      <option value="id_kategori">Makanan</option>
-                      <option value="id_kategori">Minuman</option>
+                      {daftarKategori.map((kat) => (
+                        <option key={kat.id_kategori} value={kat.id_kategori}>
+                          {kat.nama_kategori}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -128,7 +145,12 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Foto Produk</label>
                 <div className="control">
-                  <input type="file" className="input" placeholder="foto" value={foto_produk || ""} onChange={(e) => setFoto_produk(e.target.value)} />
+                  {foto_produk && (
+                    <div className="image-container">
+                      <img src={foto_produk} alt="Foto Produk" style={{ maxWidth: "200px", maxHeight: "200px" }} />
+                    </div>
+                  )}
+                  <input type="file" className="input" onChange={handleFileChange} />
                 </div>
               </div>
               <div className="field">

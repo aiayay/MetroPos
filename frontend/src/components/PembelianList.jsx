@@ -59,7 +59,7 @@ const PembelianList = () => {
         </div>
       </div>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>
@@ -77,8 +77,8 @@ const PembelianList = () => {
               <tr key={pembelian.id_pembelian}>
                 <td>{index + 1}</td>
                 <td>{pembelian.id_pembelian}</td>
-                <td>{pembelian.produk.nmproduk}</td>
-                <td>{pembelian.supplier.nmsupplier}</td>
+                <td>{pembelian.id_pembelian}</td>
+                <td>{pembelian.id_pembelian}</td>
                 <td>{pembelian.kuantitas}</td>
                 <td>{pembelian.harga_beli}</td>
                 <td>{pembelian.tanggal}</td>
