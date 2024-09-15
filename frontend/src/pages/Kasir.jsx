@@ -49,32 +49,33 @@ export default class Kasir extends Component {
       });
   };
 
-  masukKeranjang = (value) => {
-  console.log("menu :", value);
-
-  const keranjang = {
-    id_produk: value.id_produk,  // Pastikan id_produk dikirim dengan benar
-    kuantitas: 1,               // Default kuantitas, bisa diubah sesuai kebutuhan
-    total_bayar: value.harga_jual,  // Pastikan ini sesuai dengan yang diharapkan server
-  };
-
-  axios
-    .post(API_URL + "keranjang", keranjang)
-    .then((res) => {
+  masukKeranjang = async (value) => {
+    const keranjang = {
+      id_produk: value.id_produk,
+      kuantitas: 1,
+      total_bayar: value.harga_jual,
+      id_member: null,  // Kirim null jika tidak ada member
+    };
+  
+    try {
+      await axios.post(API_URL + "keranjang", keranjang);
       swal({
         title: "Sukses Masuk Keranjang",
         text: "Sukses Masuk Keranjang: " + value.nmproduk,
         icon: "success",
         button: false,
       });
-    })
-    .catch((error) => {
-      console.log("Error Data:", error.response ? error.response.data : error.message);
-      console.log("Error Status:", error.response ? error.response.status : "No status");
-      console.log("Error Headers:", error.response ? error.response.headers : "No headers");
-    });
-};
-
+    } catch (error) {
+      console.error("Error Data:", error.response ? error.response.data : error.message);
+      swal({
+        title: "Terjadi Kesalahan",
+        text: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
+        icon: "error",
+        button: false,
+      });
+    }
+  };
+  
 
   render() {
     const { menus } = this.state;

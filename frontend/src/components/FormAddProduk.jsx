@@ -11,7 +11,7 @@ const FormAddProduk = () => {
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
-  const [nama_kategori, setNamaKategori] = useState("");
+  const [nama_kategori, setNamaKategori] = useState(""); // Menggunakan nama_kategori
 
   // const [foto_produk, setFoto_produk] = useState("");
   const [diskon, setDiskon] = useState("");
@@ -33,7 +33,12 @@ const FormAddProduk = () => {
 
   const simpanProduk = async (e) => {
     e.preventDefault();
-    // const kategori = kategoriList.find((kat) => kat.nama_kategori === nama_kategori);
+
+    // Validasi data sebelum dikirim
+    if (!nama_kategori) {
+      setMsg("Kategori harus dipilih.");
+      return;
+    }
 
     const data = {
       nmproduk: nmproduk,
@@ -41,7 +46,7 @@ const FormAddProduk = () => {
       stok: stok,
       satuan: satuan,
       merk: merk,
-      nama_kategori: nama_kategori, // Mengirim nama_kategori
+      nama_kategori: nama_kategori, // Pastikan ini adalah id_kategori
       diskon: diskon,
     };
 
@@ -109,7 +114,7 @@ const FormAddProduk = () => {
                     <select value={nama_kategori} onChange={(e) => setNamaKategori(e.target.value)}>
                       <option value="">Pilih Kategori</option>
                       {kategoriList.map((kat) => (
-                        <option key={kat.id_kategori} value={kat.nama_kategori}>
+                        <option key={kat.id_kategori} value={kat.id_kategori}>
                           {kat.nama_kategori}
                         </option>
                       ))}
