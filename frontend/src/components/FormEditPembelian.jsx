@@ -7,12 +7,14 @@ import "../index.css";
 
 const FormEditPembelian = () => {
   const [nmproduk, setNmproduk] = useState("");
-  const [nmsupplier, setNmsupplier] = useState("");
+  const [supplier, setSupplier] = useState("");
   const [stok, setStok] = useState("");
   const [harga_beli, setHarga_beli] = useState("");
   const [kuantitas, setKuantitas] = useState("");
   const [tanggal, setTanggal] = useState("");
   const [msg, setMsg] = useState("");
+  const [supplierList, setSupplierList] = useState([]);
+  const [produkList, setProdukList] = useState([]);
   const navigate = useNavigate();
   const { id_pembelian } = useParams();
 
@@ -20,12 +22,14 @@ const FormEditPembelian = () => {
     const getPembelianById = async () => {
       try {
         const response = await axios.get(API_URL + "pembelian/" + id_pembelian);
-        setNmproduk(response.data.nmproduk);
-        setNmsupplier(response.data.nmsupplier);
-        setStok(response.data.stok);
-        setHarga_beli(response.data.harga_beli);
-        setKuantitas(response.data.kuantitas);
-        setTanggal(response.data.tanggal);
+
+        const pembelianData = response.data.data;
+        setNmproduk(pembelianData.produk.nmproduk); // Nama produk
+        setSupplier(pembelianData.supplier.nmsupplier); // Nama supplier
+        setStok(pembelianData.produk.stok); // Stok produk
+        setHarga_beli(pembelianData.harga_beli); // Harga beli
+        setKuantitas(pembelianData.kuantitas); // Kuantitas
+        setTanggal(pembelianData.tanggal.split("T")[0]);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -35,12 +39,37 @@ const FormEditPembelian = () => {
     getPembelianById();
   }, [id_pembelian]);
 
+  useEffect(() => {
+    const getSupplier = async () => {
+      try {
+        const response = await axios.get(API_URL + "supplier");
+        setSupplierList(response.data.data);
+      } catch (error) {
+        console.error("erro fetching supplier", error);
+      }
+    };
+    getSupplier();
+  }, []);
+
+  useEffect(() => {
+    const getProduk = async () => {
+      try {
+        const response = await axios.get(API_URL + "produk");
+        console.log(response.data); // Cek apakah data produk muncul
+        setProdukList(response.data.data || []); // Default ke array kosong jika data tidak ada
+      } catch (error) {
+        console.error("Error fetching produk", error);
+      }
+    };
+    getProduk();
+  }, []);
+
   const editPembelian = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "pembelian/" + id_pembelian, {
+      await axios.put(API_URL + "pembelian/" + id_pembelian, {
         nmproduk: nmproduk,
-        nmsupplier: nmsupplier,
+        nmsupplier: supplier,
         stok: stok,
         harga_beli: harga_beli,
         kuantitas: kuantitas,
@@ -74,8 +103,11 @@ const FormEditPembelian = () => {
                   <div className="select is-fullwidth">
                     <select value={nmproduk || ""} onChange={(e) => setNmproduk(e.target.value)}>
                       <option value="">Pilih Produk</option>
-                      <option value="id_kategori">Makanan</option>
-                      <option value="id_kategori">Minuman</option>
+                      {produkList.map((produk) => (
+                        <option key={produk.id_produk} value={produk.id_produk}>
+                          {produk.nmproduk}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -84,10 +116,13 @@ const FormEditPembelian = () => {
                 <label className="label">Nama Supplier</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nmsupplier || ""} onChange={(e) => setNmsupplier(e.target.value)}>
-                      <option value="">Pilih Supplier</option>
-                      <option value="id_kategori">Makanan</option>
-                      <option value="id_kategori">Minuman</option>
+                    <select value={supplier || ""} onChange={(e) => setSupplier(e.target.value)}>
+                      <option value="">Pilih supplier</option>
+                      {supplierList.map((supplier) => (
+                        <option key={supplier.id_supplier} value={supplier.id_supplier}>
+                          {supplier.nmsupplier}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
