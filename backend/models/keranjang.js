@@ -4,23 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define('Keranjang', {
     id_keranjang: {
       type: DataTypes.UUID,
-      defaultValue: uuidv4(), 
+      defaultValue: uuidv4(),
       primaryKey: true,
       allowNull: false
     },
     id_member: {
       type: DataTypes.STRING,
       allowNull: true
-    },
-    id_produk: {
-      type: DataTypes.JSON,
-      allowNull: false
-    },
-    kuantitas: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    
+    }
   }, {});
 
   Keranjang.associate = (models) => {
@@ -28,8 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_member',
       as: 'member'
     });
-    Keranjang.belongsTo(models.Produk, {
-      foreignKey: 'id_produk',
+    Keranjang.belongsToMany(models.Produk, {
+      through: models.KeranjangProduk,
+      foreignKey: 'id_keranjang',
+      otherKey: 'id_produk',
       as: 'produk'
     });
   };

@@ -36,22 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    total_harga: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    potongan: {
-      type: DataTypes.FLOAT,
+    catatan: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
-    total_bayar: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    metode_bayar: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    }
   }, {
     tableName: 'detailtransaksi',
     timestamps: false,
