@@ -33,6 +33,7 @@ const FormAddPembelian = () => {
     const getProduk = async () => {
       try {
         const response = await axios.get(API_URL + "produk");
+        console.log(response.data); // Cek apakah data produk muncul
         setProdukList(response.data.data || []); // Default ke array kosong jika data tidak ada
       } catch (error) {
         console.error("Error fetching produk", error);

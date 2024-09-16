@@ -7,7 +7,6 @@ import "../index.css";
 
 const FormEditUser = () => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [nama_lengkap, setNama_lengkap] = useState("");
   const [notlp, setNotlp] = useState("");
   const [jk, setJk] = useState("");
@@ -39,7 +38,7 @@ const FormEditUser = () => {
   const editUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "user/users/" + id_user, {
+      await axios.put(API_URL + "user/users/" + id_user, {
         username: username,
         nama_lengkap: nama_lengkap,
         notlp: notlp,
@@ -90,12 +89,12 @@ const FormEditUser = () => {
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk || ""} onChange={(e) => setJk(e.target.value)}>
-                    <input type="radio" name="jk" value="Laki-laki" />
+                  <label className="radio">
+                    <input type="radio" name="jk" value="laki-laki" checked={jk === "laki-laki"} onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="Perempuan" />
+                    <input type="radio" name="jk" value="perempuan" checked={jk === "perempuan"} onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>

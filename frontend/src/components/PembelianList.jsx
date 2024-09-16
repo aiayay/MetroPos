@@ -77,8 +77,8 @@ const PembelianList = () => {
               <tr key={pembelian.id_pembelian}>
                 <td>{index + 1}</td>
                 <td>{pembelian.id_pembelian}</td>
-                <td>{pembelian.id_pembelian}</td>
-                <td>{pembelian.id_pembelian}</td>
+                <td>{pembelian.produk.nmproduk}</td>
+                <td>{pembelian.supplier.nmsupplier}</td>
                 <td>{pembelian.kuantitas}</td>
                 <td>{pembelian.harga_beli}</td>
                 <td>{pembelian.tanggal}</td>

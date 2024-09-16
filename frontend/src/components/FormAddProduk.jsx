@@ -34,7 +34,6 @@ const FormAddProduk = () => {
   const simpanProduk = async (e) => {
     e.preventDefault();
 
-    // Validasi data sebelum dikirim
     if (!nama_kategori) {
       setMsg("Kategori harus dipilih.");
       return;
@@ -46,18 +45,18 @@ const FormAddProduk = () => {
       stok: stok,
       satuan: satuan,
       merk: merk,
-      nama_kategori: nama_kategori, // Pastikan ini adalah id_kategori
+      nama_kategori: nama_kategori, // Mengirim nama_kategori
       diskon: diskon,
     };
 
-    console.log("Data yang dikirim: ", data); // Log data sebelum dikirim
+    console.log("Data yang dikirim: ", data); // Lihat data sebelum dikirim
     try {
       await axios.post(API_URL + "produk", data);
       navigate("/produk");
     } catch (error) {
       if (error.response) {
-        console.error("Error response: ", error.response.data); // Log error detail
-        setMsg(error.response.data.msg);
+        console.error("Error response: ", error.response.data);
+        setMsg(error.response.data.error || error.response.data.msg);
       }
     }
   };
@@ -92,7 +91,7 @@ const FormAddProduk = () => {
               <div className="field">
                 <label className="label">Stok</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="stok" value={stok} onChange={(e) => setStok(e.target.value)} />
+                  <input type="number" className="input" placeholder="Stok" value={stok} onChange={(e) => setStok(e.target.value)} />
                 </div>
               </div>
               <div className="field">
@@ -114,7 +113,7 @@ const FormAddProduk = () => {
                     <select value={nama_kategori} onChange={(e) => setNamaKategori(e.target.value)}>
                       <option value="">Pilih Kategori</option>
                       {kategoriList.map((kat) => (
-                        <option key={kat.id_kategori} value={kat.id_kategori}>
+                        <option key={kat.id_kategori} value={kat.nama_kategori}>
                           {kat.nama_kategori}
                         </option>
                       ))}
@@ -125,13 +124,19 @@ const FormAddProduk = () => {
               {/* <div className="field">
                 <label className="label">Foto Produk</label>
                 <div className="control">
-                  <input type="file" className="input" placeholder="foto" value={foto_produk} onChange={(e) => setFoto_produk(e.target.value)} />
+                  <input
+                    type="file"
+                    className="input"
+                    placeholder="Foto"
+                    value={foto_produk}
+                    onChange={(e) => setFoto_produk(e.target.value)}
+                  />
                 </div>
               </div> */}
               <div className="field">
                 <label className="label">Diskon</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="diskon" value={diskon} onChange={(e) => setDiskon(e.target.value)} />
+                  <input type="text" className="input" placeholder="Diskon" value={diskon} onChange={(e) => setDiskon(e.target.value)} />
                 </div>
               </div>
 
