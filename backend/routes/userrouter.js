@@ -14,4 +14,11 @@ router.get('/profile', authMiddleware, userController.getUserProfile);
 
 router.get('/users', userController.getAllUsers);
 
+// hapus
+router.delete('/users/:id', userController.deleteUser);
+
+// ambil 1 per id 
+router.get('/users/:id', userController.getUserById);
+
+
 module.exports = router;
