@@ -24,8 +24,8 @@ const FormEditPembelian = () => {
         const response = await axios.get(API_URL + "pembelian/" + id_pembelian);
 
         const pembelianData = response.data.data;
-        setNmproduk(pembelianData.produk.nmproduk); // Nama produk
-        setSupplier(pembelianData.supplier.nmsupplier); // Nama supplier
+        setNmproduk(pembelianData.produk.id_produk); // Nama produk
+        setSupplier(pembelianData.supplier.id_supplier); // Nama supplier
         setStok(pembelianData.produk.stok); // Stok produk
         setHarga_beli(pembelianData.harga_beli); // Harga beli
         setKuantitas(pembelianData.kuantitas); // Kuantitas
@@ -43,7 +43,9 @@ const FormEditPembelian = () => {
     const getSupplier = async () => {
       try {
         const response = await axios.get(API_URL + "supplier");
-        setSupplierList(response.data.data);
+        //  console.log(response.data.data); // Periksa data di sini
+        const data = Array.isArray(response.data.data) ? response.data.data : [];
+        setSupplierList(data);
       } catch (error) {
         console.error("erro fetching supplier", error);
       }
@@ -69,12 +71,20 @@ const FormEditPembelian = () => {
     try {
       await axios.put(API_URL + "pembelian/" + id_pembelian, {
         nmproduk: nmproduk,
-        nmsupplier: supplier,
+        id_supplier: supplier, // ID supplier yang benar
         stok: stok,
         harga_beli: harga_beli,
         kuantitas: kuantitas,
         tanggal: tanggal,
       });
+
+      // await axios.put(API_URL + "pembelian/" + id_pembelian, {
+      //   id_produk: nmproduk,
+      //   kuantitas,
+      //   id_supplier: supplier,
+      //   tanggal,
+      //   harga_beli,
+      // });
       navigate("/pembelian");
     } catch (error) {
       if (error.response) {
@@ -82,6 +92,7 @@ const FormEditPembelian = () => {
       }
     }
   };
+
   return (
     <div>
       <h1 className="title">Pembelian</h1>
@@ -127,6 +138,7 @@ const FormEditPembelian = () => {
                   </div>
                 </div>
               </div>
+
               <div className="field">
                 <label className="label">Stok Awal</label>
                 <div className="control">
