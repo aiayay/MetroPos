@@ -35,7 +35,7 @@ export default class Kasir extends Component {
 
   getListKeranjang = () => {
     axios
-      .get(API_URL + "keranjang")
+      .get(API_URL + "keranjangproduk")
       .then((res) => {
         // console.log("Response :", res);
         const keranjang = res.data;
