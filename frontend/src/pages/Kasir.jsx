@@ -30,7 +30,21 @@ export default class Kasir extends Component {
       .catch((error) => {
         console.log(error);
       });
+    // this.getListKeranjang;
   }
+
+  getListKeranjang = () => {
+    axios
+      .get(API_URL + "keranjang")
+      .then((res) => {
+        // console.log("Response :", res);
+        const keranjang = res.data;
+        this.setState({ keranjang });
+      })
+      .catch((error) => {
+        console.log("eror disini", error);
+      });
+  };
 
   changeKategori = (value) => {
     this.setState({
@@ -49,103 +63,91 @@ export default class Kasir extends Component {
       });
   };
 
-  masukKeranjang = async (value) => {
+  masukKeranjang = (value) => {
+    console.log("Menu :", value);
 
     axios
-    .get(API_URL + "keranjang?produk.id_produk=" + value.id_produk)
-    .then((res) => {
-      // console.log("Response : ", res);
-      if(res.data.length === 0){
-        const keranjang = {
-          id_produk: value.id_produk,
-          kuantitas: 1,
-          total_bayar: value.harga_jual,
-          id_member: null,  // Kirim null jika tidak ada member
-        };
-        console.log("Produk masuk keranjang:", value.nmproduk); // Menampilkan nama produk yang masuk keranjang
-        console.log("Detail keranjang:", keranjang); // Menampilkan detail produk yang masuk keranjang
+      .get(API_URL + "keranjang?prduk.id_produk=" + value.id_produk)
+      .then((res) => {
+        // console.log("Response : ", res);
 
-     
-        axios
-        .post(API_URL + "keranjang", keranjang)
-        .then((res)=>{
-          swal({
-            title: "Sukses Masuk Keranjang",
-            text: "Sukses Masuk Keranjang: " + value.nmproduk,
-            icon: "success",
-            button: false,
-          });
-        })
-          .catch ((error) => {
-          console.error("Error Data:", error.response ? error.response.data : error.message);
-          swal({
-            title: "Terjadi Kesalahan",
-            text: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
-            icon: "error",
-            button: false,
-          });
-        })
-      } else {
-        const keranjang = {
-          id_produk: value.id_produk,
-          kuantitas: res.data[0].jumlah+1,
-          total_bayar:  res.data[0].total_bayar+value.harga_jual,
-          id_member: null,  // Kirim null jika tidak ada member
-        };
-        // axios
-        // .put(API_URL + "keranjang/"+res.data[0].id_produk, keranjang)
-        // .then((res)=>{
-        //   swal({
-        //     title: "Sukses Masuk Keranjang",
-        //     text: "Sukses Masuk Keranjang: " + value.nmproduk,
-        //     icon: "success",
-        //     button: false,
-        //   });
-        // })
-        //   .catch ((error) => {
-        //   console.error("Error Data:", error.response ? error.response.data : error.message);
-        //   swal({
-        //     title: "Terjadi Kesalahan",
-        //     text: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
-        //     icon: "error",
-        //     button: false,
-        //   });
-        // })
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+        //kalau data produk tidak ada dikeranjang
+        if (res.data.length === 0) {
+          const keranjang = {
+            id_member: null, // Kirim ID member jika ada
+            produk: [
+              {
+                id_produk: value.id_produk,
+                kuantitas: 1,
+              },
+            ],
+          };
 
-    const keranjang = {
-      id_produk: value.id_produk,
-      kuantitas: 1,
-      total_bayar: value.harga_jual,
-      id_member: null,  // Kirim null jika tidak ada member
-    };
-    console.log("Produk masuk keranjang:", value.nmproduk); // Menampilkan nama produk yang masuk keranjang
-    console.log("Detail keranjang:", keranjang); // Menampilkan detail produk yang masuk keranjang
+          axios
+            .post(API_URL + "keranjang", keranjang) // Mengirim sebagai objek produk
+            .then((res) => {
+              swal({
+                title: "Sukses Masuk Keranjang",
+                text: "Sukses Masuk Keranjang: " + keranjang.produk.nmproduk,
+                icon: "success",
+                button: false,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          const existingKeranjang = res.data[0];
+          const keranjang = {
+            id_member: null, // Kirim ID member jika ada
+            produk: [
+              {
+                id_produk: value.id_produk,
+                kuantitas: 1,
+              },
+            ],
+          };
 
-  
-    try {
-      await axios.post(API_URL + "keranjang", keranjang);
-      swal({
-        title: "Sukses Masuk Keranjang",
-        text: "Sukses Masuk Keranjang: " + value.nmproduk,
-        icon: "success",
-        button: false,
+          axios
+            .put(API_URL + "keranjang/" + existingKeranjang.id_keranjang, keranjang)
+            .then((res) => {
+              swal({
+                title: "Sukses Masuk Keranjang",
+                text: "Sukses Masuk Keranjang: " + value.nmproduk,
+                icon: "success",
+                button: false,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    } catch (error) {
-      console.error("Error Data:", error.response ? error.response.data : error.message);
-      swal({
-        title: "Terjadi Kesalahan",
-        text: "Gagal menambahkan ke keranjang. Silakan coba lagi.",
-        icon: "error",
-        button: false,
-      });
-    }
   };
-  
+
+  // const keranjang = {
+  //   id_produk: value.id_produk,
+  //   kuantitas: 1,
+  //   id_member: null, // Kirim null jika tidak ada member
+  //      // total_harga: value.harga,
+  // };
+
+  // axios
+  //   .post(API_URL + "keranjang", { produk: keranjang }) // Mengirim sebagai objek produk
+  //   .then((res) => {
+  //     swal({
+  //       title: "Sukses Masuk Keranjang",
+  //       text: "Sukses Masuk Keranjang: " + value.nmproduk,
+  //       icon: "success",
+  //       button: false,
+  //     });
+  //   })
+  //   .catch((error) => {
+  //     console.log(error);
+  //   });
 
   render() {
     const { menus } = this.state;
