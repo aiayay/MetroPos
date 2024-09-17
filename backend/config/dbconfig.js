@@ -2,7 +2,7 @@ module.exports = {
   HOST: 'localhost',
   USER: 'root', // pastikan menggunakan lowercase 'root'
   PASSWORD: '',
-  DB: 'metropos2',
+  DB: 'metropos',
   dialect: 'mysql',
 
   pool: {

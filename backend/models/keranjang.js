@@ -4,13 +4,16 @@ module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define('Keranjang', {
     id_keranjang: {
       type: DataTypes.UUID,
-      defaultValue: uuidv4(),
-      primaryKey: true,
-      allowNull: false
+      defaultValue: uuidv4,  // Perbaiki defaultValue menjadi fungsi
+      primaryKey: true
     },
     id_member: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'Member',
+        key: 'id_member'
+      }
     }
   }, {});
 
