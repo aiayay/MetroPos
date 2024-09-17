@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import KasirLayout from "./KasirLayout";
 import Menus from "../components/Menus";
-import KasirList from "../components/KasirList";
 import KasirHasil from "../components/KasirHasil";
 import { Row, Container, Col } from "react-bootstrap";
 import { API_URL } from "../features/constants";
@@ -20,31 +19,29 @@ export default class Kasir extends Component {
   }
 
   componentDidMount() {
+    // this.getListKeranjang(); // Pastikan keranjang diperbarui saat komponen dimuat
     axios
       .get(API_URL + "produk?kategori.nama_kategori=" + this.state.kategoriYangDipilih)
       .then((res) => {
-        // console.log("Response : ", res);
         const menus = res.data;
         this.setState({ menus });
       })
       .catch((error) => {
         console.log(error);
       });
-    // this.getListKeranjang;
   }
 
-  getListKeranjang = () => {
-    axios
-      .get(API_URL + "keranjang")
-      .then((res) => {
-        // console.log("Response :", res);
-        const keranjang = res.data;
-        this.setState({ keranjang });
-      })
-      .catch((error) => {
-        console.log("eror disini", error);
-      });
-  };
+  // getListKeranjang = () => {
+  //   axios
+  //     .get(API_URL + "keranjang")
+  //     .then((res) => {
+  //       const keranjangs = res.data;
+  //       this.setState({ keranjangs });
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting keranjang", error);
+  //     });
+  // };
 
   changeKategori = (value) => {
     this.setState({
@@ -54,7 +51,6 @@ export default class Kasir extends Component {
     axios
       .get(API_URL + "produk?kategori.nama_kategori=" + value)
       .then((res) => {
-        // console.log("Response : ", res);
         const menus = res.data;
         this.setState({ menus });
       })
@@ -63,91 +59,67 @@ export default class Kasir extends Component {
       });
   };
 
-  masukKeranjang = (value) => {
+  masukKeranjang = async (value) => {
     console.log("Menu :", value);
-
-    axios
-      .get(API_URL + "keranjang?prduk.id_produk=" + value.id_produk)
-      .then((res) => {
-        // console.log("Response : ", res);
-
-        //kalau data produk tidak ada dikeranjang
-        if (res.data.length === 0) {
-          const keranjang = {
-            id_member: null, // Kirim ID member jika ada
-            produk: [
-              {
-                id_produk: value.id_produk,
-                kuantitas: 1,
-              },
-            ],
-          };
-
-          axios
-            .post(API_URL + "keranjang", keranjang) // Mengirim sebagai objek produk
-            .then((res) => {
-              swal({
-                title: "Sukses Masuk Keranjang",
-                text: "Sukses Masuk Keranjang: " + keranjang.produk.nmproduk,
-                icon: "success",
-                button: false,
-              });
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        } else {
-          const existingKeranjang = res.data[0];
-          const keranjang = {
-            id_member: null, // Kirim ID member jika ada
-            produk: [
-              {
-                id_produk: value.id_produk,
-                kuantitas: 1,
-              },
-            ],
-          };
-
-          axios
-            .put(API_URL + "keranjang/" + existingKeranjang.id_keranjang, keranjang)
-            .then((res) => {
-              swal({
-                title: "Sukses Masuk Keranjang",
-                text: "Sukses Masuk Keranjang: " + value.nmproduk,
-                icon: "success",
-                button: false,
-              });
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const res = await axios.get(API_URL + "keranjang?produk.id_produk=" + value.id_produk);
+      if (res.data.length === 0) {
+        // Data keranjang tidak ada, buat keranjang baru
+        const keranjang = {
+          id_member: null,
+          produk: [
+            {
+              id_produk: value.id_produk,
+              kuantitas: 1,
+            },
+          ],
+        };
+        await axios.post(API_URL + "keranjang", keranjang);
+        swal({
+          title: "Sukses Masuk Keranjang",
+          text: "Sukses Masuk Keranjang: " + value.nmproduk,
+          icon: "success",
+          button: false,
+        });
+  
+        // Perbarui daftar keranjang
+        this.getListKeranjang();
+      } 
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
+  
+      // else {
+      //   const existingKeranjang = res.data[0];
+      //   const updatedKeranjang = {
+      //     produk: [
+      //       {
+      //         id_produk: value.id_produk,
+      //         kuantitas: 1,
+      //       },
+      //     ],
+      //   };
 
-  // const keranjang = {
-  //   id_produk: value.id_produk,
-  //   kuantitas: 1,
-  //   id_member: null, // Kirim null jika tidak ada member
-  //      // total_harga: value.harga,
-  // };
-
-  // axios
-  //   .post(API_URL + "keranjang", { produk: keranjang }) // Mengirim sebagai objek produk
-  //   .then((res) => {
-  //     swal({
-  //       title: "Sukses Masuk Keranjang",
-  //       text: "Sukses Masuk Keranjang: " + value.nmproduk,
-  //       icon: "success",
-  //       button: false,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
+        // axios
+        //   .put(API_URL + "keranjang/" + existingKeranjang.id_keranjang, updatedKeranjang)
+        //   .then((res) => {
+        //     swal({
+        //       title: "Sukses Memperbarui Keranjang",
+        //       text: "Sukses Memperbarui Keranjang: " + value.nmproduk,
+        //       icon: "success",
+        //       button: false,
+        //     });
+        //   })
+        //   .catch((error) => {
+        //     console.log("Error during PUT request:", error.response.data);
+        //   });
+      // }
+//     })
+//     .catch((error) => {
+//       console.log("Error during GET request:", error);
+//     });
+// };
 
   render() {
     const { menus } = this.state;
