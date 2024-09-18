@@ -5,42 +5,65 @@ module.exports = (sequelize, DataTypes) => {
     id_produk: {
       type: DataTypes.STRING,
       primaryKey: true,
-      defaultValue: uuidv4(),
+      defaultValue: () => uuidv4(), // Memastikan UUID di-generate untuk setiap produk baru
     },
     id_kategori: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: false,
     },
-    nmproduk: DataTypes.STRING,
-    stok: DataTypes.INTEGER,
-    foto_produk: DataTypes.STRING,
-    satuan: DataTypes.STRING,
-    merk: DataTypes.STRING,
-    harga_jual: DataTypes.INTEGER,
-    diskon: DataTypes.INTEGER
+    nmproduk: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    stok: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    foto_produk: {
+      type: DataTypes.STRING,
+    },
+    satuan: {
+      type: DataTypes.STRING,
+    },
+    merk: {
+      type: DataTypes.STRING,
+    },
+    harga_jual: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    diskon: {
+      type: DataTypes.INTEGER,
+    }
   }, {
     tableName: 'produk',
-    timestamps: false
+    timestamps: false,
   });
 
+  // Relasi
   Produk.associate = (models) => {
-    Produk.belongsToMany(models.Keranjang, {
-      through: models.KeranjangProduk,
+    // Relasi dengan tabel `Keranjang`
+    Produk.hasMany(models.Keranjang, {
       foreignKey: 'id_produk',
-      otherKey: 'id_keranjang',
-      as: 'keranjang'
+      as: 'keranjang', // Menghubungkan produk dengan keranjang tanpa tabel pivot
     });
+
+    // Relasi dengan `DetailTransaksi`
     Produk.hasMany(models.DetailTransaksi, {
       foreignKey: 'id_produk',
-      as: 'detailTransaksi'
+      as: 'detailTransaksi',
     });
+
+    // Relasi dengan `Kategori`
     Produk.belongsTo(models.Kategori, {
       foreignKey: 'id_kategori',
-      as: 'kategori'
+      as: 'kategori',
     });
+
+    // Relasi dengan `Pembelian`
     Produk.hasMany(models.Pembelian, {
       foreignKey: 'id_produk',
-      as: 'pembelian'
+      as: 'pembelian',
     });
   };
 

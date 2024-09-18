@@ -1,32 +1,39 @@
-const { v4: uuidv4 } = require('uuid');
-
 module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define('Keranjang', {
     id_keranjang: {
       type: DataTypes.UUID,
-      defaultValue: uuidv4,  // Perbaiki defaultValue menjadi fungsi
-      primaryKey: true
+      defaultValue: DataTypes.UUIDV4, // Generate UUID otomatis
+      primaryKey: true,
+      allowNull: false,
     },
     id_member: {
       type: DataTypes.STRING,
-      allowNull: true,
-      references: {
-        model: 'Member',
-        key: 'id_member'
-      }
-    }
-  }, {});
+      allowNull: false,
+    },
+    id_produk: {
+      type: DataTypes.STRING, // Mengacu langsung ke produk
+      allowNull: false,
+    },
+    kuantitas: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+    },
+  }, {
+    tableName: 'keranjang',
+    timestamps: true,
+  });
 
+  // Relasi keranjang dengan member dan produk (jika diperlukan)
   Keranjang.associate = (models) => {
     Keranjang.belongsTo(models.Member, {
       foreignKey: 'id_member',
-      as: 'member'
+      as: 'member',
     });
-    Keranjang.belongsToMany(models.Produk, {
-      through: models.KeranjangProduk,
-      foreignKey: 'id_keranjang',
-      otherKey: 'id_produk',
-      as: 'produk'
+
+    Keranjang.belongsTo(models.Produk, {
+      foreignKey: 'id_produk',
+      as: 'produk',
     });
   };
 
