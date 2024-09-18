@@ -23,7 +23,7 @@ const Userlist = () => {
   //metod delete user
 
   const deleteUser = async (id_user) => {
-    await axios.delete(API_URL + "user/" + id_user);
+    await axios.delete(API_URL + "user/users/" + id_user);
     getUser();
   };
   return (
