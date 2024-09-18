@@ -81,9 +81,10 @@ const FormAddPembelian = () => {
                   <div className="select is-fullwidth">
                     <select value={nmproduk} onChange={(e) => setNmproduk(e.target.value)}>
                       <option value="">Pilih Produk</option>
-                      {produkList.map((produk) => (
-                        <option key={produk.id_produk} value={produk.id_produk}>
-                          {produk.nmproduk}
+                      {
+                      produkList.map((getproduk) => (
+                        <option key={getproduk.id_produk} value={getproduk.id_produk}>
+                          {getproduk.nmproduk}
                         </option>
                       ))}
                     </select>
