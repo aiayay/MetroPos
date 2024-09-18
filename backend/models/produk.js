@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     id_produk: {
       type: DataTypes.STRING,
       primaryKey: true,
-      defaultValue: () => uuidv4(), // Memastikan UUID di-generate untuk setiap produk baru
+      defaultValue: () => uuidv4(),
     },
     id_kategori: {
       type: DataTypes.UUID,
@@ -40,27 +40,22 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  // Relasi
   Produk.associate = (models) => {
-    // Relasi dengan tabel `Keranjang`
     Produk.hasMany(models.Keranjang, {
       foreignKey: 'id_produk',
-      as: 'keranjang', // Menghubungkan produk dengan keranjang tanpa tabel pivot
+      as: 'keranjang',
     });
 
-    // Relasi dengan `DetailTransaksi`
-    Produk.hasMany(models.DetailTransaksi, {
-      foreignKey: 'id_produk',
-      as: 'detailTransaksi',
-    });
-
-    // Relasi dengan `Kategori`
     Produk.belongsTo(models.Kategori, {
       foreignKey: 'id_kategori',
       as: 'kategori',
     });
 
-    // Relasi dengan `Pembelian`
+    Produk.hasMany(models.DetailTransaksi, {
+      foreignKey: 'id_produk',
+      as: 'detailTransaksi',
+    });
+
     Produk.hasMany(models.Pembelian, {
       foreignKey: 'id_produk',
       as: 'pembelian',

@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define('Keranjang', {
     id_keranjang: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4, // Generate UUID otomatis
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
       allowNull: false,
     },
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     id_produk: {
-      type: DataTypes.STRING, // Mengacu langsung ke produk
+      type: DataTypes.STRING,
       allowNull: false,
     },
     kuantitas: {
@@ -24,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
   });
 
-  // Relasi keranjang dengan member dan produk (jika diperlukan)
   Keranjang.associate = (models) => {
     Keranjang.belongsTo(models.Member, {
       foreignKey: 'id_member',
