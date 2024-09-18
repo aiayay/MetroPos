@@ -1,4 +1,4 @@
-const { Keranjang, Member, Produk } = require('../models');
+const { Keranjang, Member, Produk } = require ("../models")
 
 // Mendapatkan semua item keranjang beserta produk yang terkait
 exports.getAllKeranjang = async (req, res) => {
@@ -56,8 +56,13 @@ exports.createKeranjang = async (req, res) => {
       return res.status(404).json({ error: `Produk dengan id ${id_produk} tidak ditemukan` });
     }
 
-    // Cek apakah member ada, jika id_member diberikan
-    let keranjang = await Keranjang.findOne({ where: { id_member, id_produk } });
+    // Cek apakah keranjang sudah ada untuk member dan produk yang diberikan
+    let keranjang = await Keranjang.findOne({
+      where: {
+        ...(id_member ? { id_member } : {}),  // Hanya tambahkan id_member jika ada
+        id_produk
+      }
+    });
 
     if (keranjang) {
       // Jika produk sudah ada di keranjang, tambahkan kuantitas
@@ -66,7 +71,7 @@ exports.createKeranjang = async (req, res) => {
     } else {
       // Jika produk belum ada, buat keranjang baru
       keranjang = await Keranjang.create({
-        id_member: id_member || null,
+        id_member: id_member || null,  // Set null jika id_member tidak ada
         id_produk,
         kuantitas,
       });
@@ -78,7 +83,6 @@ exports.createKeranjang = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 // Memperbarui kuantitas produk di keranjang
 exports.updateKeranjang = async (req, res) => {
   const { id } = req.params;
