@@ -15,13 +15,13 @@ const FormAddPembelian = () => {
   const [msg, setMsg] = useState("");
   const [supplierList, setSupplierList] = useState([]);
   const [produkList, setProdukList] = useState([]);
+  const [selectedProduk, setSelectedProduk] = useState(null); // State untuk produk yang dipilih
   const navigate = useNavigate();
 
   useEffect(() => {
     const getSupplier = async () => {
       try {
         const response = await axios.get(API_URL + "supplier");
-        console.log(response.data); // Cek apakah data produk muncul
         setSupplierList(response.data.data);
       } catch (error) {
         console.error("erro fetching supplier", error);
@@ -43,17 +43,37 @@ const FormAddPembelian = () => {
     getProduk();
   }, []);
 
+  useEffect(() => {
+    const fetchStok = async () => {
+      if (nmproduk) {
+        try {
+          const response = await axios.get(`${API_URL}produk/${nmproduk}`);
+          setSelectedProduk(response.data);
+          setStok(response.data.stok || ""); // Set stok dari produk yang dipilih
+          setHarga_beli(response.data.harga_beli || ""); // Set harga beli dari produk yang dipilih
+        } catch (error) {
+          console.error("Error fetching produk details", error);
+        }
+      } else {
+        setSelectedProduk(null);
+        setStok("");
+        setHarga_beli("");
+      }
+    };
+    fetchStok();
+  }, [nmproduk]);
+
   const simpanPembelian = async (e) => {
     e.preventDefault();
     try {
       await axios.post(API_URL + "pembelian", {
-        nmproduk: nmproduk,
-        nmsupplier: supplier,
-        stok: stok,
-        harga_beli: harga_beli,
-        kuantitas: kuantitas,
-        tanggal: tanggal,
-      });
+        id_produk: nmproduk,  // Ganti dengan id_produk
+        id_supplier: supplier, // Ganti dengan id_supplier
+        kuantitas: kuantitas,  // Tidak perlu diubah
+        harga_beli: harga_beli, // Tidak perlu diubah
+        tanggal: tanggal        // Tidak perlu diubah
+    });
+    
       navigate("/pembelian");
     } catch (error) {
       if (error.response) {
@@ -82,10 +102,9 @@ const FormAddPembelian = () => {
                   <div className="select is-fullwidth">
                     <select value={nmproduk} onChange={(e) => setNmproduk(e.target.value)}>
                       <option value="">Pilih Produk</option>
-                      {
-                      produkList.map((getproduk) => (
-                        <option key={getproduk.id_produk} value={getproduk.id_produk}>
-                          {getproduk.nmproduk}
+                      {produkList.map((produk) => (
+                        <option key={produk.id_produk} value={produk.id_produk}>
+                          {produk.nmproduk}
                         </option>
                       ))}
                     </select>
@@ -110,7 +129,7 @@ const FormAddPembelian = () => {
               <div className="field">
                 <label className="label">Stok Awal</label>
                 <div className="control">
-                  <input type="number" className="input" readOnly value={stok} onChange={(e) => setStok(e.target.value)} />
+                  <input type="number" className="input" readOnly value={stok} />
                 </div>
               </div>
               <div className="field">

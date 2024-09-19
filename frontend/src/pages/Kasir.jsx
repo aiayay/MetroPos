@@ -61,42 +61,47 @@ export default class Kasir extends Component {
           console.log("Produk belum ada di keranjang. Menambahkan produk...");
   
           const keranjang = {
-            id_member: null,  // Kirim null jika tidak ada member
-            produk: [
-              {
-                id_produk: value.id_produk,
-                kuantitas: 1  // Kuantitas produk yang ingin ditambahkan
-              }
-            ]
+            id_member: null,        // Sesuaikan dengan nilai sebenarnya jika ada
+            id_produk: value.id_produk, // ID produk
+            kuantitas: 1    // Kuantitas produk
           };
+          // console.log("Payload Keranjang:", keranjang);
+
   
           // Menambahkan produk ke keranjang
           axios
-            .post(API_URL + "keranjang", keranjang)
-            .then((res) => {
-              console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
-              swal({
-                title: "Sukses Masuk Keranjang",
-                text: "Sukses Masuk Keranjang: " + value.nmproduk,
-                button: false,
-                timer: 1500,
-              });
-            })
-            .catch((error) => {
-              console.error("Error saat menambahkan produk ke keranjang:", error);
+          .post(API_URL + "keranjang", keranjang)
+          .then((res) => {
+            console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
+            swal({
+              title: "Sukses Masuk Keranjang",
+              text: "Sukses Masuk Keranjang: " + value.nmproduk,
+              button: false,
+              timer: 1500,
             });
+          })
+          .catch((error) => {
+            console.error("Error saat menambahkan produk ke keranjang:", error.response ? error.response.data : error.message);
+          });
+        
         } else {
           console.log("Produk sudah ada di keranjang. Mengupdate kuantitas...");
   
+          // const keranjang = {
+          //   id_member: null,  // Kirim null jika tidak ada member
+          //   produk: [
+          //     {
+          //       id_produk: value.id_produk,
+          //       kuantitas: 1  // Kuantitas produk yang ingin ditambahkan
+          //     }
+          //   ]
+          // };
           const keranjang = {
-            id_member: null,  // Kirim null jika tidak ada member
-            produk: [
-              {
-                id_produk: value.id_produk,
-                kuantitas: 1  // Kuantitas produk yang ingin ditambahkan
-              }
-            ]
+            id_member: null,        // Sesuaikan dengan nilai sebenarnya jika ada
+            id_produk: value.id_produk, // ID produk
+            kuantitas: 1    // Kuantitas produk
           };
+          console.log("Payload Keranjang:", keranjang);
   
           // Mengupdate produk di keranjang
           axios
