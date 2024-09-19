@@ -25,6 +25,7 @@ import TransaksiDetail from "./pages/TransaksiDetail";
 import Kasir from "./pages/Kasir";
 import KasirAddMember from "./components/KasirAddMember";
 import KasirTransaksi from "./pages/KasirTransaksi";
+import Sukses from "./pages/Sukses";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/kasir" element={<Kasir />} />
+          <Route path="/sukses" element={<Sukses />} />
           <Route path="/kasirmember/add" element={<KasirAddMember />} />
           <Route path="/kasirtransaksi" element={<KasirTransaksi />} />
           <Route path="/dashboard" element={<Dashboard />} />

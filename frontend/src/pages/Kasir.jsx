@@ -30,7 +30,33 @@ export default class Kasir extends Component {
       .catch((error) => {
         console.log(error);
       });
+
+      axios
+      .get(API_URL + "keranjang")
+      .then((res) => {
+        // console.log("Response : ", res);
+        const keranjang = res.data;
+        this.setState({ keranjang });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+
+componentDidUpdate (prevState) {
+  if(this.state.keranjang !== prevState.keranjang){
+  axios
+      .get(API_URL + "keranjang")
+      .then((res) => {
+        // console.log("Response : ", res);
+        const keranjang = res.data;
+        this.setState({ keranjang });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}
 
   changeKategori = (value) => {
     this.setState({
@@ -128,7 +154,7 @@ export default class Kasir extends Component {
   
 
   render() {
-    const { menus } = this.state;
+    const { menus, kategoriYangDipilih, keranjang } = this.state;
     return (
       <div>
         <KasirLayout>
@@ -149,7 +175,7 @@ export default class Kasir extends Component {
                 <div className="bd-notification is-primary">
                   <div className="cell">
                     <Col>
-                      <KasirHasil />
+                      <KasirHasil keranjang={keranjang} {...this.props} />
                     </Col>
                   </div>
                 </div>
