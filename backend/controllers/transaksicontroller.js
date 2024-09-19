@@ -12,7 +12,6 @@ exports.getAllTransaksi = async (req, res) => {
           attributes: { exclude: ['password'] } // Mengecualikan password
         },
         { model: Member, as: 'member' }
-        
       ]
     });
     res.status(200).json(transaksi);
@@ -20,6 +19,7 @@ exports.getAllTransaksi = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 // Mendapatkan transaksi berdasarkan ID
 exports.getTransaksiById = async (req, res) => {
   const { id } = req.params;
@@ -30,7 +30,7 @@ exports.getTransaksiById = async (req, res) => {
         { 
           model: User, 
           as: 'user',
-          attributes: { exclude: ['password'] } // Mengecualikan password
+          attributes: { exclude: ['password'] } 
         },
         { model: Member, as: 'member' }
       ]
@@ -46,32 +46,37 @@ exports.getTransaksiById = async (req, res) => {
 
 // Membuat transaksi baru
 exports.createTransaksi = async (req, res) => {
-  const { id_member, id_user, nama_kasir, nama_member, tanggal, detailTransaksi } = req.body;
+  const { id_member, id_user, nama_kasir, nama_member, total_harga, total_bayar, bayar, potongan, metode_bayar, tanggal, detailTransaksi } = req.body;
 
   try {
-    // Membuat transaksi baru
+    // Buat transaksi baru
     const newTransaksi = await Transaksi.create({
       id_member,
       id_user,
       nama_kasir,
       nama_member,
+      total_harga,
+      total_bayar,
+      bayar,
+      potongan,
+      metode_bayar,
       tanggal,
     });
 
-    // Jika ada detailTransaksi, simpan juga detailnya
+    // Jika ada detail transaksi, masukkan ke tabel detailTransaksi
     if (detailTransaksi && detailTransaksi.length > 0) {
       for (const detail of detailTransaksi) {
-        // Cek stok produk sebelum mengurangi
         const produk = await Produk.findByPk(detail.id_produk);
         if (!produk) {
           return res.status(404).json({ error: `Produk dengan ID ${detail.id_produk} tidak ditemukan` });
         }
 
+        // Cek stok produk
         if (produk.stok < detail.kuantitas) {
           return res.status(400).json({ error: `Stok produk ${produk.nmproduk} tidak mencukupi` });
         }
 
-        // Menyimpan detail transaksi
+        // Buat detail transaksi
         await DetailTransaksi.create({
           id_transaksi: newTransaksi.id_transaksi,
           id_produk: detail.id_produk,
@@ -80,7 +85,7 @@ exports.createTransaksi = async (req, res) => {
           potongan: detail.potongan,
         });
 
-        // Memperbarui stok produk
+        // Kurangi stok produk
         await Produk.decrement('stok', {
           by: detail.kuantitas,
           where: { id_produk: detail.id_produk },
@@ -100,17 +105,23 @@ exports.createTransaksi = async (req, res) => {
 // Memperbarui transaksi
 exports.updateTransaksi = async (req, res) => {
   const { id } = req.params;
-  const { id_member, id_user, nama_kasir, nama_member, tanggal } = req.body;
+  const { id_member, id_user, nama_kasir, nama_member, total_harga, total_bayar, bayar, potongan, metode_bayar, tanggal } = req.body;
   try {
     const transaksi = await Transaksi.findByPk(id);
     if (!transaksi) {
       return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
     }
 
+    // Update data transaksi
     transaksi.id_member = id_member;
     transaksi.id_user = id_user;
     transaksi.nama_kasir = nama_kasir;
     transaksi.nama_member = nama_member;
+    transaksi.total_harga = total_harga;
+    transaksi.total_bayar = total_bayar;
+    transaksi.bayar = bayar;
+    transaksi.potongan = potongan;
+    transaksi.metode_bayar = metode_bayar;
     transaksi.tanggal = tanggal;
 
     await transaksi.save();

@@ -1,4 +1,4 @@
-const { Keranjang, Member, Produk } = require ("../models")
+const { Keranjang, Member, Produk } = require("../models");
 
 // Mendapatkan semua item keranjang beserta produk yang terkait
 exports.getAllKeranjang = async (req, res) => {
@@ -6,10 +6,7 @@ exports.getAllKeranjang = async (req, res) => {
     const keranjang = await Keranjang.findAll({
       include: [
         { model: Member, as: 'member' },
-        {
-          model: Produk,
-          as: 'produk',
-        },
+        { model: Produk, as: 'produk' },
       ]
     });
     res.status(200).json(keranjang);
@@ -25,10 +22,7 @@ exports.getKeranjangById = async (req, res) => {
     const keranjang = await Keranjang.findByPk(id, {
       include: [
         { model: Member, as: 'member' },
-        {
-          model: Produk,
-          as: 'produk',
-        },
+        { model: Produk, as: 'produk' },
       ]
     });
     if (!keranjang) {
@@ -64,9 +58,13 @@ exports.createKeranjang = async (req, res) => {
       }
     });
 
+    // Hitung total_harga berdasarkan harga produk dan kuantitas
+    const total_harga = produk.harga_jual * kuantitas;
+
     if (keranjang) {
       // Jika produk sudah ada di keranjang, tambahkan kuantitas
       keranjang.kuantitas += kuantitas;
+      keranjang.total_harga = produk.harga_jual * keranjang.kuantitas;
       await keranjang.save();
     } else {
       // Jika produk belum ada, buat keranjang baru
@@ -74,6 +72,7 @@ exports.createKeranjang = async (req, res) => {
         id_member: id_member || null,  // Set null jika id_member tidak ada
         id_produk,
         kuantitas,
+        total_harga, // Set total_harga
       });
     }
 
@@ -83,6 +82,7 @@ exports.createKeranjang = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 // Memperbarui kuantitas produk di keranjang
 exports.updateKeranjang = async (req, res) => {
   const { id } = req.params;
@@ -101,8 +101,9 @@ exports.updateKeranjang = async (req, res) => {
       return res.status(404).json({ error: 'Produk tidak ditemukan' });
     }
 
-    // Update kuantitas produk dalam keranjang
+    // Update kuantitas dan total_harga produk dalam keranjang
     keranjang.kuantitas = kuantitas;
+    keranjang.total_harga = produk.harga_jual * kuantitas;
     await keranjang.save();
 
     res.status(200).json({ message: 'Keranjang berhasil diperbarui', keranjang });
@@ -128,5 +129,3 @@ exports.deleteKeranjang = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-// qq
