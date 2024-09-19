@@ -168,3 +168,24 @@
 .btn-success {
   background-color: #36dda5;
 }
+
+.modal-content {
+  color: black; /* Ubah sesuai kebutuhan */
+}
+.bootstrap-modal .modal-content {
+  background-color: white !important;
+  color: black !important;
+}
+.modal-card-body{
+  background-color: white !important;
+}
+.modal-card-head{
+  background-color: white !important;
+}
+.modal-card-foot{
+  background-color: white !important;
+}
+.modal-card-title{
+  color: black !important;
+  text-align: center;
+}

@@ -31,7 +31,7 @@ export default class Kasir extends Component {
         console.log(error);
       });
 
-      axios
+    axios
       .get(API_URL + "keranjang")
       .then((res) => {
         // console.log("Response : ", res);
@@ -43,20 +43,20 @@ export default class Kasir extends Component {
       });
   }
 
-componentDidUpdate (prevState) {
-  if(this.state.keranjang !== prevState.keranjang){
-  axios
-      .get(API_URL + "keranjang")
-      .then((res) => {
-        // console.log("Response : ", res);
-        const keranjang = res.data;
-        this.setState({ keranjang });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  componentDidUpdate(prevState) {
+    if (this.state.keranjang !== prevState.keranjang) {
+      axios
+        .get(API_URL + "keranjang")
+        .then((res) => {
+          // console.log("Response : ", res);
+          const keranjang = res.data;
+          this.setState({ keranjang });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
-}
 
   changeKategori = (value) => {
     this.setState({
@@ -77,42 +77,40 @@ componentDidUpdate (prevState) {
 
   masukKeranjang = (value) => {
     console.log("Memproses produk:", value);
-  
+
     axios
       .get(API_URL + "keranjang?produk.id_produk=" + value.id_produk)
       .then((res) => {
         console.log("Data keranjang yang diterima:", res.data);
-  
+
         if (res.data.length === 0) {
           console.log("Produk belum ada di keranjang. Menambahkan produk...");
-  
+
           const keranjang = {
-            id_member: null,        // Sesuaikan dengan nilai sebenarnya jika ada
+            id_member: null, // Sesuaikan dengan nilai sebenarnya jika ada
             id_produk: value.id_produk, // ID produk
-            kuantitas: 1    // Kuantitas produk
+            kuantitas: 1, // Kuantitas produk
           };
           // console.log("Payload Keranjang:", keranjang);
 
-  
           // Menambahkan produk ke keranjang
           axios
-          .post(API_URL + "keranjang", keranjang)
-          .then((res) => {
-            console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
-            swal({
-              title: "Sukses Masuk Keranjang",
-              text: "Sukses Masuk Keranjang: " + value.nmproduk,
-              button: false,
-              timer: 1500,
+            .post(API_URL + "keranjang", keranjang)
+            .then((res) => {
+              console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
+              swal({
+                title: "Sukses Masuk Keranjang",
+                text: "Sukses Masuk Keranjang: " + value.nmproduk,
+                button: false,
+                timer: 1500,
+              });
+            })
+            .catch((error) => {
+              console.error("Error saat menambahkan produk ke keranjang:", error.response ? error.response.data : error.message);
             });
-          })
-          .catch((error) => {
-            console.error("Error saat menambahkan produk ke keranjang:", error.response ? error.response.data : error.message);
-          });
-        
         } else {
           console.log("Produk sudah ada di keranjang. Mengupdate kuantitas...");
-  
+
           // const keranjang = {
           //   id_member: null,  // Kirim null jika tidak ada member
           //   produk: [
@@ -123,12 +121,12 @@ componentDidUpdate (prevState) {
           //   ]
           // };
           const keranjang = {
-            id_member: null,        // Sesuaikan dengan nilai sebenarnya jika ada
+            id_member: null, // Sesuaikan dengan nilai sebenarnya jika ada
             id_produk: value.id_produk, // ID produk
-            kuantitas: 1    // Kuantitas produk
+            kuantitas: 1, // Kuantitas produk
           };
           console.log("Payload Keranjang:", keranjang);
-  
+
           // Mengupdate produk di keranjang
           axios
             .put(API_URL + "keranjang/" + res.data[0].id_keranjang, keranjang)
@@ -151,7 +149,6 @@ componentDidUpdate (prevState) {
         console.error("Error saat memeriksa produk di keranjang:", error);
       });
   };
-  
 
   render() {
     const { menus, kategoriYangDipilih, keranjang } = this.state;

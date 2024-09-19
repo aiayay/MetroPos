@@ -2,8 +2,91 @@ import React, { Component } from "react";
 import { Badge, Col, ListGroup, Row } from "react-bootstrap";
 import { numberWithCommas } from "../features/utils";
 import TotalBayar from "./TotalBayar";
+import ModalKeranjang from "./ModalKeranjang";
+import { API_URL } from "../features/constants";
+import axios from "axios";
+import swal from "sweetalert";
 
 export default class KasirHasil extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showModal: false,
+      keranjangDetail: false,
+      jumlah: 0,
+      keterangan: "",
+      totalHarga: 0,
+    };
+  }
+
+  handleShow = (menuKeranjang) => {
+    this.setState({
+      showModal: true,
+      keranjangDetail: menuKeranjang,
+      kuantitas: menuKeranjang.kuantitas,
+      catatan: menuKeranjang.catatan,
+      totalHarga: menuKeranjang.total_harga,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      showModal: false,
+    });
+  };
+
+  tambah = () => {
+    this.setState({
+      kuantitas: this.state.kuantitas + 1,
+      totalHarga: this.state.keranjangDetail.produk.harga_jual * (this.state.kuantitas + 1),
+    });
+  };
+
+  kurang = () => {
+    if (this.state.kuantitas !== 1) {
+      this.setState({
+        kuantitas: this.state.kuantitas - 1,
+        totalHarga: this.state.keranjangDetail.produk.harga_jual * (this.state.kuantitas - 1),
+      });
+    }
+  };
+
+  changeHandler = (event) => {
+    this.setState({
+      catatan: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    //erro nih update data nya
+    event.preventDefault();
+    const data = {
+      id_member: null, // Sesuaikan dengan nilai sebenarnya jika ada
+      id_produk: this.state.keranjangDetail.produk, // ID produk
+      kuantitas: this.state.kuantitas, // Kuantitas produk
+      total_harga: this.state.totalHarga,
+      catatan: this.state.catatan,
+    };
+    // console.log("Payload Keranjang:", keranjang);
+
+    // Menambahkan produk ke keranjang
+    axios
+      .put(API_URL + "keranjang/" + this.state.keranjangDetail.id_keranjang, data)
+      .then((res) => {
+        console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
+        swal({
+          title: "Update Pesanan!",
+          text: "Sukses Update Pesanan: " + data.id_produk.nmproduk,
+          button: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error("Error saat menambahkan produk ke keranjang:", error.response ? error.response.data : error.message);
+      });
+  };
+
   render() {
     const { keranjang } = this.props;
     return (
@@ -20,7 +103,7 @@ export default class KasirHasil extends Component {
             {keranjang.length !== 0 && (
               <ListGroup variant="flush">
                 {keranjang.map((menuKeranjang) => (
-                  <ListGroup.Item key={menuKeranjang.id_keranjang}>
+                  <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
                     <Row>
                       <Col xs={2}>
                         <h4 className="text-black">
@@ -39,11 +122,13 @@ export default class KasirHasil extends Component {
                     </Row>
                   </ListGroup.Item>
                 ))}
+
+                <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} />
               </ListGroup>
             )}
             <hr />
 
-            <TotalBayar keranjang={keranjang} {...this.props}  />
+            <TotalBayar keranjang={keranjang} {...this.props} />
 
             {/* <p className="text-black">Total Bayar</p>
             <p className="text-black">Disc Member</p>
