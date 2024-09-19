@@ -21,14 +21,17 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 1,
       },
+      total_harga: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0, // Default nilai 0
+      },
     },
-
     {
       tableName: "keranjang",
       timestamps: true,
     }
   );
-
 
   // Relasi keranjang dengan member dan produk (jika diperlukan)
   Keranjang.associate = (models) => {
