@@ -61,9 +61,11 @@ export default class KasirHasil extends Component {
   handleSubmit = (event) => {
     //erro nih update data nya
     event.preventDefault();
+
+    this.handleClose();
     const data = {
       id_member: null, // Sesuaikan dengan nilai sebenarnya jika ada
-      id_produk: this.state.keranjangDetail.produk, // ID produk
+      id_produk: this.state.keranjangDetail.produk.id_produk, // Pastikan hanya mengirim ID produk
       kuantitas: this.state.kuantitas, // Kuantitas produk
       total_harga: this.state.totalHarga,
       catatan: this.state.catatan,
@@ -78,6 +80,33 @@ export default class KasirHasil extends Component {
         swal({
           title: "Update Pesanan!",
           text: "Sukses Update Pesanan: " + data.id_produk.nmproduk,
+          // icon: success,
+          button: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error("Error saat menambahkan produk ke keranjang:", error.response ? error.response.data : error.message);
+      });
+  };
+
+  hapusPesanan = (id) => {
+    //erro nih update data nya
+
+    this.handleClose();
+
+    // console.log("Payload Keranjang:", keranjang);
+
+    // Menambahkan produk ke keranjang
+    axios
+      .delete(API_URL + "keranjang/" + this.state.keranjangDetail.id_keranjang)
+
+      .then((res) => {
+        console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
+        swal({
+          title: "Hapus Pesanan!",
+          text: "Sukses Hapus Pesanan: " + this.state.keranjangDetail.produk.nmproduk,
+          // icon: error,
           button: false,
           timer: 1500,
         });
@@ -123,7 +152,7 @@ export default class KasirHasil extends Component {
                   </ListGroup.Item>
                 ))}
 
-                <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} />
+                <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} hapusPesanan={this.hapusPesanan} />
               </ListGroup>
             )}
             <hr />

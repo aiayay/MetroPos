@@ -45,7 +45,7 @@ const ModalKeranjang = ({ showModal, handleClose, keranjangDetail, kuantitas, ca
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer > 
           <Button variant="danger" onClick={() => hapusPesanan(keranjangDetail.id_keranjang)}>
             Hapus Pesanan
           </Button>
