@@ -146,7 +146,7 @@ export default class KasirHasil extends Component {
                         <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
                       </Col>
                       <Col>
-                        <strong className="float-right"></strong>
+                        <strong className="float-right">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
