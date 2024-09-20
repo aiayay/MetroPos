@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0, // Default nilai 0
       },
+      catatan: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       tableName: "keranjang",
