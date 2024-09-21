@@ -124,15 +124,14 @@ export default class KasirHasil extends Component {
           <div className="keranjang-wrapper">
             <h2 className="text-black">Keranjang</h2>
             <hr />
-            <p className="text-black">Tanggal : 04/09/2024</p>
-            <p className="text-black">Kasir : Aini</p>
-            <p className="text-black">Kode Transaksi : 085265</p>
-            <p className="text-black">Member : Aini</p>
-            <hr />
             {keranjang.length !== 0 && (
               <ListGroup variant="flush">
                 {keranjang.map((menuKeranjang) => (
                   <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
+                    <p className="text-black">Tanggal :</p>
+                    <p className="text-black">Kasir :</p>
+                    <p className="text-black">Member : {menuKeranjang.member.nama_member}</p>
+                    <hr />
                     <Row>
                       <Col xs={2}>
                         <h4 className="text-black">
