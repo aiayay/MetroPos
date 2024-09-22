@@ -6,6 +6,8 @@ import { API_URL } from "../features/constants";
 
 const KategoriList = () => {
   const [kategori, setKategori] = useState([]);
+  const [search, setSearch] = useState("");
+  // console.log(search);
 
   useEffect(() => {
     getKategori();
@@ -46,7 +48,7 @@ const KategoriList = () => {
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -71,21 +73,25 @@ const KategoriList = () => {
             </tr>
           </thead>
           <tbody>
-            {kategori.map((kategori, index) => (
-              <tr key={kategori.id_kategori}>
-                <td>{index + 1}</td>
-                <td>{kategori.id_kategori}</td>
-                <td>{kategori.nama_kategori}</td>
-                <td>
-                  <Link to={`/kategori/edit/${kategori.id_kategori}`} className="button is-small is-info">
-                    Edit
-                  </Link>
-                  <button onClick={() => deleteKategori(kategori.id_kategori)} className="button is-small is-danger">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {kategori
+              .filter((kategori) => {
+                return search.toLowerCase() === "" ? kategori : kategori.nama_kategori.toLowerCase().includes(search);
+              })
+              .map((kategori, index) => (
+                <tr key={kategori.id_kategori}>
+                  <td>{index + 1}</td>
+                  <td>{kategori.id_kategori}</td>
+                  <td>{kategori.nama_kategori}</td>
+                  <td>
+                    <Link to={`/kategori/edit/${kategori.id_kategori}`} className="button is-small is-info">
+                      Edit
+                    </Link>
+                    <button onClick={() => deleteKategori(kategori.id_kategori)} className="button is-small is-danger">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

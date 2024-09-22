@@ -6,6 +6,8 @@ import "../index.css";
 
 const TransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
+  const [search, setSearch] = useState("");
+  // console.log(search);
 
   useEffect(() => {
     getTransaksi();
@@ -25,7 +27,6 @@ const TransaksiList = () => {
     <div>
       <h1 className="title">Transaksi</h1>
       <h2 className="subtitle">Barang Terjual</h2>
-
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
           <div className="navbar-item">
@@ -40,7 +41,7 @@ const TransaksiList = () => {
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -60,39 +61,49 @@ const TransaksiList = () => {
         <button className="button ungu">Filter</button>
       </p>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>
-              <th>Nama Produk</th>
-              <th>Stok</th>
-              <th>Satuan</th>
-              <th>Foto Produk</th>
-              <th>Merk</th>
-              <th>Harga Beli</th>
-              <th>Harga Jual</th>
+              <th>Kode Transaksi</th>
+              <th>Nama Member</th>
+              <th>Nama Kasir</th>
+              <th>Total harga</th>
+              <th>Total Bayar</th>
+              <th>Bayar</th>
+              <th>Potongan</th>
+              <th>Metode Bayar</th>
+              <th>Tanggal</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <Link to="/transaksi/detail" className="button is-primary mb-2">
-                  Detail
-                </Link>
-                <button onClick={() => deleteTransaksi(transaksi.id_transaksi)} className="button is-danger mb-2">
-                  Delete
-                </button>
-              </td>
-            </tr>
+            {transaksi
+              .filter((transaksi) => {
+                return search.toLowerCase() === "" ? transaksi : transaksi.nama_member.toLowerCase().includes(search);
+              })
+              .map((transaksi, index) => (
+                <tr key={transaksi.id_transaksi}>
+                  <td>{index + 1}</td>
+                  <td>{transaksi.id_transaksi}</td>
+                  <td>{transaksi.nama_member}</td>
+                  <td>{transaksi.nama_kasir}</td>
+                  <td>{transaksi.total_harga}</td>
+                  <td>{transaksi.total_bayar}</td>
+                  <td>{transaksi.bayar}</td>
+                  <td>{transaksi.potongan}</td>
+                  <td>{transaksi.metode_bayar}</td>
+                  <td>{transaksi.tanggal}</td>
+                  <td>
+                    <Link to={`/transaksi/detail/${transaksi.id_transaksi}`} className="button is-primary is-info">
+                      Detail
+                    </Link>
+                    <button onClick={() => deleteTransaksi(transaksi.id_transaksi)} className="button is-danger mb-2">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

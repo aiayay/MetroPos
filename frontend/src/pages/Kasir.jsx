@@ -7,6 +7,8 @@ import { Row, Container, Col } from "react-bootstrap";
 import { API_URL } from "../features/constants";
 import axios from "axios";
 import swal from "sweetalert";
+import KasirNavbarBawah from "../components/KasirNavbarBawah";
+
 
 export default class Kasir extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ export default class Kasir extends Component {
       menus: [],
       kategoriYangDipilih: "Minuman",
       keranjang: [],
+      id_member: null, // Tambahkan state id_member
     };
   }
 
@@ -75,19 +78,53 @@ export default class Kasir extends Component {
       });
   };
 
+  pilihMember = (id_member) => {
+    console.log("Member terpilih:", id_member);
+    this.setState({ id_member });
+  
+    // Update semua item di keranjang dengan ID member yang baru dipilih
+    axios
+      .get(API_URL + "keranjang")
+      .then((res) => {
+        const keranjangItems = res.data;
+        
+        keranjangItems.forEach((item) => {
+          const updatedKeranjang = {
+            ...item,
+            id_member: id_member, // Assign member baru ke setiap item
+          };
+  
+          axios
+            .put(API_URL + "keranjang/" + item.id_keranjang, updatedKeranjang)
+            .then((res) => {
+              console.log("Keranjang berhasil diupdate dengan member:", id_member);
+            })
+            .catch((error) => {
+              console.error("Error saat mengupdate keranjang:", error);
+            });
+        });
+      })
+      .catch((error) => {
+        console.error("Error saat mengambil data keranjang:", error);
+      });
+  };
+  
   masukKeranjang = (value) => {
     console.log("Memproses produk:", value);
+    console.log("ID Member yang dipilih:", this.state.id_member); // Log ID Member sebelum memproses
+
 
     axios
       .get(API_URL + "keranjang?produk.id_produk=" + value.id_produk)
       .then((res) => {
+        
         console.log("Data keranjang yang diterima:", res.data);
 
         if (res.data.length === 0) {
           console.log("Produk belum ada di keranjang. Menambahkan produk...");
 
           const keranjang = {
-            id_member: null, // Sesuaikan dengan nilai sebenarnya jika ada
+            id_member: this.state.id_member || null, // Menggunakan id_member yang dipilih
             id_produk: value.id_produk, // ID produk
             kuantitas: 1, // Kuantitas produk
           };
@@ -98,6 +135,8 @@ export default class Kasir extends Component {
             .post(API_URL + "keranjang", keranjang)
             .then((res) => {
               console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
+            console.log("ID Member yang dikirim:", keranjang.id_member); // Log ID Member yang dikirim dalam post
+            console.log("Respons dari server:", res.data); // Cek respons dari server
               swal({
                 title: "Sukses Masuk Keranjang",
                 text: "Sukses Masuk Keranjang: " + value.nmproduk,
@@ -121,7 +160,7 @@ export default class Kasir extends Component {
           //   ]
           // };
           const keranjang = {
-            id_member: null, // Sesuaikan dengan nilai sebenarnya jika ada
+            id_member: this.state.id_member || null, // Sesuaikan dengan nilai sebenarnya jika ada
             id_produk: value.id_produk, // ID produk
             kuantitas: 1, // Kuantitas produk
           };
@@ -132,6 +171,7 @@ export default class Kasir extends Component {
             .put(API_URL + "keranjang/" + res.data[0].id_keranjang, keranjang)
             .then((res) => {
               console.log("Produk berhasil diupdate di keranjang:", value.nmproduk);
+              console.log("ID Member yang dikirim untuk update:", keranjang.id_member); // Log ID Member yang dikirim dalam update
               swal({
                 title: "Sukses Masuk Keranjang",
                 text: "Sukses Masuk Keranjang: " + value.nmproduk,
@@ -155,6 +195,7 @@ export default class Kasir extends Component {
     return (
       <div>
         <KasirLayout>
+        <KasirNavbarBawah pilihMember={this.pilihMember} /> {/* Tambahkan prop pilihMember */}
           <Container fluid className="mt-3">
             <div className="columns">
               <div className="column is-8">
