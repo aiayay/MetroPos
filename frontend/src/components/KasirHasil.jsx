@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Badge, Col, ListGroup, Row } from "react-bootstrap";
+import { Badge, Col, ListGroup, Row, Card } from "react-bootstrap";
 import { numberWithCommas } from "../features/utils";
 import TotalBayar from "./TotalBayar";
 import ModalKeranjang from "./ModalKeranjang";
@@ -76,7 +76,8 @@ export default class KasirHasil extends Component {
     axios
       .put(API_URL + "keranjang/" + this.state.keranjangDetail.id_keranjang, data)
       .then((res) => {
-        console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
+        this.props.getListKeranjang();
+        // console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
         swal({
           title: "Update Pesanan!",
           text: "Sukses Update Pesanan: " + data.id_produk.nmproduk,
@@ -102,7 +103,8 @@ export default class KasirHasil extends Component {
       .delete(API_URL + "keranjang/" + this.state.keranjangDetail.id_keranjang)
 
       .then((res) => {
-        console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
+        this.props.getListKeranjang();
+        // console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
         swal({
           title: "Hapus Pesanan!",
           text: "Sukses Hapus Pesanan: " + this.state.keranjangDetail.produk.nmproduk,
@@ -118,6 +120,11 @@ export default class KasirHasil extends Component {
 
   render() {
     const { keranjang } = this.props;
+    const today = new Date().toLocaleDateString("id-ID", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
     return (
       <div>
         <Col md={6} mt="2">
@@ -125,10 +132,11 @@ export default class KasirHasil extends Component {
             <h2 className="text-black">Keranjang</h2>
             <hr />
             {keranjang.length !== 0 && (
-              <ListGroup variant="flush">
+              <Card className="overflow-auto hasil">
+                <ListGroup variant="flush">
                 {keranjang.map((menuKeranjang) => (
                   <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
-                    <p className="text-black">Tanggal :</p>
+                    <p className="text-black">Tanggal : {today}</p>
                     <p className="text-black">Kasir :</p>
                     <p className="text-black">Member : {menuKeranjang.member.nama_member}</p>
                     <hr />
@@ -145,7 +153,7 @@ export default class KasirHasil extends Component {
                         <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
                       </Col>
                       <Col>
-                        <strong className="float-right">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
+                        <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
@@ -153,10 +161,11 @@ export default class KasirHasil extends Component {
 
                 <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} hapusPesanan={this.hapusPesanan} />
               </ListGroup>
+              </Card>
             )}
             <hr />
 
-            <TotalBayar keranjang={keranjang} {...this.props} />
+            <TotalBayar keranjang={keranjang} {...this.props}  />
 
             {/* <p className="text-black">Total Bayar</p>
             <p className="text-black">Disc Member</p>

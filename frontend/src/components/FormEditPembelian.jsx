@@ -112,7 +112,7 @@ const FormEditPembelian = () => {
                 <label className="label">Nama Produk</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nmproduk || ""} onChange={(e) => setNmproduk(e.target.value)}>
+                    <select value={nmproduk || ""} onChange={(e) => setNmproduk(e.target.value)} className="text-black">
                       <option value="">Pilih Produk</option>
                       {produkList.map((produk) => (
                         <option key={produk.id_produk} value={produk.id_produk}>
@@ -127,7 +127,7 @@ const FormEditPembelian = () => {
                 <label className="label">Nama Supplier</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={supplier || ""} onChange={(e) => setSupplier(e.target.value)}>
+                    <select value={supplier || ""} onChange={(e) => setSupplier(e.target.value)} className="text-black">
                       <option value="">Pilih supplier</option>
                       {supplierList.map((supplier) => (
                         <option key={supplier.id_supplier} value={supplier.id_supplier}>

@@ -35,6 +35,25 @@ export default class Kasir extends Component {
         console.log(error);
       });
 
+    this.getListKeranjang();
+  }
+
+  // componentDidUpdate(prevState) {
+  //   if (this.state.keranjang !== prevState.keranjang) {
+  //     axios
+  //       .get(API_URL + "keranjang")
+  //       .then((res) => {
+  //         // console.log("Response : ");
+  //         const keranjang = res.data;
+  //         this.setState({ keranjang });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }
+
+  getListKeranjang =() => {
     axios
       .get(API_URL + "keranjang")
       .then((res) => {
@@ -45,21 +64,6 @@ export default class Kasir extends Component {
       .catch((error) => {
         console.log(error);
       });
-  }
-
-  componentDidUpdate(prevState) {
-    if (this.state.keranjang !== prevState.keranjang) {
-      axios
-        .get(API_URL + "keranjang")
-        .then((res) => {
-          // console.log("Response : ", res);
-          const keranjang = res.data;
-          this.setState({ keranjang });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
   }
 
   changeKategori = (value) => {
@@ -135,9 +139,10 @@ export default class Kasir extends Component {
           axios
             .post(API_URL + "keranjang", keranjang)
             .then((res) => {
-              console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
-            console.log("ID Member yang dikirim:", keranjang.id_member); // Log ID Member yang dikirim dalam post
-            console.log("Respons dari server:", res.data); // Cek respons dari server
+              this.getListKeranjang();
+            //   console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
+            // console.log("ID Member yang dikirim:", keranjang.id_member); // Log ID Member yang dikirim dalam post
+            // console.log("Respons dari server:", res.data); // Cek respons dari server
               swal({
                 title: "Sukses Masuk Keranjang",
                 text: "Sukses Masuk Keranjang: " + value.nmproduk,
@@ -199,8 +204,7 @@ export default class Kasir extends Component {
         <KasirLayout>
         <KasirNavbarBawah pilihMember={this.pilihMember} /> {/* Tambahkan prop pilihMember */}
           <Container fluid className="mt-3">
-          <div className="column is-2">
-          </div>
+            <Row>
             <div className="columns">
            <KasirSidebar changeKategori={this.changeKategori} kategoriYangDipilih={kategoriYangDipilih} />
               <div className="column is-6">
@@ -218,12 +222,16 @@ export default class Kasir extends Component {
                 <div className="bd-notification is-primary">
                   <div className="cell">
                     <Col>
-                      <KasirHasil keranjang={keranjang} {...this.props} />
+                      <KasirHasil keranjang={keranjang} {...this.props} getListKeranjang={this.getListKeranjang} />
                     </Col>
                   </div>
                 </div>
               </div>
             </div>
+            </Row>
+          {/* <div className="column is-2">
+          </div> */}
+            
           </Container>
         </KasirLayout>
       </div>

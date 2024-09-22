@@ -117,15 +117,7 @@
   background-color: #36dda5;
   color: white;
 } */
-.menu-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.menu-wrapper .col-md-4 {
-  /* flex-basis: calc(33.333% - 20px); Menyisakan sedikit ruang untuk margin */
-  margin-bottom: 20px;
-}
 .keranjang-wrapper {
   position: relative;
   right: 0;
@@ -174,7 +166,6 @@
   color: white !important;
 }
 
-
 .btn-success {
   background-color: #36dda5;
 }
@@ -216,4 +207,23 @@
   margin: 2px;
 }
 
+@media only screen and (max-height: 1000px) {
+  .hasil {
+    background-color: rgb(230, 230, 230) !important;
+    height: 650px;
+  }
 
+  .menu-wrapper {
+    /* height: 800px; */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .menu-wrapper .col-md-4 {
+    /* flex-basis: calc(33.333% - 20px); Menyisakan sedikit ruang untuk margin */
+    margin-bottom: 20px;
+  }
+}
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+}
