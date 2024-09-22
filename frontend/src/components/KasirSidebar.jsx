@@ -30,23 +30,33 @@ export default class KasirSidebar extends Component {
   }
 
   render() {
+    // console.log("kategori : ", this.state.kategories);
     const { kategories } = this.state;
     const { changeKategori, kategoriYangDipilih } = this.props;
-    // console.log("kategori : ", this.state.kategories);
+
     return (
       <div>
-        <Col md={2} mt="2">
-          <aside className="menu pl-2 pr-2 has-shadow mt-5">
+        <Col md={8} xs={12} className="mb-4 mr-4">
+          <aside className="menu pl-2 pr-2 has-shadow mt-0">
             <h1 className="text-white">Daftar Kategori</h1>
             <hr />
-            <ListGroup>
+            <ul className="menu-list">
               {kategories &&
                 kategories.map((kategori) => (
-                  <ListGroupItem key={kategori.id_kategori} className={kategoriYangDipilih === kategori.nama_kategori && "kategori-aktif"} onClick={() => changeKategori(kategori.nama_kategori)}>
+                  <li key={kategori.id_kategori} className={kategoriYangDipilih === kategori.nama_kategori ? "item-sidebar" : ""} onClick={() => changeKategori(kategori.nama_kategori)} style={{ cursor: "pointer" }}>
+                    <a>{kategori.nama_kategori}</a>
+                  </li>
+                ))}
+            </ul>
+
+            {/* <ListGroup>
+              {kategories &&
+                kategories.map((kategori) => (
+                  <ListGroupItem key={kategori.id_kategori} className={kategoriYangDipilih === kategori.nama_kategori && "kategori-aktif"} onClick={() => changeKategori(kategori.nama_kategori)} style={{ cursor: "pointer" }}>
                     <h5>{kategori.nama_kategori}</h5>
                   </ListGroupItem>
                 ))}
-            </ListGroup>
+            </ListGroup> */}
             {/* <ul className="menu-list">
               {kategories &&
                 kategories.map((kategori) => (
