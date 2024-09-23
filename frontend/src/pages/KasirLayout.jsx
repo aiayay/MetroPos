@@ -46,11 +46,9 @@ export default class KasirLayout extends Component {
       <React.Fragment>
         <KasirNavbar />
         <div className="columns mt-6" style={{ minHeight: "100vh" }}>
-          <div className="column is-2">
-            <KasirSidebar changeKategori={this.changeKategori} kategoriYangDipilih={kategoriYangDipilih} />
-          </div>
+     
           <div className="column">
-            <KasirNavbarBawah />
+            {/* <KasirNavbarBawah /> */}
             <main>{this.props.children}</main>
           </div>
         </div>

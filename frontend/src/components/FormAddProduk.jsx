@@ -8,12 +8,12 @@ import "../index.css";
 const FormAddProduk = () => {
   const [nmproduk, setNmproduk] = useState("");
   const [harga_jual, setHarga_jual] = useState("");
-  const [harga_beli, setHarga_beli] = useState("");
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
-  const [nama_kategori, setKategori] = useState("");
-  const [foto_produk, setFoto_produk] = useState("");
+  const [nama_kategori, setNamaKategori] = useState(""); // Menggunakan nama_kategori
+
+  // const [foto_produk, setFoto_produk] = useState("");
   const [diskon, setDiskon] = useState("");
   const [msg, setMsg] = useState("");
   const [kategoriList, setKategoriList] = useState([]);
@@ -33,25 +33,34 @@ const FormAddProduk = () => {
 
   const simpanProduk = async (e) => {
     e.preventDefault();
+
+    if (!nama_kategori) {
+      setMsg("Kategori harus dipilih.");
+      return;
+    }
+
+    const data = {
+      nmproduk: nmproduk,
+      harga_jual: harga_jual,
+      stok: stok,
+      satuan: satuan,
+      merk: merk,
+      nama_kategori: nama_kategori, // Mengirim nama_kategori
+      diskon: diskon,
+    };
+
+    console.log("Data yang dikirim: ", data); // Lihat data sebelum dikirim
     try {
-      await axios.post(API_URL + "produk", {
-        nmproduk: nmproduk,
-        harga_jual: harga_jual,
-        harga_beli: harga_beli,
-        stok: stok,
-        satuan: satuan,
-        merk: merk,
-        nama_kategori: nama_kategori,
-        foto_produk: foto_produk,
-        diskon: diskon,
-      });
+      await axios.post(API_URL + "produk", data);
       navigate("/produk");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.msg);
+        console.error("Error response: ", error.response.data);
+        setMsg(error.response.data.error || error.response.data.msg);
       }
     }
   };
+
   return (
     <div>
       <h1 className="title">Produk</h1>
@@ -80,15 +89,9 @@ const FormAddProduk = () => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Harga Beli</label>
-                <div className="control">
-                  <input type="number" className="input" placeholder="Harga Beli" value={harga_beli} onChange={(e) => setHarga_beli(e.target.value)} />
-                </div>
-              </div>
-              <div className="field">
                 <label className="label">Stok</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="stok" value={stok} onChange={(e) => setStok(e.target.value)} />
+                  <input type="number" className="input" placeholder="Stok" value={stok} onChange={(e) => setStok(e.target.value)} />
                 </div>
               </div>
               <div className="field">
@@ -107,10 +110,10 @@ const FormAddProduk = () => {
                 <label className="label">Kategori</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={nama_kategori} onChange={(e) => setKategori(e.target.value)}>
+                    <select value={nama_kategori} onChange={(e) => setNamaKategori(e.target.value)}>
                       <option value="">Pilih Kategori</option>
                       {kategoriList.map((kat) => (
-                        <option key={kat.id_kategori} value={kat.id_kategori}>
+                        <option key={kat.id_kategori} value={kat.nama_kategori}>
                           {kat.nama_kategori}
                         </option>
                       ))}
@@ -118,16 +121,22 @@ const FormAddProduk = () => {
                   </div>
                 </div>
               </div>
-              <div className="field">
+              {/* <div className="field">
                 <label className="label">Foto Produk</label>
                 <div className="control">
-                  <input type="file" className="input" placeholder="foto" value={foto_produk} onChange={(e) => setFoto_produk(e.target.value)} />
+                  <input
+                    type="file"
+                    className="input"
+                    placeholder="Foto"
+                    value={foto_produk}
+                    onChange={(e) => setFoto_produk(e.target.value)}
+                  />
                 </div>
-              </div>
+              </div> */}
               <div className="field">
                 <label className="label">Diskon</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="diskon" value={diskon} onChange={(e) => setDiskon(e.target.value)} />
+                  <input type="text" className="input" placeholder="Diskon" value={diskon} onChange={(e) => setDiskon(e.target.value)} />
                 </div>
               </div>
 

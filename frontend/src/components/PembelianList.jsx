@@ -5,6 +5,8 @@ import { API_URL } from "../features/constants";
 import "../index.css";
 const PembelianList = () => {
   const [pembelian, setPembelian] = useState([]);
+  const [search, setSearch] = useState("");
+  console.log(search);
 
   useEffect(() => {
     getPembelian();
@@ -44,7 +46,7 @@ const PembelianList = () => {
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -59,7 +61,7 @@ const PembelianList = () => {
         </div>
       </div>
       <div>
-        <table className="table is-striped is-fullwidth">
+        <table className="table is-fullwidth">
           <thead>
             <tr>
               <th>No</th>
@@ -73,25 +75,29 @@ const PembelianList = () => {
             </tr>
           </thead>
           <tbody>
-            {pembelian.map((pembelian, index) => (
-              <tr key={pembelian.id_pembelian}>
-                <td>{index + 1}</td>
-                <td>{pembelian.id_pembelian}</td>
-                <td>{pembelian.produk.nmproduk}</td>
-                <td>{pembelian.supplier.nmsupplier}</td>
-                <td>{pembelian.kuantitas}</td>
-                <td>{pembelian.harga_beli}</td>
-                <td>{pembelian.tanggal}</td>
-                <td>
-                  <Link to={`/pembelian/edit/${pembelian.id_pembelian}`} className="button is-small is-info">
-                    Edit
-                  </Link>
-                  <button onClick={() => deletePembelian(pembelian.id_pembelian)} className="button is-small is-danger">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {pembelian
+              .filter((pembelian) => {
+                return search.toLowerCase() === "" ? pembelian : pembelian.produk.nmproduk.toLowerCase().includes(search);
+              })
+              .map((pembelian, index) => (
+                <tr key={pembelian.id_pembelian}>
+                  <td>{index + 1}</td>
+                  <td>{pembelian.id_pembelian}</td>
+                  <td>{pembelian.produk.nmproduk}</td>
+                  <td>{pembelian.supplier.nmsupplier}</td>
+                  <td>{pembelian.kuantitas}</td>
+                  <td>{pembelian.harga_beli}</td>
+                  <td>{pembelian.tanggal}</td>
+                  <td>
+                    <Link to={`/pembelian/edit/${pembelian.id_pembelian}`} className="button is-small is-info">
+                      Edit
+                    </Link>
+                    <button onClick={() => deletePembelian(pembelian.id_pembelian)} className="button is-small is-danger">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

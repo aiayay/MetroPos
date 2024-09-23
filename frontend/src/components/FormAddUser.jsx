@@ -19,7 +19,7 @@ const FormAddUser = () => {
   const simpanUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "user", {
+      await axios.post(API_URL + "user/register", {
         username: username,
         password: password,
         nama_lengkap: nama_lengkap,

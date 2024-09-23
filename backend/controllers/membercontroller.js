@@ -72,7 +72,7 @@ exports.createMember = async (req, res) => {
   }
 };
 
-// Update member by ID
+// Update member by IDx`
 exports.updateMember = async (req, res) => {
   const { id } = req.params;
   const { nama_member, no_telepon, alamat, jk } = req.body;
@@ -81,7 +81,8 @@ exports.updateMember = async (req, res) => {
     if (member) {
       member.nama_member = nama_member; // Pastikan nama field sesuai dengan model
       member.no_telepon = no_telepon;   // Pastikan nama field sesuai dengan model
-      member.alamat = alamat;          // Pastikan nama field sesuai dengan model
+      member.alamat = alamat;  
+      member.jk=jk;        // Pastikan nama field sesuai dengan model
                 // Pastikan nama field sesuai dengan model
       await member.save();
       res.status(200).json({

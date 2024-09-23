@@ -6,6 +6,8 @@ import "../index.css";
 
 const SupplierList = () => {
   const [supplier, setSupplier] = useState([]);
+  const [search, setSearch] = useState("");
+  // console.log(search);
 
   useEffect(() => {
     getSupplier();
@@ -45,7 +47,7 @@ const SupplierList = () => {
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -72,23 +74,27 @@ const SupplierList = () => {
             </tr>
           </thead>
           <tbody>
-            {supplier.map((supplier, index) => (
-              <tr key={supplier.id_supplier}>
-                <td>{index + 1}</td>
-                <td>{supplier.id_supplier}</td>
-                <td>{supplier.nmsupplier}</td>
-                <td>{supplier.alamat}</td>
-                <td>{supplier.notlp}</td>
-                <td>
-                  <Link to={`/supplier/edit/${supplier.id_supplier}`} className="button is-small is-info">
-                    Edit
-                  </Link>
-                  <button onClick={() => deleteSupplier(supplier.id_supplier)} className="button is-small is-danger">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {supplier
+              .filter((supplier) => {
+                return search.toLowerCase() === "" ? supplier : supplier.nmsupplier.toLowerCase().includes(search);
+              })
+              .map((supplier, index) => (
+                <tr key={supplier.id_supplier}>
+                  <td>{index + 1}</td>
+                  <td>{supplier.id_supplier}</td>
+                  <td>{supplier.nmsupplier}</td>
+                  <td>{supplier.alamat}</td>
+                  <td>{supplier.notlp}</td>
+                  <td>
+                    <Link to={`/supplier/edit/${supplier.id_supplier}`} className="button is-small is-info">
+                      Edit
+                    </Link>
+                    <button onClick={() => deleteSupplier(supplier.id_supplier)} className="button is-small is-danger">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

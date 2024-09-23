@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path"); // Mengimpor path
 require('dotenv').config();
 
 // Inisialisasi Express
@@ -23,6 +24,9 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Import semua router
 const detailtransaksirouter = require("./routes/detailtransaksirouter.js");
@@ -64,7 +68,7 @@ db.sequelize
   });
 
 // Start server
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

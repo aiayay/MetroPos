@@ -6,6 +6,8 @@ import "../index.css";
 
 const ProductList = () => {
   const [produk, setProduk] = useState([]);
+  const [search, setSearch] = useState("");
+  // console.log(search);
 
   useEffect(() => {
     getProduk();
@@ -42,7 +44,7 @@ const ProductList = () => {
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -64,7 +66,6 @@ const ProductList = () => {
               <th>Kode Produk</th>
               <th>Nama Produk</th>
               <th>Kategori</th>
-              <th>Harga Beli</th>
               <th>Harga Jual</th>
               <th>Merk</th>
               <th>Stok</th>
@@ -75,29 +76,32 @@ const ProductList = () => {
             </tr>
           </thead>
           <tbody>
-            {produk.map((produk, index) => (
-              <tr key={produk.id_produk}>
-                <td>{index + 1}</td>
-                <td>{produk.id_produk}</td>
-                <td>{produk.nmproduk}</td>
-                <td>{produk.nmproduk}</td>
-                <td>{produk.harga_beli}</td>
-                <td>{produk.harga_jual}</td>
-                <td>{produk.merk}</td>
-                <td>{produk.stok}</td>
-                <td>{produk.satuan}</td>
-                <td>{produk.foto_produk}</td>
-                <td>{produk.diskon}</td>
-                <td>
-                  <Link to={`/produk/edit/${produk.id_produk}`} className="button is-small is-info">
-                    Edit
-                  </Link>
-                  <button onClick={() => deleteProduk(produk.id_produk)} className="button is-small is-danger">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {produk
+              .filter((produk) => {
+                return search.toLowerCase() === "" ? produk : produk.nmproduk.toLowerCase().includes(search);
+              })
+              .map((produk, index) => (
+                <tr key={produk.id_produk}>
+                  <td>{index + 1}</td>
+                  <td>{produk.id_produk}</td>
+                  <td>{produk.nmproduk}</td>
+                  <td>{produk.kategori.nama_kategori}</td>
+                  <td>{produk.harga_jual}</td>
+                  <td>{produk.merk}</td>
+                  <td>{produk.stok}</td>
+                  <td>{produk.satuan}</td>
+                  <td>{produk.foto_produk}</td>
+                  <td>{produk.diskon}</td>
+                  <td>
+                    <Link to={`/produk/edit/${produk.id_produk}`} className="button is-small is-info">
+                      Edit
+                    </Link>
+                    <button onClick={() => deleteProduk(produk.id_produk)} className="button is-small is-danger">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

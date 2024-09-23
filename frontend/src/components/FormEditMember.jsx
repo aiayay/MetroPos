@@ -92,16 +92,17 @@ const FormEditMember = () => {
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk || ""} onChange={(e) => setJk(e.target.value)}>
-                    <input type="radio" name="jk" value="Laki-laki" />
+                  <label className="radio">
+                    <input type="radio" name="jk" value="laki-laki" checked={jk === "laki-laki"} onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="Perempuan" />
+                    <input type="radio" name="jk" value="perempuan" checked={jk === "perempuan"} onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>
               </div>
+
               <div className="field">
                 <div className="control">
                   <button type="submit" className="button is-success">

@@ -7,7 +7,6 @@ import "../index.css";
 
 const FormEditUser = () => {
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [nama_lengkap, setNama_lengkap] = useState("");
   const [notlp, setNotlp] = useState("");
   const [jk, setJk] = useState("");
@@ -20,13 +19,13 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const response = await axios.get(API_URL + "user/" + id_user);
-        setUsername(response.data.username);
-        setPassword(response.data.password);
-        setNama_lengkap(response.data.nama_lengkap);
-        setNotlp(response.data.notlp);
-        setJk(response.data.jk);
-        setLevel(response.data.level);
+        const response = await axios.get(API_URL + "user/users/" + id_user);
+        
+        setUsername(response.data.data.username);
+        setNama_lengkap(response.data.data.nama_lengkap);
+        setNotlp(response.data.data.notlp);
+        setJk(response.data.data.jk);
+        setLevel(response.data.data.level);
         setFoto(response.data.foto);
       } catch (error) {
         if (error.response) {
@@ -40,9 +39,8 @@ const FormEditUser = () => {
   const editUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "user/" + id_user, {
+      await axios.put(API_URL + "user/users/" + id_user, {
         username: username,
-        password: password,
         nama_lengkap: nama_lengkap,
         notlp: notlp,
         jk: jk,
@@ -92,12 +90,12 @@ const FormEditUser = () => {
               <div className="field">
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
-                  <label className="radio" value={jk || ""} onChange={(e) => setJk(e.target.value)}>
-                    <input type="radio" name="jk" value="Laki-laki" />
+                  <label className="radio">
+                    <input type="radio" name="jk" value="l" checked={jk === "l"} onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="Perempuan" />
+                    <input type="radio" name="jk" value="p" checked={jk === "p"} onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>
@@ -106,7 +104,7 @@ const FormEditUser = () => {
                 <label className="label">Level</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={level || ""} onChange={(e) => setLevel(e.target.value)}>
+                    <select value={level || ""} onChange={(e) => setLevel(e.target.value)} className="text-black">
                       <option value="">Pilih Level</option>
                       <option value="admin">Admin</option>
                       <option value="kasir">Kasir</option>

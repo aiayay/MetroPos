@@ -1,45 +1,84 @@
 const db = require("../models");
-const { Produk, Kategori } = require("../models");
+const { Produk, Kategori, Pembelian } = require("../models");
+const multer = require('multer');
+const path = require('path');
 
-// Fungsi untuk menambahkan produk
-exports.create = async (req, res) => {
-  const { nmproduk, stok, foto_produk, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
+// Konfigurasi penyimpanan untuk Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Folder penyimpanan gambar
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Penamaan file dengan timestamp
+  }
+});
 
-  try {
-    // Cari id_kategori berdasarkan nama kategori
-    const kategori = await Kategori.findOne({ where: { nama_kategori } });
+// Filter untuk hanya menerima file gambar
+const fileFilter = (req, file, cb) => {
+  const allowedFileTypes = /jpeg|jpg|png/;
+  const extname = allowedFileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = allowedFileTypes.test(file.mimetype);
 
-    // Jika kategori tidak ditemukan, return error
-    if (!kategori) {
-      return res.status(404).json({ error: "Kategori tidak ditemukan" });
-    }
-
-    // Buat produk baru dengan id_kategori yang ditemukan
-    const newProduk = await Produk.create({
-      nmproduk,
-      stok,
-      foto_produk,
-      satuan,
-      merk,
-      harga_beli,
-      harga_jual,
-      diskon,
-      id_kategori: kategori.id_kategori,
-    });
-
-    res.status(201).json(newProduk);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  if (extname && mimetype) {
+    cb(null, true);
+  } else {
+    cb(new Error('Hanya gambar dengan format .jpeg, .jpg, atau .png yang diizinkan!'), false);
   }
 };
 
-// Fungsi untuk mendapatkan semua produk
-// Untuk mendapatkan semua produk beserta relasi kategori dan pembelian
+// Middleware untuk upload file
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter
+});
+
+// Fungsi untuk menambahkan produk dengan upload foto
+exports.create = async (req, res) => {
+  upload.single('foto_produk')(req, res, async (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json({ error: 'Terjadi kesalahan saat mengupload gambar.' });
+    } else if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+
+    const { nmproduk, stok, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
+    const foto_produk = req.file ? req.file.filename : null; // Nama file foto yang diupload
+
+    try {
+      // Cari id_kategori berdasarkan nama kategori
+      const kategori = await Kategori.findOne({ where: { nama_kategori } });
+
+      // Jika kategori tidak ditemukan, return error
+      if (!kategori) {
+        return res.status(404).json({ error: "Kategori tidak ditemukan" });
+      }
+
+      // Buat produk baru dengan id_kategori dan foto yang diupload
+      const newProduk = await Produk.create({
+        nmproduk,
+        stok,
+        foto_produk, // Tambahkan foto_produk yang diupload
+        satuan,
+        merk,
+        harga_beli,
+        harga_jual,
+        diskon,
+        id_kategori: kategori.id_kategori
+      });
+
+      res.status(201).json(newProduk);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+};
+
+// Fungsi untuk mendapatkan semua produk beserta kategori
 exports.findAll = (req, res) => {
   Produk.findAll({
     include: [
       {
-        model: db.Kategori,
+        model: Kategori,
         as: "kategori",
       },
     ],
@@ -52,19 +91,18 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Fungsi untuk mendapatkan produk berdasarkan ID
-// Mendapatkan satu produk berdasarkan id beserta dan relasi di tambahkan id relasi nya
+// Fungsi untuk mendapatkan produk berdasarkan ID beserta kategori dan pembelian
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
   Produk.findByPk(id, {
     include: [
       {
-        model: db.Kategori, // Relasi dengan tabel kategori
+        model: Kategori, // Relasi dengan tabel kategori
         as: "kategori",
       },
       {
-        model: db.Pembelian, // Relasi dengan tabel pembelian
+        model: Pembelian, // Relasi dengan tabel pembelian
         as: "pembelian",
       },
     ],
@@ -86,7 +124,6 @@ exports.findOne = (req, res) => {
 };
 
 // Fungsi untuk memperbarui produk
-// Untuk memperbarui produk
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -100,7 +137,7 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Tidak dapat memperbarui produk dengan id ${id}.`,
+          message: `Tidak dapat memperbarui produk dengan id ${id}. Produk mungkin tidak ditemukan atau tidak ada perubahan data.`,
         });
       }
     })

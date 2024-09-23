@@ -1,111 +1,139 @@
-const db = require('../models');
-const detailtransaksi = db.DetailTransaksi;
-const produk = db.Produk; // Import model Produk
+const { DetailTransaksi, Transaksi, Produk } = require('../models');
+const { v4: uuidv4 } = require('uuid');
 
-// Mendapatkan semua detail transaksi dengan nama produk dari tabel Produk
+// Mendapatkan semua detail transaksi
 exports.getAllDetailTransaksi = async (req, res) => {
   try {
-    const detailTransaksi = await detailtransaksi.findAll({
+    const detailTransaksi = await DetailTransaksi.findAll({
       include: [
-        {
-          model: produk,
-          as: 'produk', // Alias sesuai dengan relasi di model
-          attributes: ['nmproduk'] // Ambil hanya nama produk
-        }
+        { model: Transaksi, as: 'transaksi' },
+        { model: Produk, as: 'produk' }
       ]
     });
     res.status(200).json(detailTransaksi);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Mendapatkan detail transaksi berdasarkan ID, dengan nama produk dari tabel Produk
+// Mendapatkan detail transaksi berdasarkan ID
 exports.getDetailTransaksiById = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   try {
-    const detailTransaksi = await detailtransaksi.findByPk(id, {
+    const detailTransaksi = await DetailTransaksi.findByPk(id, {
       include: [
-        {
-          model: produk,
-          as: 'produk',
-          attributes: ['nmproduk'] // Ambil nama produk
-        }
+        { model: Transaksi, as: 'transaksi' },
+        { model: Produk, as: 'produk' }
       ]
     });
-
-    if (detailTransaksi) {
-      res.status(200).json(detailTransaksi);
-    } else {
-      res.status(404).json({ message: "Detail Transaksi not found" });
+    if (!detailTransaksi) {
+      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(200).json(detailTransaksi);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Membuat detail transaksi baru, mengisi nama produk dari tabel Produk
+// Membuat detail transaksi baru
 exports.createDetailTransaksi = async (req, res) => {
+  const { id_transaksi, id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
+
   try {
-    const { id_produk, id_transaksi, kuantitas, potongan, total_bayar, metode_bayar } = req.body;
+    // Cek apakah transaksi dan produk ada
+    const transaksi = await Transaksi.findByPk(id_transaksi);
+    const produk = await Produk.findByPk(id_produk);
 
-    // Cari produk berdasarkan id_produk untuk mendapatkan harga dan nama produk
-    const produkData = await produk.findByPk(id_produk);
-
-    if (!produkData) {
-      return res.status(404).json({ message: 'Produk tidak ditemukan' });
+    if (!transaksi) {
+      return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
     }
 
-    // Hitung total harga
-    const total_harga = produkData.harga_jual * kuantitas;
+    if (!produk) {
+      return res.status(404).json({ error: 'Produk tidak ditemukan' });
+    }
 
-    // Buat detail transaksi dengan nmproduk dari produk
-    const newDetailTransaksi = await detailtransaksi.create({
+    // Mengecek stok produk
+    if (produk.stok < kuantitas) {
+      return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
+    }
+
+    // Membuat detail transaksi
+    const newDetailTransaksi = await DetailTransaksi.create({
+      id_detailtrans: uuidv4(),
       id_transaksi,
       id_produk,
-      nmproduk: produkData.nmproduk, // Ambil nama produk dari tabel Produk
-      harga_produk: produkData.harga_jual,
+      nmproduk,
+      harga_produk,
       kuantitas,
-      total_harga,
-      potongan,
-      total_bayar,
-      metode_bayar
+      catatan
+    });
+
+    // Mengurangi stok produk
+    await Produk.decrement('stok', {
+      by: kuantitas,
+      where: { id_produk }
     });
 
     res.status(201).json(newDetailTransaksi);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Memperbarui detail transaksi berdasarkan ID
+// Memperbarui detail transaksi
 exports.updateDetailTransaksi = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
+  const { id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
+
   try {
-    const updated = await detailtransaksi.update(req.body, { where: { id_detailtrans: id } });
-    
-    if (updated[0] > 0) { // Check if any row is updated
-      res.status(200).json({ message: "Detail Transaksi updated successfully" });
-    } else {
-      res.status(404).json({ message: "Detail Transaksi not found" });
+    const detailTransaksi = await DetailTransaksi.findByPk(id);
+    if (!detailTransaksi) {
+      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    // Cek stok produk jika kuantitas diubah
+    const produk = await Produk.findByPk(id_produk);
+    if (!produk) {
+      return res.status(404).json({ error: 'Produk tidak ditemukan' });
+    }
+
+    if (produk.stok < kuantitas) {
+      return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
+    }
+
+    detailTransaksi.id_produk = id_produk;
+    detailTransaksi.nmproduk = nmproduk;
+    detailTransaksi.harga_produk = harga_produk;
+    detailTransaksi.kuantitas = kuantitas;
+    detailTransaksi.catatan = catatan;
+
+    await detailTransaksi.save();
+
+    res.status(200).json(detailTransaksi);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
-// Menghapus detail transaksi berdasarkan ID
+// Menghapus detail transaksi
 exports.deleteDetailTransaksi = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
+
   try {
-    const deleted = await detailtransaksi.destroy({ where: { id_detailtrans: id } });
-    
-    if (deleted) {
-      res.status(200).json({ message: "Detail Transaksi deleted successfully" });
-    } else {
-      res.status(404).json({ message: "Detail Transaksi not found" });
+    const detailTransaksi = await DetailTransaksi.findByPk(id);
+    if (!detailTransaksi) {
+      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
     }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+
+    // Mengembalikan stok produk sebelum dihapus
+    await Produk.increment('stok', {
+      by: detailTransaksi.kuantitas,
+      where: { id_produk: detailTransaksi.id_produk }
+    });
+
+    await detailTransaksi.destroy();
+    res.status(200).json({ message: 'Detail transaksi berhasil dihapus' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

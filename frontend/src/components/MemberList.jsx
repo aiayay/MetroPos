@@ -6,6 +6,8 @@ import "../index.css";
 
 const MemberList = () => {
   const [member, setMember] = useState([]);
+  const [search, setSearch] = useState("");
+  // console.log(search);
 
   useEffect(() => {
     getMember();
@@ -45,7 +47,7 @@ const MemberList = () => {
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -73,24 +75,28 @@ const MemberList = () => {
             </tr>
           </thead>
           <tbody>
-            {member.map((member, index) => (
-              <tr key={member.id_member}>
-                <td>{index + 1}</td>
-                <td>{member.id_member}</td>
-                <td>{member.nama_member}</td>
-                <td>{member.no_telepon}</td>
-                <td>{member.alamat}</td>
-                <td>{member.jk}</td>
-                <td>
-                  <Link to={`/member/edit/${member.id_member}`} className="button is-small is-info">
-                    Edit
-                  </Link>
-                  <button onClick={() => deleteMember(member.id_member)} className="button is-small is-danger">
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {member
+              .filter((member) => {
+                return search.toLowerCase() === "" ? member : member.nama_member.toLowerCase().includes(search);
+              })
+              .map((member, index) => (
+                <tr key={member.id_member}>
+                  <td>{index + 1}</td>
+                  <td>{member.id_member}</td>
+                  <td>{member.nama_member}</td>
+                  <td>{member.no_telepon}</td>
+                  <td>{member.alamat}</td>
+                  <td>{member.jk}</td>
+                  <td>
+                    <Link to={`/member/edit/${member.id_member}`} className="button is-small is-info">
+                      Edit
+                    </Link>
+                    <button onClick={() => deleteMember(member.id_member)} className="button is-small is-danger">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

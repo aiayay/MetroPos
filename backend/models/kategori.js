@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING, 
       allowNull: false,
       primaryKey: true,
-      defaultValue: uuidv4(), // Menghasilkan UUID secara otomatis
+      defaultValue: uuidv4(), 
     },
     nama_kategori: {
       type: DataTypes.STRING,
@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
   });
 
-  Kategori.associate = (models) => {
-    Kategori.hasMany(models.Produk, {
-      foreignKey: 'id_kategori',
-      as: 'produk',
-    });
-  };
+  // Kategori.associate = (models) => {
+  //   Kategori.hasMany(models.Produk, {
+  //     foreignKey: 'id_kategori',
+  //     as: 'produk',
+  //   });
+  // };
 
   return Kategori;
 };

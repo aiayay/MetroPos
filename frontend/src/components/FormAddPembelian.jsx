@@ -15,6 +15,7 @@ const FormAddPembelian = () => {
   const [msg, setMsg] = useState("");
   const [supplierList, setSupplierList] = useState([]);
   const [produkList, setProdukList] = useState([]);
+  const [selectedProduk, setSelectedProduk] = useState(null); // State untuk produk yang dipilih
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +34,8 @@ const FormAddPembelian = () => {
     const getProduk = async () => {
       try {
         const response = await axios.get(API_URL + "produk");
-        setProdukList(response.data.data || []); // Default ke array kosong jika data tidak ada
+        console.log(response.data); // Cek apakah data produk muncul
+        setProdukList(response.data || []); // Default ke array kosong jika data tidak ada
       } catch (error) {
         console.error("Error fetching produk", error);
       }
@@ -41,17 +43,37 @@ const FormAddPembelian = () => {
     getProduk();
   }, []);
 
+  useEffect(() => {
+    const fetchStok = async () => {
+      if (nmproduk) {
+        try {
+          const response = await axios.get(`${API_URL}produk/${nmproduk}`);
+          setSelectedProduk(response.data);
+          setStok(response.data.stok || ""); // Set stok dari produk yang dipilih
+          setHarga_beli(response.data.harga_beli || ""); // Set harga beli dari produk yang dipilih
+        } catch (error) {
+          console.error("Error fetching produk details", error);
+        }
+      } else {
+        setSelectedProduk(null);
+        setStok("");
+        setHarga_beli("");
+      }
+    };
+    fetchStok();
+  }, [nmproduk]);
+
   const simpanPembelian = async (e) => {
     e.preventDefault();
     try {
       await axios.post(API_URL + "pembelian", {
-        nmproduk: nmproduk,
-        nmsupplier: supplier,
-        stok: stok,
-        harga_beli: harga_beli,
-        kuantitas: kuantitas,
-        tanggal: tanggal,
-      });
+        id_produk: nmproduk,  // Ganti dengan id_produk
+        id_supplier: supplier, // Ganti dengan id_supplier
+        kuantitas: kuantitas,  // Tidak perlu diubah
+        harga_beli: harga_beli, // Tidak perlu diubah
+        tanggal: tanggal        // Tidak perlu diubah
+    });
+    
       navigate("/pembelian");
     } catch (error) {
       if (error.response) {
@@ -107,7 +129,7 @@ const FormAddPembelian = () => {
               <div className="field">
                 <label className="label">Stok Awal</label>
                 <div className="control">
-                  <input type="number" className="input" readOnly value={stok} onChange={(e) => setStok(e.target.value)} />
+                  <input type="number" className="input" readOnly value={stok} />
                 </div>
               </div>
               <div className="field">
