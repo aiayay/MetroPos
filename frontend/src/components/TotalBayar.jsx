@@ -6,15 +6,43 @@ import { API_URL } from "../features/constants";
 
 export default class TotalBayar extends Component {
 
-  submitTotalBayar = (totalBayar) =>{
+  submitTotalBayar = (totalBayar) => {
+    // Data untuk transaksi
     const transaksi = {
       total_bayar: totalBayar,
-      menus: this.props.keranjang
-    }
-    axios.post(API_URL+"transaksi",transaksi).then((res) =>{
-      this.props.history.push("/sukses")
-    })
+    };
+  
+    // Kirim data transaksi terlebih dahulu
+    axios.post(API_URL + "transaksi", transaksi)
+      .then((res) => {
+        const id_transaksi = res.data.id_transaksi; // Asumsi ID transaksi dikembalikan dari API
+  
+        // Kirim detail transaksi
+        const detailTransaksiPromises = this.props.keranjang.map((item) => {
+          const detailTransaksi = {
+            id_transaksi: id_transaksi,
+            id_produk: item.produk.id_produk,
+            kuantitas: item.kuantitas,
+            total_harga: item.total_harga,
+          };
+  
+          return axios.post(API_URL + "detail-transaksi", detailTransaksi);
+        });
+  
+        // Tunggu sampai semua detail transaksi berhasil terkirim
+        Promise.all(detailTransaksiPromises)
+          .then(() => {
+            this.props.history.push("/sukses");
+          })
+          .catch((error) => {
+            console.error("Gagal mengirim detail transaksi:", error.response ? error.response.data : error.message);
+          });
+      })
+      .catch((error) => {
+        console.error("Gagal mengirim transaksi:", error.response ? error.response.data : error.message);
+      });
   }
+  
   render() {
     const totalBayar = this.props.keranjang.reduce(function (result, item) {
       return result + item.total_harga;
