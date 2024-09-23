@@ -8,9 +8,9 @@ import "../index.css";
 const FormEditPembelian = () => {
   const [nmproduk, setNmproduk] = useState("");
   const [supplier, setSupplier] = useState("");
-  const [stok, setStok] = useState("");
-  const [harga_beli, setHarga_beli] = useState("");
-  const [kuantitas, setKuantitas] = useState("");
+  const [stok, setStok] = useState(0); // Inisialisasi sebagai number
+  const [harga_beli, setHarga_beli] = useState(0); // Inisialisasi sebagai number
+  const [kuantitas, setKuantitas] = useState(0); // Inisialisasi sebagai number
   const [tanggal, setTanggal] = useState("");
   const [msg, setMsg] = useState("");
   const [supplierList, setSupplierList] = useState([]);
@@ -70,11 +70,10 @@ const FormEditPembelian = () => {
     e.preventDefault();
     try {
       await axios.put(API_URL + "pembelian/" + id_pembelian, {
-        nmproduk: nmproduk,
+         id_produk: nmproduk,  // Ganti dengan id_produk
         id_supplier: supplier, // ID supplier yang benar
-        stok: stok,
-        harga_beli: harga_beli,
-        kuantitas: kuantitas,
+        kuantitas: Number(kuantitas),  // Konversi ke number
+        harga_beli: Number(harga_beli), // Konversi ke number
         tanggal: tanggal,
       });
 
