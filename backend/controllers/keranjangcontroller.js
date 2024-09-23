@@ -36,7 +36,7 @@ exports.getKeranjangById = async (req, res) => {
 
 // Menambahkan produk ke keranjang (dengan kuantitas)
 exports.createKeranjang = async (req, res) => {
-  const { id_member, id_produk, kuantitas } = req.body;
+  const { id_member, id_produk, kuantitas, catatan } = req.body; // Tambahkan catatan ke dalam req.body
 
   try {
     // Validasi input
@@ -65,14 +65,16 @@ exports.createKeranjang = async (req, res) => {
       // Jika produk sudah ada di keranjang, tambahkan kuantitas
       keranjang.kuantitas += kuantitas;
       keranjang.total_harga = produk.harga_jual * keranjang.kuantitas;
+      keranjang.catatan = catatan || keranjang.catatan; // Update catatan jika ada
       await keranjang.save();
     } else {
-      // Jika produk belum ada, buat keranjang baru
+      // Buat entri baru di keranjang
       keranjang = await Keranjang.create({
-        id_member: id_member || null,  // Set null jika id_member tidak ada
+        id_member: id_member || null,  
         id_produk,
         kuantitas,
-        total_harga, // Set total_harga
+        total_harga,
+        catatan: catatan || null // Tambahkan catatan, null jika tidak ada
       });
     }
 
@@ -82,6 +84,7 @@ exports.createKeranjang = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Memperbarui kuantitas produk di keranjang
 exports.updateKeranjang = async (req, res) => {
