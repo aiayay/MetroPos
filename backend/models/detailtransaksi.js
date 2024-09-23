@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid'); // Mengimpor uuid
-
+const sequelize = require('../config/dbconfig.js');
 module.exports = (sequelize, DataTypes) => {
   const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {
