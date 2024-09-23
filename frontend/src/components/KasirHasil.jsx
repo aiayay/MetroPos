@@ -138,22 +138,22 @@ export default class KasirHasil extends Component {
                   <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
                     <p className="text-black">Tanggal : {today}</p>
                     <p className="text-black">Kasir :</p>
-                    
+                    <p className="text-black">Member : {menuKeranjang.member.nama_member}</p>
                     <hr />
                     <Row>
                       <Col xs={2}>
                         <h4 className="text-black">
-                          <Badge pill variant="success">
+                          <Badge pill variant="success"> kuantitas :
                             {menuKeranjang.kuantitas}
                           </Badge>
                         </h4>
                       </Col>
                       <Col>
                         <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
-                        <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
+                        <p className="text-black">harga jual : Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
                       </Col>
                       <Col>
-                        <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
+                        <strong className="text-black">total Harga : Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>

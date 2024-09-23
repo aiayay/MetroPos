@@ -26,7 +26,7 @@ export default class TotalBayar extends Component {
         <Row>
           <Col md={{ span: 3, offset: 9 }} className="px-4">
             <h4 className="text-black">
-              Total Harga : <strong className="text-black">Rp. {numberWithCommas(totalBayar)}</strong>
+              Total Bayar : <strong className="text-black">Rp. {numberWithCommas(totalBayar)}</strong>
             </h4>
             <button variant="primary" className="mb- mt-4 mr-2" size="lg" onClick={() => this.submitTotalBayar(totalBayar)}>
               <strong className="text-black">Bayar</strong>
@@ -35,18 +35,18 @@ export default class TotalBayar extends Component {
         </Row>
       </div>
       {/* mobile */}
-      <div className="">
+      {/* <div className="">
         <Row>
           <Col md={{ span: 3, offset: 9 }} className="px-4">
             <h4 className="text-black">
-              Total Harga : <strong className="text-black">Rp. {numberWithCommas(totalBayar)}</strong>
+              Total Bayar : <strong className="text-black">Rp. {numberWithCommas(totalBayar)}</strong>
             </h4>
             <button variant="primary" className="mb- mt-4 mr-2" size="lg" onClick={() => this.submitTotalBayar(totalBayar)}>
               <strong className="text-black">Bayar</strong>
             </button>
           </Col>
         </Row>
-      </div>
+      </div> */}
       </>
     );
   }
