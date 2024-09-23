@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       },
     },
     tanggal: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     harga_beli: {

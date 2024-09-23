@@ -1,4 +1,5 @@
 const { Pembelian, Produk, Supplier } = require('../models');
+const moment = require('moment');
 
 // Mendapatkan semua pembelian dengan detail produk dan supplier
 exports.getAllPembelian = async (req, res) => {
@@ -8,19 +9,26 @@ exports.getAllPembelian = async (req, res) => {
                 {
                     model: Produk,
                     as: 'produk',
-                    attributes: ['id_produk', 'nmproduk', 'stok', 'foto_produk', 'satuan', 'merk', 'harga_jual', 'diskon'] // Mengambil detail produk
+                    attributes: ['id_produk', 'nmproduk', 'stok', 'foto_produk', 'satuan', 'merk', 'harga_jual', 'diskon']
                 },
                 {
                     model: Supplier,
                     as: 'supplier',
-                    attributes: ['id_supplier', 'nmsupplier', 'alamat', 'notlp'] // Mengambil detail supplier
+                    attributes: ['id_supplier', 'nmsupplier', 'alamat', 'notlp']
                 }
             ]
         });
+
+        // Format tanggal sebelum mengirimkan data
+        const formattedPembelian = pembelian.map(item => ({
+            ...item.toJSON(),
+            tanggal: moment(item.tanggal).format('YYYY-MM-DD'), // Memformat tanggal
+        }));
+
         res.status(200).json({
             success: true,
             message: 'Daftar semua pembelian',
-            data: pembelian
+            data: formattedPembelian // Mengirim data yang sudah diformat
         });
     } catch (error) {
         res.status(500).json({
@@ -71,8 +79,13 @@ exports.getPembelianById = async (req, res) => {
 };
 
 // Menambahkan pembelian baru dengan detail produk dan supplier
+
+
 exports.createPembelian = async (req, res) => {
     const { id_produk, kuantitas, harga_beli, id_supplier, tanggal } = req.body;
+
+    // Format tanggal menjadi YYYY-MM-DD
+    const formattedTanggal = moment(tanggal).format('YYYY-MM-DD');
 
     try {
         // Buat entri pembelian baru
@@ -81,7 +94,7 @@ exports.createPembelian = async (req, res) => {
             kuantitas,
             harga_beli,
             id_supplier,
-            tanggal,
+            tanggal: formattedTanggal // Simpan tanggal yang sudah diformat
         });
 
         // Cari produk yang dibeli berdasarkan id_produk
@@ -110,15 +123,18 @@ exports.createPembelian = async (req, res) => {
                 {
                     model: Produk,
                     as: 'produk',
-                    attributes: ['id_produk', 'nmproduk', 'stok', 'foto_produk', 'satuan', 'merk', 'harga_jual', 'diskon'] // Mengambil detail produk
+                    attributes: ['id_produk', 'nmproduk', 'stok', 'foto_produk', 'satuan', 'merk', 'harga_jual', 'diskon']
                 },
                 {
                     model: Supplier,
                     as: 'supplier',
-                    attributes: ['id_supplier', 'nmsupplier', 'alamat', 'notlp'] // Mengambil detail supplier
+                    attributes: ['id_supplier', 'nmsupplier', 'alamat', 'notlp']
                 }
             ]
         });
+
+        // Format tanggal menjadi YYYY-MM-DD untuk respons
+        result.tanggal = moment(result.tanggal).format('YYYY-MM-DD');
 
         res.status(201).json({
             success: true,
@@ -129,6 +145,7 @@ exports.createPembelian = async (req, res) => {
         res.status(500).json({ success: false, message: 'Gagal menambahkan pembelian', error: error.message });
     }
 };
+
 
 // Mengedit pembelian dengan detail produk dan supplier
 exports.updatePembelian = async (req, res) => {

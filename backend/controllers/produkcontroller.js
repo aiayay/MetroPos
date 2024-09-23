@@ -172,3 +172,31 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findByCategory = async (req, res) => {
+  const kategori = req.params.kategori; // Mengambil kategori dari parameter
+
+  try {
+    const produkList = await Produk.findAll({
+      include: [
+        {
+          model: Kategori,
+          as: "kategori",
+          where: { nama_kategori: kategori }, // Menyaring berdasarkan nama kategori
+        },
+      ],
+    });
+
+    if (produkList.length > 0) {
+      res.send(produkList);
+    } else {
+      res.status(404).send({
+        message: `Tidak ada produk ditemukan untuk kategori ${kategori}.`,
+      });
+    }
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || "Terjadi kesalahan saat mengambil produk.",
+    });
+  }
+};

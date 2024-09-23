@@ -8,6 +8,6 @@ router.get("/:id", produkController.findOne); // Mendapatkan produk berdasarkan 
 router.post("/", produkController.create); // Membuat produk baru
 router.put("/:id", produkController.update); // Memperbarui produk
 router.delete("/:id", produkController.delete); // Menghapus produk
-
+router.get("/kategori/:kategori", produkController.findByCategory);
 module.exports = router;
 // hhhh
