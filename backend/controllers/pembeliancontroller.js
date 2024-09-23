@@ -151,44 +151,65 @@ exports.createPembelian = async (req, res) => {
 exports.updatePembelian = async (req, res) => {
     const { id } = req.params;
     const { id_produk, kuantitas, id_supplier, tanggal, harga_beli } = req.body;
+
     try {
+        // Ambil pembelian yang ada
         const pembelian = await Pembelian.findByPk(id);
-        if (pembelian) {
-            await pembelian.update({
-                id_produk,
-                kuantitas,
-                id_supplier,
-                tanggal,
-                harga_beli
-            });
-
-            // Mengambil data lengkap dari pembelian termasuk detail produk dan supplier
-            const updatedPembelian = await Pembelian.findByPk(pembelian.id_pembelian, {
-                include: [
-                    {
-                        model: Produk,
-                        as: 'produk',
-                        attributes: ['id_produk', 'nmproduk', 'stok', 'foto_produk', 'satuan', 'merk', 'harga_jual', 'diskon'] // Mengambil detail produk
-                    },
-                    {
-                        model: Supplier,
-                        as: 'supplier',
-                        attributes: ['id_supplier', 'nmsupplier', 'alamat', 'notlp'] // Mengambil detail supplier
-                    }
-                ]
-            });
-
-            res.status(200).json({
-                success: true,
-                message: 'Pembelian berhasil diperbarui',
-                data: updatedPembelian
-            });
-        } else {
-            res.status(404).json({
-                success: false,
-                message: 'Pembelian tidak ditemukan'
-            });
+        if (!pembelian) {
+            return res.status(404).json({ success: false, message: 'Pembelian tidak ditemukan' });
         }
+
+        // Dapatkan produk terkait
+        const produk = await Produk.findByPk(pembelian.id_produk);
+        if (!produk) {
+            return res.status(404).json({ success: false, message: 'Produk tidak ditemukan' });
+        }
+
+        // Hitung stok baru berdasarkan kuantitas yang baru
+        const kuantitasLama = pembelian.kuantitas;
+
+        // Update stok: kurangi stok lama
+        produk.stok += kuantitasLama; // Kembalikan stok lama
+        produk.stok -= kuantitas; // Kurangi stok dengan kuantitas baru
+
+        // Pastikan stok tidak negatif
+        if (produk.stok < 0) {
+            return res.status(400).json({ success: false, message: 'Stok tidak cukup' });
+        }
+
+        // Simpan perubahan pada produk
+        await produk.save();
+
+        // Update data pembelian
+        await pembelian.update({
+            id_produk,
+            kuantitas,
+            id_supplier,
+            tanggal,
+            harga_beli
+        });
+
+        // Mengambil data lengkap dari pembelian termasuk detail produk dan supplier
+        const updatedPembelian = await Pembelian.findByPk(pembelian.id_pembelian, {
+            include: [
+                {
+                    model: Produk,
+                    as: 'produk',
+                    attributes: ['id_produk', 'nmproduk', 'stok', 'foto_produk', 'satuan', 'merk', 'harga_jual', 'diskon']
+                },
+                {
+                    model: Supplier,
+                    as: 'supplier',
+                    attributes: ['id_supplier', 'nmsupplier', 'alamat', 'notlp']
+                }
+            ]
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Pembelian berhasil diperbarui',
+            data: updatedPembelian
+        });
     } catch (error) {
         res.status(500).json({
             success: false,
