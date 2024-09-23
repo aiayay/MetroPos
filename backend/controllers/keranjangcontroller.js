@@ -89,7 +89,7 @@ exports.createKeranjang = async (req, res) => {
 // Memperbarui kuantitas produk di keranjang
 exports.updateKeranjang = async (req, res) => {
   const { id } = req.params;
-  const { id_produk, kuantitas } = req.body;
+  const { id_produk, kuantitas, catatan } = req.body;
 
   try {
     const keranjang = await Keranjang.findByPk(id);
@@ -107,6 +107,14 @@ exports.updateKeranjang = async (req, res) => {
     // Update kuantitas dan total_harga produk dalam keranjang
     keranjang.kuantitas = kuantitas;
     keranjang.total_harga = produk.harga_jual * kuantitas;
+
+    // Cek apakah catatan baru diberikan
+    if (catatan) {
+      keranjang.catatan = catatan; // Update catatan jika ada
+    } else {
+      keranjang.catatan = null; // Hapus catatan jika tidak ada
+    }
+
     await keranjang.save();
 
     res.status(200).json({ message: 'Keranjang berhasil diperbarui', keranjang });
@@ -114,6 +122,7 @@ exports.updateKeranjang = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // Menghapus keranjang
 exports.deleteKeranjang = async (req, res) => {
