@@ -131,7 +131,7 @@ const FormEditProduk = () => {
                 <label className="label">Kategori</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={id_kategori || ""} onChange={(e) => setKategori(e.target.value)}>
+                    <select value={id_kategori || ""} onChange={(e) => setKategori(e.target.value)} className="text-black">
                       <option value="">Pilih Kategori</option>
                       {daftarKategori.map((kat) => (
                         <option key={kat.id_kategori} value={kat.id_kategori}>

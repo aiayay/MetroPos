@@ -8,6 +8,7 @@ import { API_URL } from "../features/constants";
 import axios from "axios";
 import swal from "sweetalert";
 import KasirNavbarBawah from "../components/KasirNavbarBawah";
+import KasirSidebar from "../components/KasirSidebar";
 
 
 export default class Kasir extends Component {
@@ -34,6 +35,25 @@ export default class Kasir extends Component {
         console.log(error);
       });
 
+    this.getListKeranjang();
+  }
+
+  // componentDidUpdate(prevState) {
+  //   if (this.state.keranjang !== prevState.keranjang) {
+  //     axios
+  //       .get(API_URL + "keranjang")
+  //       .then((res) => {
+  //         // console.log("Response : ");
+  //         const keranjang = res.data;
+  //         this.setState({ keranjang });
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // }
+
+  getListKeranjang =() => {
     axios
       .get(API_URL + "keranjang")
       .then((res) => {
@@ -46,21 +66,6 @@ export default class Kasir extends Component {
       });
   }
 
-  componentDidUpdate(prevState) {
-    if (this.state.keranjang !== prevState.keranjang) {
-      axios
-        .get(API_URL + "keranjang")
-        .then((res) => {
-          // console.log("Response : ", res);
-          const keranjang = res.data;
-          this.setState({ keranjang });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }
-
   changeKategori = (value) => {
     this.setState({
       kategoriYangDipilih: value,
@@ -69,17 +74,17 @@ export default class Kasir extends Component {
     axios
       .get(API_URL + "produk?kategori.nama_kategori=" + value)
       .then((res) => {
-        // console.log("Response : ", res);
+        console.log("Response : ", res);
         const menus = res.data;
         this.setState({ menus });
       })
       .catch((error) => {
         console.log(error);
-      });
+      }); 
   };
 
   pilihMember = (id_member) => {
-    console.log("Member terpilih:", id_member);
+    // console.log("Member terpilih:", id_member);
     this.setState({ id_member });
   
     // Update semua item di keranjang dengan ID member yang baru dipilih
@@ -134,9 +139,10 @@ export default class Kasir extends Component {
           axios
             .post(API_URL + "keranjang", keranjang)
             .then((res) => {
-              console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
-            console.log("ID Member yang dikirim:", keranjang.id_member); // Log ID Member yang dikirim dalam post
-            console.log("Respons dari server:", res.data); // Cek respons dari server
+              this.getListKeranjang();
+            //   console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
+            // console.log("ID Member yang dikirim:", keranjang.id_member); // Log ID Member yang dikirim dalam post
+            // console.log("Respons dari server:", res.data); // Cek respons dari server
               swal({
                 title: "Sukses Masuk Keranjang",
                 text: "Sukses Masuk Keranjang: " + value.nmproduk,
@@ -191,14 +197,17 @@ export default class Kasir extends Component {
   };
 
   render() {
+    // console.log(this.state.menus);
     const { menus, kategoriYangDipilih, keranjang } = this.state;
     return (
       <div>
         <KasirLayout>
         <KasirNavbarBawah pilihMember={this.pilihMember} /> {/* Tambahkan prop pilihMember */}
           <Container fluid className="mt-3">
+            <Row>
             <div className="columns">
-              <div className="column is-8">
+           <KasirSidebar changeKategori={this.changeKategori} kategoriYangDipilih={kategoriYangDipilih} />
+              <div className="column is-6">
                 <div className="bd-notification is-primary">
                   <div className="cell">
                     <Col>
@@ -213,12 +222,16 @@ export default class Kasir extends Component {
                 <div className="bd-notification is-primary">
                   <div className="cell">
                     <Col>
-                      <KasirHasil keranjang={keranjang} {...this.props} />
+                      <KasirHasil keranjang={keranjang} {...this.props} getListKeranjang={this.getListKeranjang} />
                     </Col>
                   </div>
                 </div>
               </div>
             </div>
+            </Row>
+          {/* <div className="column is-2">
+          </div> */}
+            
           </Container>
         </KasirLayout>
       </div>

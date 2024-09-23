@@ -32,7 +32,8 @@
   font-size: large;
 }
 .menu {
-  background-color: #c081ff;
+  color: white !important;
+  background-color: #c081ff !important;
 }
 /* .item-sidebar {
   background-color: #c081ff;
@@ -46,6 +47,14 @@
 }
 .item-sidebar a:hover {
   background-color: #36dda5 !important;
+}
+.menu-list {
+  color: white !important;
+  background-color: #c081ff !important;
+}
+.menu-list a {
+  color: white !important;
+  background-color: #c081ff !important;
 }
 .menu p {
   color: white;
@@ -108,15 +117,7 @@
   background-color: #36dda5;
   color: white;
 } */
-.menu-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.menu-wrapper .col-md-4 {
-  /* flex-basis: calc(33.333% - 20px); Menyisakan sedikit ruang untuk margin */
-  margin-bottom: 20px;
-}
 .keranjang-wrapper {
   position: relative;
   right: 0;
@@ -161,8 +162,8 @@
   background-color: white !important;
 }
 .kategori-aktif {
-  background-color: #36dda5;
-  color: white;
+  background-color: #36dda5 !important;
+  color: white !important;
 }
 
 .btn-success {
@@ -176,16 +177,53 @@
   background-color: white !important;
   color: black !important;
 }
-.modal-card-body{
+.modal-card-body {
   background-color: white !important;
 }
-.modal-card-head{
+.modal-card-head {
   background-color: white !important;
 }
-.modal-card-foot{
+.modal-card-foot {
   background-color: white !important;
 }
-.modal-card-title{
+.modal-card-title {
   color: black !important;
   text-align: center;
+}
+/* .menu {
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.sidebar-container {
+  position: relative; 
+  padding-top: 20px; 
+} */
+
+.card {
+  margin: 2px;
+}
+
+@media only screen and (max-height: 1000px) {
+  .hasil {
+    background-color: rgb(230, 230, 230) !important;
+    height: 650px;
+  }
+
+  .menu-wrapper {
+    /* height: 800px; */
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .menu-wrapper .col-md-4 {
+    /* flex-basis: calc(33.333% - 20px); Menyisakan sedikit ruang untuk margin */
+    margin-bottom: 20px;
+  }
+}
+.overflow-auto::-webkit-scrollbar {
+  display: none;
 }

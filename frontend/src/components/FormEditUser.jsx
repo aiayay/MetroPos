@@ -19,12 +19,13 @@ const FormEditUser = () => {
   useEffect(() => {
     const getUserById = async () => {
       try {
-        const response = await axios.get(API_URL + "user/users" + id_user);
-        setUsername(response.data.username);
-        setNama_lengkap(response.data.nama_lengkap);
-        setNotlp(response.data.notlp);
-        setJk(response.data.jk);
-        setLevel(response.data.level);
+        const response = await axios.get(API_URL + "user/users/" + id_user);
+        
+        setUsername(response.data.data.username);
+        setNama_lengkap(response.data.data.nama_lengkap);
+        setNotlp(response.data.data.notlp);
+        setJk(response.data.data.jk);
+        setLevel(response.data.data.level);
         setFoto(response.data.foto);
       } catch (error) {
         if (error.response) {
@@ -90,11 +91,11 @@ const FormEditUser = () => {
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
                   <label className="radio">
-                    <input type="radio" name="jk" value="laki-laki" checked={jk === "laki-laki"} onChange={(e) => setJk(e.target.value)} />
+                    <input type="radio" name="jk" value="l" checked={jk === "l"} onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="perempuan" checked={jk === "perempuan"} onChange={(e) => setJk(e.target.value)} />
+                    <input type="radio" name="jk" value="p" checked={jk === "p"} onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>
@@ -103,7 +104,7 @@ const FormEditUser = () => {
                 <label className="label">Level</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={level || ""} onChange={(e) => setLevel(e.target.value)}>
+                    <select value={level || ""} onChange={(e) => setLevel(e.target.value)} className="text-black">
                       <option value="">Pilih Level</option>
                       <option value="admin">Admin</option>
                       <option value="kasir">Kasir</option>
