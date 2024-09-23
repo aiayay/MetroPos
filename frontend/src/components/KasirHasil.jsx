@@ -138,7 +138,7 @@ export default class KasirHasil extends Component {
                   <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
                     <p className="text-black">Tanggal : {today}</p>
                     <p className="text-black">Kasir :</p>
-                    <p className="text-black">Member : {menuKeranjang.member.nama_member}</p>
+                    
                     <hr />
                     <Row>
                       <Col xs={2}>

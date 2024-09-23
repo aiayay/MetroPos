@@ -20,7 +20,7 @@ exports.getAllCategories = async (req, res) => {
     }
 };
 
-// Get category by ID
+// ambil per id
 exports.getCategoryById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -47,8 +47,8 @@ exports.getCategoryById = async (req, res) => {
 };
 
 
-// Create a new category
-// Create a new category
+
+// tambah  kategori
 exports.createCategory = async (req, res) => {
     const { nama_kategori } = req.body;
     try {
@@ -71,7 +71,7 @@ exports.createCategory = async (req, res) => {
   
 
 
-// Update category by ID
+// edit category by ID
 exports.updateCategory = async (req, res) => {
     const { id } = req.params;
     const { nama_kategori } = req.body;

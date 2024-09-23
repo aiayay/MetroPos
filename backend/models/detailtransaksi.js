@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid'); // Mengimpor uuid
-
+const sequelize = require('../config/dbconfig.js');
 module.exports = (sequelize, DataTypes) => {
   const DetailTransaksi = sequelize.define('DetailTransaksi', {
     id_detailtrans: {
@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     harga_produk: {
       type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    total_harga: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     kuantitas: {

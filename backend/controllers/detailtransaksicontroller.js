@@ -6,7 +6,7 @@ exports.getAllDetailTransaksi = async (req, res) => {
   try {
     const detailTransaksi = await DetailTransaksi.findAll({
       include: [
-        { model: Transaksi, as: 'transaksi' },
+        { model: Transaksi, as: 'transaksi' }, // hanya relasi, tidak ada field `total_harga`
         { model: Produk, as: 'produk' }
       ]
     });
@@ -40,7 +40,6 @@ exports.createDetailTransaksi = async (req, res) => {
   const { id_transaksi, id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
 
   try {
-    // Cek apakah transaksi dan produk ada
     const transaksi = await Transaksi.findByPk(id_transaksi);
     const produk = await Produk.findByPk(id_produk);
 
@@ -52,23 +51,23 @@ exports.createDetailTransaksi = async (req, res) => {
       return res.status(404).json({ error: 'Produk tidak ditemukan' });
     }
 
-    // Mengecek stok produk
     if (produk.stok < kuantitas) {
       return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
     }
 
-    // Membuat detail transaksi
+    const total_harga = harga_produk * kuantitas;
+
     const newDetailTransaksi = await DetailTransaksi.create({
       id_detailtrans: uuidv4(),
       id_transaksi,
       id_produk,
       nmproduk,
       harga_produk,
+      total_harga,
       kuantitas,
       catatan
     });
 
-    // Mengurangi stok produk
     await Produk.decrement('stok', {
       by: kuantitas,
       where: { id_produk }
@@ -91,7 +90,6 @@ exports.updateDetailTransaksi = async (req, res) => {
       return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
     }
 
-    // Cek stok produk jika kuantitas diubah
     const produk = await Produk.findByPk(id_produk);
     if (!produk) {
       return res.status(404).json({ error: 'Produk tidak ditemukan' });
@@ -101,11 +99,14 @@ exports.updateDetailTransaksi = async (req, res) => {
       return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
     }
 
+    const total_harga = harga_produk * kuantitas;
+
     detailTransaksi.id_produk = id_produk;
     detailTransaksi.nmproduk = nmproduk;
     detailTransaksi.harga_produk = harga_produk;
     detailTransaksi.kuantitas = kuantitas;
     detailTransaksi.catatan = catatan;
+    detailTransaksi.total_harga = total_harga;
 
     await detailTransaksi.save();
 
@@ -125,7 +126,6 @@ exports.deleteDetailTransaksi = async (req, res) => {
       return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
     }
 
-    // Mengembalikan stok produk sebelum dihapus
     await Produk.increment('stok', {
       by: detailTransaksi.kuantitas,
       where: { id_produk: detailTransaksi.id_produk }

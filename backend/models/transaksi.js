@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     id_member: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'member', // Sesuaikan dengan nama model yang tepat
         key: 'id_member',
@@ -32,10 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    total_harga: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    
     total_bayar: {
       type: DataTypes.INTEGER,
       allowNull: false,
