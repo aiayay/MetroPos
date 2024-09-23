@@ -41,13 +41,15 @@ const KasirNavbarBawah = ({ pilihMember }) => {
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="field has-addons">
                 <div className="control is-expanded">
-                  <input type="text" className="input" placeholder="Cari member atau produk.." value={search} onChange={(e) => setSearch(e.target.value)} />
+                  <input type="text" className="input" placeholder="Cari member atau produk.." value={search} onChange={(event) =>{
+                    setSearch(event.target.value);
+                  }} />
                 </div>
-                <div className="control">
+                {/* <div className="control">
                   <button type="submit" className="button is-info">
                     search
                   </button>
-                </div>
+                </div> */}
               </div>
             </form>
             <div className="buttons">
