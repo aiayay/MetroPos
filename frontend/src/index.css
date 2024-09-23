@@ -227,3 +227,34 @@
 .overflow-auto::-webkit-scrollbar {
   display: none;
 }
+.bootstrap-modal .modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+.modal-content {
+  background-color: #fff !important;
+  border-radius: 5px !important;
+}
+
+.modal-header {
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6 !important;
+}
+textarea {
+  width: 100%; /* Lebar textarea memenuhi container */
+  height: 200px; /* Ketinggian textarea */
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+/* .modal-header .btn-close {
+  display: block;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+} */
