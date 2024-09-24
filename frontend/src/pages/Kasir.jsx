@@ -125,13 +125,15 @@ export default class Kasir extends Component {
         
         console.log("Data keranjang yang diterima:", res.data);
 
-        if (res.data.length === 0) {
+        const produkDiKeranjang = res.data.find(item => item.id_produk === value.id_produk); // Temukan produk berdasarkan id_produk
+
+        if (!produkDiKeranjang) {
           console.log("Produk belum ada di keranjang. Menambahkan produk...");
 
           const keranjang = {
-            id_member: this.state.id_member || null, // Menggunakan id_member yang dipilih
-            id_produk: value.id_produk, // ID produk
-            kuantitas: 1, // Kuantitas produk
+            id_member: this.state.id_member || null,
+            id_produk: value.id_produk,
+            kuantitas: 1,
           };
           // console.log("Payload Keranjang:", keranjang);
 
@@ -168,7 +170,7 @@ export default class Kasir extends Component {
           const keranjang = {
             id_member: this.state.id_member || null, // Sesuaikan dengan nilai sebenarnya jika ada
             id_produk: value.id_produk, // ID produk
-            kuantitas: 1, // Kuantitas produk
+            kuantitas: res.data[0].kuantitas + 1, // Kuantitas produk
           };
           console.log("Payload Keranjang:", keranjang);
 
