@@ -66,22 +66,23 @@ export default class Kasir extends Component {
       });
   }
 
-  changeKategori = (value) => {
-    this.setState({
-      kategoriYangDipilih: value,
-      menus: [],
+changeKategori = (value) => {
+  this.setState({
+    kategoriYangDipilih: value,
+    menus: [],
+  });
+  axios
+    .get(API_URL + "produk?kategori.nama_kategori=" + value)
+    .then((res) => {
+      console.log("Response : ", res);
+      const menus = res.data;
+      this.setState({ menus });
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    axios
-      .get(API_URL + "produk?kategori.nama_kategori=" + value)
-      .then((res) => {
-        console.log("Response : ", res);
-        const menus = res.data;
-        this.setState({ menus });
-      })
-      .catch((error) => {
-        console.log(error);
-      }); 
-  };
+};
+
 
   pilihMember = (id_member) => {
     // console.log("Member terpilih:", id_member);
@@ -114,89 +115,46 @@ export default class Kasir extends Component {
       });
   };
   
-  masukKeranjang = (value) => {
-    console.log("Memproses produk:", value);
-    console.log("ID Member yang dipilih:", this.state.id_member); // Log ID Member sebelum memproses
-
-
-    axios
-      .get(API_URL + "keranjang?produk.id_produk=" + value.id_produk)
-      .then((res) => {
-        
-        console.log("Data keranjang yang diterima:", res.data);
-
-        const produkDiKeranjang = res.data.find(item => item.id_produk === value.id_produk); // Temukan produk berdasarkan id_produk
-
-        if (!produkDiKeranjang) {
-          console.log("Produk belum ada di keranjang. Menambahkan produk...");
-
-          const keranjang = {
-            id_member: this.state.id_member || null,
-            id_produk: value.id_produk,
-            kuantitas: 1,
-          };
-          // console.log("Payload Keranjang:", keranjang);
-
-          // Menambahkan produk ke keranjang
-          axios
-            .post(API_URL + "keranjang", keranjang)
-            .then((res) => {
-              this.getListKeranjang();
-            //   console.log("Produk berhasil ditambahkan ke keranjang:", value.nmproduk);
-            // console.log("ID Member yang dikirim:", keranjang.id_member); // Log ID Member yang dikirim dalam post
-            // console.log("Respons dari server:", res.data); // Cek respons dari server
-              swal({
-                title: "Sukses Masuk Keranjang",
-                text: "Sukses Masuk Keranjang: " + value.nmproduk,
-                button: false,
-                timer: 1500,
-              });
-            })
-            .catch((error) => {
-              console.error("Error saat menambahkan produk ke keranjang:", error.response ? error.response.data : error.message);
-            });
-        } else {
-          console.log("Produk sudah ada di keranjang. Mengupdate kuantitas...");
-
-          // const keranjang = {
-          //   id_member: null,  // Kirim null jika tidak ada member
-          //   produk: [
-          //     {
-          //       id_produk: value.id_produk,
-          //       kuantitas: 1  // Kuantitas produk yang ingin ditambahkan
-          //     }
-          //   ]
-          // };
-          const keranjang = {
-            id_member: this.state.id_member || null, // Sesuaikan dengan nilai sebenarnya jika ada
-            id_produk: value.id_produk, // ID produk
-            kuantitas: res.data[0].kuantitas + 1, // Kuantitas produk
-          };
-          console.log("Payload Keranjang:", keranjang);
-
-          // Mengupdate produk di keranjang
-          axios
-            .put(API_URL + "keranjang/" + res.data[0].id_keranjang, keranjang)
-            .then((res) => {
-              console.log("Produk berhasil diupdate di keranjang:", value.nmproduk);
-              console.log("ID Member yang dikirim untuk update:", keranjang.id_member); // Log ID Member yang dikirim dalam update
-              swal({
-                title: "Sukses Masuk Keranjang",
-                text: "Sukses Masuk Keranjang: " + value.nmproduk,
-                icon: "success",
-                button: false,
-                timer: 1500,
-              });
-            })
-            .catch((error) => {
-              console.error("Error saat mengupdate produk di keranjang:", error);
-            });
-        }
-      })
-      .catch((error) => {
-        console.error("Error saat memeriksa produk di keranjang:", error);
-      });
+  masukKeranjang = async (value) => {
+    try {
+      const res = await axios.get(API_URL + "keranjang?produk.id_produk=" + value.id_produk);
+      const produkDiKeranjang = res.data.find(item => item.id_produk === value.id_produk);
+  
+      if (!produkDiKeranjang) {
+        const keranjang = {
+          id_member: this.state.id_member || null,
+          id_produk: value.id_produk,
+          kuantitas: 1,
+        };
+        await axios.post(API_URL + "keranjang", keranjang);
+        this.getListKeranjang();
+        swal({
+          title: "Sukses Masuk Keranjang",
+          text: "Sukses Masuk Keranjang: " + value.nmproduk,
+          button: false,
+          timer: 1500,
+        });
+      } 
+      // else {
+      //   const keranjangUpdate = {
+      //     id_member: this.state.id_member || null,
+      //     id_produk: value.id_produk,
+      //     kuantitas: produkDiKeranjang.kuantitas + 1,
+      //   };
+      //   await axios.put(API_URL + "keranjang/" + produkDiKeranjang.id_keranjang, keranjangUpdate);
+      //   swal({
+      //     title: "Sukses Masuk Keranjang",
+      //     text: "Sukses Masuk Keranjang: " + value.nmproduk,
+      //     icon: "success",
+      //     button: false,
+      //     timer: 1500,
+      //   });
+      // }
+    } catch (error) {
+      console.error("Error saat memproses keranjang:", error);
+    }
   };
+  
 
   render() {
     // console.log(this.state.menus);
