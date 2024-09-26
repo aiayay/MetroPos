@@ -46,7 +46,7 @@ exports.getTransaksiById = async (req, res) => {
 
 // Membuat transaksi baru
 exports.createTransaksi = async (req, res) => {
-  const { id_member, id_user, nama_kasir, nama_member, total_harga, total_bayar, bayar, potongan, metode_bayar, tanggal, detailTransaksi } = req.body;
+  const { id_member, id_user, nama_kasir, nama_member, total_harga,  bayar, potongan, metode_bayar, tanggal, detailTransaksi } = req.body;
 
   try {
     // Buat transaksi baru
@@ -56,7 +56,6 @@ exports.createTransaksi = async (req, res) => {
       nama_kasir,
       nama_member,
       total_harga,
-      total_bayar,
       bayar,
       potongan,
       metode_bayar,
@@ -105,7 +104,7 @@ exports.createTransaksi = async (req, res) => {
 // Memperbarui transaksi
 exports.updateTransaksi = async (req, res) => {
   const { id } = req.params;
-  const { id_member, id_user, nama_kasir, nama_member, total_harga, total_bayar, bayar, potongan, metode_bayar, tanggal } = req.body;
+  const { id_member, id_user, nama_kasir, nama_member, total_harga,  bayar, potongan, metode_bayar, tanggal } = req.body;
   try {
     const transaksi = await Transaksi.findByPk(id);
     if (!transaksi) {
@@ -118,7 +117,6 @@ exports.updateTransaksi = async (req, res) => {
     transaksi.nama_kasir = nama_kasir;
     transaksi.nama_member = nama_member;
     transaksi.total_harga = total_harga;
-    transaksi.total_bayar = total_bayar;
     transaksi.bayar = bayar;
     transaksi.potongan = potongan;
     transaksi.metode_bayar = metode_bayar;
