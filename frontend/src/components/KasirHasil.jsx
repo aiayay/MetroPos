@@ -59,7 +59,6 @@ export default class KasirHasil extends Component {
   };
 
   handleSubmit = (event) => {
-    //erro nih update data nya
     event.preventDefault();
 
     this.handleClose();
@@ -70,18 +69,14 @@ export default class KasirHasil extends Component {
       total_harga: this.state.totalHarga,
       catatan: this.state.catatan,
     };
-    // console.log("Payload Keranjang:", keranjang);
 
-    // Menambahkan produk ke keranjang
     axios
       .put(API_URL + "keranjang/" + this.state.keranjangDetail.id_keranjang, data)
       .then((res) => {
         this.props.getListKeranjang();
-        // console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
         swal({
           title: "Update Pesanan!",
           text: "Sukses Update Pesanan: " + data.id_produk.nmproduk,
-          // icon: success,
           button: false,
           timer: 1500,
         });
@@ -92,23 +87,15 @@ export default class KasirHasil extends Component {
   };
 
   hapusPesanan = (id) => {
-    //erro nih update data nya
-
     this.handleClose();
 
-    // console.log("Payload Keranjang:", keranjang);
-
-    // Menambahkan produk ke keranjang
     axios
       .delete(API_URL + "keranjang/" + this.state.keranjangDetail.id_keranjang)
-
       .then((res) => {
         this.props.getListKeranjang();
-        // console.log("Produk berhasil ditambahkan ke keranjang:", res.data.nmproduk);
         swal({
           title: "Hapus Pesanan!",
           text: "Sukses Hapus Pesanan: " + this.state.keranjangDetail.produk.nmproduk,
-          // icon: error,
           button: false,
           timer: 1500,
         });
@@ -125,6 +112,11 @@ export default class KasirHasil extends Component {
       month: "long",
       year: "numeric",
     });
+    
+    // Ambil data member dari keranjang pertama (jika ada)
+   // Ambil data member dari keranjang pertama (jika ada dan tidak null)
+const namaMember = keranjang.length > 0 && keranjang[0].member ? keranjang[0].member.nama_member : "Tidak ada member";
+
     return (
       <div>
         <Col md={6} mt="2">
@@ -134,48 +126,41 @@ export default class KasirHasil extends Component {
             {keranjang.length !== 0 && (
               <Card className="overflow-auto hasil">
                 <ListGroup variant="flush">
-                {keranjang.map((menuKeranjang) => (
-                  <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
-                    <p className="text-black">Tanggal : {today}</p>
-                    <p className="text-black">Kasir :</p>
-                    <p className="text-black">Member : {menuKeranjang.member.nama_member}</p>
-                    <hr />
-                    <Row>
-                      <Col xs={2}>
-                        <h4 className="text-black">
-                          <Badge pill variant="success">
-                            {menuKeranjang.kuantitas}
-                          </Badge>
-                        </h4>
-                      </Col>
-                      <Col>
-                        <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
-                        <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
-                      </Col>
-                      <Col>
-                        <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-                ))}
+                  {/* Informasi Member di luar looping */}
+                  <p className="text-black">Tanggal : {today}</p>
+                  <p className="text-black">Kasir :</p>
+                  <p className="text-black">Member : {namaMember}</p>
+                  <hr />
+                  
+                  {/* Looping untuk daftar menu */}
+                  {keranjang.map((menuKeranjang) => (
+                    <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
+                      <Row>
+                        <Col xs={2}>
+                          <h4 className="text-black">
+                            <Badge pill variant="success">
+                              {menuKeranjang.kuantitas}
+                            </Badge>
+                          </h4>
+                        </Col>
+                        <Col>
+                          <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
+                          <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
+                        </Col>
+                        <Col>
+                          <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  ))}
 
-                <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} hapusPesanan={this.hapusPesanan} />
-              </ListGroup>
+                  <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} hapusPesanan={this.hapusPesanan} />
+                </ListGroup>
               </Card>
             )}
             <hr />
 
-            <TotalBayar keranjang={keranjang} {...this.props}  />
-
-            {/* <p className="text-black">Total Bayar</p>
-            <p className="text-black">Disc Member</p>
-            <p className="text-black">Catatan</p>
-            <p className="text-black">Tunai</p>
-            <p className="text-black">Kembali</p>
-            <p className="text-black">Metode Bayar</p>
-            <button type="submit" className="button is-success">
-              Proses Pembayaran
-            </button> */}
+            <TotalBayar keranjang={keranjang} {...this.props} />
           </div>
         </Col>
       </div>
