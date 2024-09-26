@@ -1,139 +1,139 @@
-const { DetailTransaksi, Transaksi, Produk } = require('../models');
-const { v4: uuidv4 } = require('uuid');
+// const { DetailTransaksi, Transaksi, Produk } = require('../models');
+// const { v4: uuidv4 } = require('uuid');
 
-// Mendapatkan semua detail transaksi
-exports.getAllDetailTransaksi = async (req, res) => {
-  try {
-    const detailTransaksi = await DetailTransaksi.findAll({
-      include: [
-        { model: Transaksi, as: 'transaksi' }, // hanya relasi, tidak ada field `total_harga`
-        { model: Produk, as: 'produk' }
-      ]
-    });
-    res.status(200).json(detailTransaksi);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// // Mendapatkan semua detail transaksi
+// exports.getAllDetailTransaksi = async (req, res) => {
+//   try {
+//     const detailTransaksi = await DetailTransaksi.findAll({
+//       include: [
+//         { model: Transaksi, as: 'transaksi' }, 
+//         { model: Produk, as: 'produk' }
+//       ]
+//     });
+//     res.status(200).json(detailTransaksi);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
-// Mendapatkan detail transaksi berdasarkan ID
-exports.getDetailTransaksiById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const detailTransaksi = await DetailTransaksi.findByPk(id, {
-      include: [
-        { model: Transaksi, as: 'transaksi' },
-        { model: Produk, as: 'produk' }
-      ]
-    });
-    if (!detailTransaksi) {
-      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
-    }
-    res.status(200).json(detailTransaksi);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+// // Mendapatkan detail transaksi berdasarkan ID
+// exports.getDetailTransaksiById = async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const detailTransaksi = await DetailTransaksi.findByPk(id, {
+//       include: [
+//         { model: Transaksi, as: 'transaksi' },
+//         { model: Produk, as: 'produk' }
+//       ]
+//     });
+//     if (!detailTransaksi) {
+//       return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
+//     }
+//     res.status(200).json(detailTransaksi);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
-// Membuat detail transaksi baru
-exports.createDetailTransaksi = async (req, res) => {
-  const { id_transaksi, id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
+// // Membuat detail transaksi baru
+// exports.createDetailTransaksi = async (req, res) => {
+//   const { id_transaksi, id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
 
-  try {
-    const transaksi = await Transaksi.findByPk(id_transaksi);
-    const produk = await Produk.findByPk(id_produk);
+//   try {
+//     const transaksi = await Transaksi.findByPk(id_transaksi);
+//     const produk = await Produk.findByPk(id_produk);
 
-    if (!transaksi) {
-      return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
-    }
+//     if (!transaksi) {
+//       return res.status(404).json({ error: 'Transaksi tidak ditemukan' });
+//     }
 
-    if (!produk) {
-      return res.status(404).json({ error: 'Produk tidak ditemukan' });
-    }
+//     if (!produk) {
+//       return res.status(404).json({ error: 'Produk tidak ditemukan' });
+//     }
 
-    if (produk.stok < kuantitas) {
-      return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
-    }
+//     if (produk.stok < kuantitas) {
+//       return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
+//     }
 
-    const total_harga = harga_produk * kuantitas;
+//     const total_harga = harga_produk * kuantitas;
 
-    const newDetailTransaksi = await DetailTransaksi.create({
-      id_detailtrans: uuidv4(),
-      id_transaksi,
-      id_produk,
-      nmproduk,
-      harga_produk,
-      total_harga,
-      kuantitas,
-      catatan
-    });
+//     const newDetailTransaksi = await DetailTransaksi.create({
+//       id_detailtrans: uuidv4(),
+//       id_transaksi,
+//       id_produk,
+//       nmproduk,
+//       harga_produk,
+//       total_harga,
+//       kuantitas,
+//       catatan
+//     });
 
-    await Produk.decrement('stok', {
-      by: kuantitas,
-      where: { id_produk }
-    });
+//     await Produk.decrement('stok', {
+//       by: kuantitas,
+//       where: { id_produk }
+//     });
 
-    res.status(201).json(newDetailTransaksi);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     res.status(201).json(newDetailTransaksi);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
-// Memperbarui detail transaksi
-exports.updateDetailTransaksi = async (req, res) => {
-  const { id } = req.params;
-  const { id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
+// // Memperbarui detail transaksi
+// exports.updateDetailTransaksi = async (req, res) => {
+//   const { id } = req.params;
+//   const { id_produk, nmproduk, harga_produk, kuantitas, catatan } = req.body;
 
-  try {
-    const detailTransaksi = await DetailTransaksi.findByPk(id);
-    if (!detailTransaksi) {
-      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
-    }
+//   try {
+//     const detailTransaksi = await DetailTransaksi.findByPk(id);
+//     if (!detailTransaksi) {
+//       return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
+//     }
 
-    const produk = await Produk.findByPk(id_produk);
-    if (!produk) {
-      return res.status(404).json({ error: 'Produk tidak ditemukan' });
-    }
+//     const produk = await Produk.findByPk(id_produk);
+//     if (!produk) {
+//       return res.status(404).json({ error: 'Produk tidak ditemukan' });
+//     }
 
-    if (produk.stok < kuantitas) {
-      return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
-    }
+//     if (produk.stok < kuantitas) {
+//       return res.status(400).json({ error: 'Stok produk tidak mencukupi' });
+//     }
 
-    const total_harga = harga_produk * kuantitas;
+//     const total_harga = harga_produk * kuantitas;
 
-    detailTransaksi.id_produk = id_produk;
-    detailTransaksi.nmproduk = nmproduk;
-    detailTransaksi.harga_produk = harga_produk;
-    detailTransaksi.kuantitas = kuantitas;
-    detailTransaksi.catatan = catatan;
-    detailTransaksi.total_harga = total_harga;
+//     detailTransaksi.id_produk = id_produk;
+//     detailTransaksi.nmproduk = nmproduk;
+//     detailTransaksi.harga_produk = harga_produk;
+//     detailTransaksi.kuantitas = kuantitas;
+//     detailTransaksi.catatan = catatan;
+//     detailTransaksi.total_harga = total_harga;
 
-    await detailTransaksi.save();
+//     await detailTransaksi.save();
 
-    res.status(200).json(detailTransaksi);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     res.status(200).json(detailTransaksi);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
-// Menghapus detail transaksi
-exports.deleteDetailTransaksi = async (req, res) => {
-  const { id } = req.params;
+// // Menghapus detail transaksi
+// exports.deleteDetailTransaksi = async (req, res) => {
+//   const { id } = req.params;
 
-  try {
-    const detailTransaksi = await DetailTransaksi.findByPk(id);
-    if (!detailTransaksi) {
-      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
-    }
+//   try {
+//     const detailTransaksi = await DetailTransaksi.findByPk(id);
+//     if (!detailTransaksi) {
+//       return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
+//     }
 
-    await Produk.increment('stok', {
-      by: detailTransaksi.kuantitas,
-      where: { id_produk: detailTransaksi.id_produk }
-    });
+//     await Produk.increment('stok', {
+//       by: detailTransaksi.kuantitas,
+//       where: { id_produk: detailTransaksi.id_produk }
+//     });
 
-    await detailTransaksi.destroy();
-    res.status(200).json({ message: 'Detail transaksi berhasil dihapus' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     await detailTransaksi.destroy();
+//     res.status(200).json({ message: 'Detail transaksi berhasil dihapus' });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
