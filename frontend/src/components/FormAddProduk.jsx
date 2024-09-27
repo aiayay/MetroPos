@@ -151,7 +151,7 @@ const FormAddProduk = () => {
                     <select
                       value={nama_kategori}
                       onChange={(e) => setNamaKategori(e.target.value)}
-                    >
+                    className="text-black" >
                       <option value="">Pilih Kategori</option>
                       {kategoriList.map((kat) => (
                         <option key={kat.id_kategori} value={kat.nama_kategori}>

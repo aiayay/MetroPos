@@ -91,7 +91,7 @@ const FormAddUser = () => {
                 <label className="label">Level</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select value={level} onChange={(e) => setLevel(e.target.value)}>
+                    <select value={level} onChange={(e) => setLevel(e.target.value)} className="text-black">
                       <option value="">Pilih Level</option>
                       <option value="admin">Admin</option>
                       <option value="kasir">Kasir</option>

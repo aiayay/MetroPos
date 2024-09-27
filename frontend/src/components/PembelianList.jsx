@@ -89,9 +89,9 @@ const PembelianList = () => {
                   <td>{pembelian.harga_beli}</td>
                   <td>{pembelian.tanggal}</td>
                   <td>
-                    <Link to={`/pembelian/edit/${pembelian.id_pembelian}`} className="button is-small is-info">
+                    {/* <Link to={`/pembelian/edit/${pembelian.id_pembelian}`} className="button is-small is-info">
                       Edit
-                    </Link>
+                    </Link> */}
                     <button onClick={() => deletePembelian(pembelian.id_pembelian)} className="button is-small is-danger">
                       Delete
                     </button>

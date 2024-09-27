@@ -1,32 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../features/constants";
+import { API_URL } from "../features/constants"; // Pastikan API_URL sudah terdefinisi dengan benar
 import "../index.css";
 
 const SupplierList = () => {
   const [supplier, setSupplier] = useState([]);
   const [search, setSearch] = useState("");
-  // console.log(search);
 
   useEffect(() => {
     getSupplier();
   }, []);
+
   const getSupplier = async () => {
-    const response = await axios.get(API_URL + "supplier");
-    if (response.data && Array.isArray(response.data.data)) {
-      setSupplier(response.data.data);
-    } else {
+    try {
+      const response = await axios.get(API_URL + "supplier");
+      if (response.data && Array.isArray(response.data.data)) {
+        setSupplier(response.data.data);
+      } else {
+        setSupplier([]);
+      }
+    } catch (error) {
+      console.error("Error fetching suppliers:", error);
       setSupplier([]);
     }
   };
 
-  //metod delete supplier
-
   const deleteSupplier = async (id_supplier) => {
-    await axios.delete(API_URL + "supplier/" + id_supplier);
-    getSupplier();
+    try {
+      await axios.delete(API_URL + "supplier/" + id_supplier);
+      getSupplier(); // Refresh supplier list after deletion
+    } catch (error) {
+      console.error("Error deleting supplier:", error);
+    }
   };
+
   return (
     <div>
       <h1 className="title">Supplier</h1>
@@ -40,14 +48,19 @@ const SupplierList = () => {
               </Link>
             </div>
           </div>
-          {/* search */}
+          {/* Search */}
           <div className="container mt-5">
             <div className="columns">
               <div className="kolom is-centered">
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
+                      <input
+                        type="text"
+                        className="input"
+                        placeholder="cari.."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -75,21 +88,24 @@ const SupplierList = () => {
           </thead>
           <tbody>
             {supplier
-              .filter((supplier) => {
-                return search.toLowerCase() === "" ? supplier : supplier.nmsupplier.toLowerCase().includes(search);
+              .filter((s) => {
+                return (
+                  search.toLowerCase() === "" ||
+                  s.nmsupplier.toLowerCase().includes(search.toLowerCase())
+                );
               })
-              .map((supplier, index) => (
-                <tr key={supplier.id_supplier}>
+              .map((s, index) => (
+                <tr key={s.id_supplier}>
                   <td>{index + 1}</td>
-                  <td>{supplier.id_supplier}</td>
-                  <td>{supplier.nmsupplier}</td>
-                  <td>{supplier.alamat}</td>
-                  <td>{supplier.notlp}</td>
+                  <td>{s.id_supplier}</td>
+                  <td>{s.nmsupplier}</td>
+                  <td>{s.alamat}</td>
+                  <td>{s.notlp}</td>
                   <td>
-                    <Link to={`/supplier/edit/${supplier.id_supplier}`} className="button is-small is-info">
+                    <Link to={`/supplier/edit/${s.id_supplier}`} className="button is-small is-info">
                       Edit
                     </Link>
-                    <button onClick={() => deleteSupplier(supplier.id_supplier)} className="button is-small is-danger">
+                    <button onClick={() => deleteSupplier(s.id_supplier)} className="button is-small is-danger">
                       Delete
                     </button>
                   </td>
