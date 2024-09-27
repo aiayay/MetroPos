@@ -1,5 +1,5 @@
-// const { DetailTransaksi, Transaksi, Produk } = require('../models');
-// const { v4: uuidv4 } = require('uuid');
+ const { DetailTransaksi, Transaksi, Produk } = require('../models');
+ const { v4: uuidv4 } = require('uuid');
 
 // // Mendapatkan semua detail transaksi
 // exports.getAllDetailTransaksi = async (req, res) => {
@@ -17,23 +17,23 @@
 // };
 
 // // Mendapatkan detail transaksi berdasarkan ID
-// exports.getDetailTransaksiById = async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const detailTransaksi = await DetailTransaksi.findByPk(id, {
-//       include: [
-//         { model: Transaksi, as: 'transaksi' },
-//         { model: Produk, as: 'produk' }
-//       ]
-//     });
-//     if (!detailTransaksi) {
-//       return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
-//     }
-//     res.status(200).json(detailTransaksi);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+exports.getDetailTransaksiById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const detailTransaksi = await DetailTransaksi.findByPk(id, {
+      include: [
+        { model: Transaksi, as: 'transaksi' },
+        { model: Produk, as: 'produk' }
+      ]
+    });
+    if (!detailTransaksi) {
+      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
+    }
+    res.status(200).json(detailTransaksi);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // // Membuat detail transaksi baru
 // exports.createDetailTransaksi = async (req, res) => {
