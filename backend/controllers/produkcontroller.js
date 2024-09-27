@@ -42,22 +42,23 @@ exports.create = async (req, res) => {
     }
 
     const { nmproduk, stok, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
-    const foto_produk = req.file ? req.file.filename : null; // Nama file foto yang diupload
+    
+    // URL lengkap gambar
+    const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
 
     try {
       // Cari id_kategori berdasarkan nama kategori
       const kategori = await Kategori.findOne({ where: { nama_kategori } });
 
-      // Jika kategori tidak ditemukan, return error
       if (!kategori) {
         return res.status(404).json({ error: "Kategori tidak ditemukan" });
       }
 
-      // Buat produk baru dengan id_kategori dan foto yang diupload
+      // Buat produk baru dengan URL gambar
       const newProduk = await Produk.create({
         nmproduk,
         stok,
-        foto_produk, // Tambahkan foto_produk yang diupload
+        foto_produk, // URL lengkap gambar yang diupload
         satuan,
         merk,
         harga_beli,
@@ -72,6 +73,7 @@ exports.create = async (req, res) => {
     }
   });
 };
+
 
 // Fungsi untuk mendapatkan semua produk beserta kategori
 exports.findAll = (req, res) => {

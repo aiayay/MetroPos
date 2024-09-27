@@ -36,21 +36,33 @@ exports.createTransaksi = async (req, res) => {
   }
 
   try {
-    // Buat transaksi baru di tabel Transaksi
-    const newTransaksi = await Transaksi.create({
-      id_transaksi: uuidv4(),
-      id_member,
-      id_user,
-      nama_kasir,
-      nama_member,
-      total_bayar,
-      bayar,
-      potongan,
-      metode_bayar,
-      tanggal
+    // Cek apakah sudah ada transaksi yang sama pada hari yang sama dengan id_user dan id_member
+    let transaksi = await Transaksi.findOne({
+      where: {
+        id_user,
+        id_member,
+        tanggal,
+        metode_bayar
+      }
     });
 
-    // Jika ada detail transaksi (array of products)
+    // Jika belum ada, buat transaksi baru
+    if (!transaksi) {
+      transaksi = await Transaksi.create({
+        id_transaksi: uuidv4(),
+        id_member,
+        id_user,
+        nama_kasir,
+        nama_member,
+        total_bayar,
+        bayar,
+        potongan,
+        metode_bayar,
+        tanggal
+      });
+    }
+
+    // Jika detailTransaksi ada dan lebih dari 0
     if (detailTransaksi && detailTransaksi.length > 0) {
       for (const detail of detailTransaksi) {
         const produk = await Produk.findByPk(detail.id_produk);
@@ -63,16 +75,16 @@ exports.createTransaksi = async (req, res) => {
           return res.status(400).json({ error: `Stok produk ${produk.nmproduk} tidak mencukupi` });
         }
 
-        // Cek apakah detail transaksi dengan produk yang sama sudah ada
-        const existingDetail = await DetailTransaksi.findOne({
+        // Cek apakah produk sudah ada di detail transaksi yang ada
+        let existingDetail = await DetailTransaksi.findOne({
           where: {
-            id_transaksi: newTransaksi.id_transaksi,
+            id_transaksi: transaksi.id_transaksi,
             id_produk: detail.id_produk
           }
         });
 
         if (existingDetail) {
-          // Jika sudah ada, update kuantitas dan total_harga
+          // Jika produk sudah ada, update kuantitas dan total_harga
           const newQuantity = existingDetail.kuantitas + detail.kuantitas;
           const newTotalPrice = newQuantity * detail.harga_produk;
 
@@ -81,10 +93,10 @@ exports.createTransaksi = async (req, res) => {
             total_harga: newTotalPrice
           });
         } else {
-          // Jika belum ada, buat detail transaksi baru
+          // Jika produk belum ada, buat detail transaksi baru
           await DetailTransaksi.create({
             id_detailtrans: uuidv4(),
-            id_transaksi: newTransaksi.id_transaksi,
+            id_transaksi: transaksi.id_transaksi,
             id_produk: detail.id_produk,
             nmproduk: detail.nmproduk,
             harga_produk: detail.harga_produk,
@@ -100,11 +112,18 @@ exports.createTransaksi = async (req, res) => {
           where: { id_produk: detail.id_produk }
         });
       }
+
+      // Update total bayar dalam transaksi setelah detail ditambahkan
+      const updatedTotal = await DetailTransaksi.sum('total_harga', {
+        where: { id_transaksi: transaksi.id_transaksi }
+      });
+
+      await transaksi.update({ total_bayar: updatedTotal });
     }
 
     res.status(201).json({
-      message: "Transaksi dan detail transaksi berhasil dibuat",
-      transaksi: newTransaksi,
+      message: "Transaksi dan detail transaksi berhasil dibuat/diupdate",
+      transaksi,
       detailTransaksi
     });
   } catch (error) {
@@ -112,7 +131,6 @@ exports.createTransaksi = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 
 // Memperbarui transaksi
