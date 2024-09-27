@@ -8,6 +8,10 @@ import { GiForkKnifeSpoon, GiCoffeeBeans, GiLiquidSoap, GiEmptyMetalBucket } fro
 import { PiTeaBag } from "react-icons/pi";
 import { IoPerson, IoHome, IoLogOut, IoCube, IoPeopleOutline, IoCart, IoList, IoPeopleCircle, IoWallet } from "react-icons/io5";
 
+
+// const Icon = ({ nama }) => {
+//   if(nama=="")
+// }
 export default class KasirSidebar extends Component {
   constructor(props) {
     super(props);
