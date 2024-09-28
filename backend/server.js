@@ -29,7 +29,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 // Import semua router
-//const detailtransaksirouter = require("./routes/detailtransaksirouter.js");
+const detailtransaksirouter = require("./routes/detailtransaksirouter.js");
 const produkRouter = require("./routes/produktrouter.js");
 const kategoriRouter = require("./routes/kategorirouter.js");
 const keranjangRouter = require("./routes/keranjangrouter.js");
@@ -40,7 +40,7 @@ const memberRouter = require("./routes/memberrouter.js");
 const userrouter = require("./routes/userrouter.js");
 
 // Gunakan router yang diimport
-//app.use("/api/detailtransaksi", detailtransaksirouter);
+app.use("/api/detailtransaksi", detailtransaksirouter);
 app.use("/api/produk", produkRouter);
 app.use("/api/kategori", kategoriRouter);
 app.use("/api/keranjang", keranjangRouter);
