@@ -23,6 +23,8 @@ const TransaksiList = () => {
     await axios.delete(API_URL + "transaksi/" + id_transaksi);
     getTransaksi();
   };
+
+ 
   return (
     <div>
       <h1 className="title">Transaksi</h1>
@@ -34,6 +36,7 @@ const TransaksiList = () => {
               <button className="button is-success">Cetak</button>
             </div>
           </div>
+         
           {/* search */}
           <div className="container mt-5">
             <div className="columns">
@@ -57,7 +60,7 @@ const TransaksiList = () => {
       </div>
 
       <p className="tanggal">
-        Dari <input type="date" /> sampai <input type="date" name="" id="" />
+   
         <button className="button ungu">Filter</button>
       </p>
       <div>
