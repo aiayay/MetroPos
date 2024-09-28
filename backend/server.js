@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path"); // Mengimpor path
 require('dotenv').config();
+const session = require("express-session");
 
 // Inisialisasi Express
 const app = express();
@@ -24,6 +25,13 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: 'your_secret_key', // Ganti dengan secret yang kuat
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set true jika menggunakan HTTPS
+}));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

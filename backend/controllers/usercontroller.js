@@ -48,10 +48,22 @@ exports.loginUser = async (req, res) => {
       { expiresIn: '1h' }
     );
 
+    // Simpan user ke dalam sesi
+    req.session.user = {
+      id: user.id_user,
+      username: user.username,
+      level: user.level
+    };
+
     res.json({
       success: true,
       message: 'Login berhasil',
       token,
+      user: {
+        id: user.id_user,
+        username: user.username,
+        level: user.level
+      }
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -61,7 +73,7 @@ exports.loginUser = async (req, res) => {
 // Get User Profile (requires login)
 exports.getUserProfile = async (req, res) => {
   try {
-    const user = await User.findByPk(req.user.id_user); // Menggunakan req.user.id_user yang diatur oleh middleware
+    const user = await User.findByPk(req.session.user.id); // Menggunakan req.session.user.id
     if (!user) return res.status(404).json({ success: false, message: 'User tidak ditemukan' });
 
     res.json({ success: true, data: user });

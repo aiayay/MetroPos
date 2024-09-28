@@ -26,13 +26,15 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     tableName: 'member',
-    timestamps: false
+    timestamps: true,
+    createdAt: 'created_at', // Gunakan 'created_at' sebagai nama kolom
+    updatedAt: false
   });
 
   Member.associate = (models) => {
     Member.hasMany(models.Keranjang, {
       foreignKey: 'id_member',
-      as: 'keranjang'  // alias untuk asosiasi
+      as: 'keranjang'  
     });
   };
 

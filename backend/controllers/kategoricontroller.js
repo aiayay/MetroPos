@@ -5,7 +5,10 @@ const { Op } = require('sequelize');
 // Get all categories
 exports.getAllCategories = async (req, res) => {
     try {
-        const categories = await Kategori.findAll();
+        const categories = await Kategori.findAll({
+            order: [['created_at', 'DESC']] // Mengurutkan berdasarkan created_at dari yang terbaru
+        });
+
         res.status(200).json({
             success: true,
             message: 'Daftar kategori berhasil diambil',

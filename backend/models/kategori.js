@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     tableName: 'kategori',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'created_at', // Gunakan 'created_at' sebagai nama kolom
+    updatedAt: false
   });
 
   // Kategori.associate = (models) => {

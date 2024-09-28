@@ -7,6 +7,9 @@ const { Op } = require("sequelize");
 exports.getAllMembers = async (req, res) => {
   try {
     const members = await Member.findAll();
+   {
+    order: [['created_at', 'DESC']]
+   } 
     res.status(200).json({
       success: true,
       message: "Daftar member berhasil diambil",
