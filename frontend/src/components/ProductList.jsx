@@ -90,7 +90,9 @@ const ProductList = () => {
                   <td>{produk.merk}</td>
                   <td>{produk.stok}</td>
                   <td>{produk.satuan}</td>
-                  <td>{produk.foto_produk}</td>
+                  <td>
+                    <img src={produk.foto_produk} style={{ width: "100px", height: "100px" }} />
+                  </td>
                   <td>{produk.diskon}</td>
                   <td>
                     <Link to={`/produk/edit/${produk.id_produk}`} className="button is-small is-info">
