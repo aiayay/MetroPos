@@ -38,7 +38,9 @@ module.exports = (sequelize) => {
     },
   }, {
     tableName: 'pembelian',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'createdAt', 
+    updatedAt: 'updatedAt',
   });
 
   Pembelian.associate = (models) => {

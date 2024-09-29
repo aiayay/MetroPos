@@ -55,7 +55,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     tableName: 'transaksi',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'createdAt',  // Sesuai dengan nama kolom di database
+    updatedAt: 'updatedAt',
   });
 
   // Definisi hubungan

@@ -35,7 +35,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     tableName: 'user',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'createdAt',  // Sesuai dengan nama kolom di database
+    updatedAt: 'updatedAt',
   });
 
   // Definisi hubungan

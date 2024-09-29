@@ -37,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     tableName: 'produk',
-    timestamps: false,
+    timestamps: true,
+    createdAt: 'createdAt', 
+    updatedAt: 'updatedAt',
   });
 
   Produk.associate = (models) => {
