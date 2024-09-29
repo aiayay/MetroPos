@@ -15,7 +15,7 @@ const KasirNavbar = () => {
     <div>
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <NavLink className="navbar-item" to="/dashboard">
+          <NavLink className="navbar-item" to="">
             <h1>Metro Pos</h1>
           </NavLink>
           <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">

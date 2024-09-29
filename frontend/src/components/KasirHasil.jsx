@@ -160,7 +160,7 @@ const namaMember = keranjang.length > 0 && keranjang[0].member ? keranjang[0].me
             )}
             <hr />
 
-            <TotalBayar keranjang={keranjang} {...this.props} />
+            <TotalBayar keranjang={keranjang} tanggal={today} {...this.props} />
           </div>
         </Col>
       </div>

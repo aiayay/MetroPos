@@ -38,14 +38,21 @@ const FormEditUser = () => {
 
   const editUser = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("nama_lengkap", nama_lengkap);
+    formData.append("notlp", notlp);
+    formData.append("jk", jk);
+    formData.append("level", level);
+    if (foto) {
+      formData.append("foto", foto); // Jika ada foto, tambahkan ke formData
+    }
+  
     try {
-      await axios.put(API_URL + "user/users/" + id_user, {
-        username: username,
-        nama_lengkap: nama_lengkap,
-        notlp: notlp,
-        jk: jk,
-        level: level,
-        foto: foto,
+      await axios.put(`${API_URL}user/upload-foto/${id_user}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       });
       navigate("/users");
     } catch (error) {
@@ -54,6 +61,7 @@ const FormEditUser = () => {
       }
     }
   };
+  
   return (
     <div>
       <h1 className="title">User</h1>
@@ -91,11 +99,11 @@ const FormEditUser = () => {
                 <label className="label">Jenis Kelamin</label>
                 <div className="control">
                   <label className="radio">
-                    <input type="radio" name="jk" value="l" checked={jk === "l"} onChange={(e) => setJk(e.target.value)} />
+                    <input type="radio" name="jk" value="Laki-laki" checked={jk === "Laki-laki"} onChange={(e) => setJk(e.target.value)} />
                     Laki-laki
                   </label>
                   <label className="radio">
-                    <input type="radio" name="jk" value="p" checked={jk === "p"} onChange={(e) => setJk(e.target.value)} />
+                    <input type="radio" name="jk" value="Perempuan" checked={jk === "Perempuan"} onChange={(e) => setJk(e.target.value)} />
                     Perempuan
                   </label>
                 </div>
@@ -113,11 +121,12 @@ const FormEditUser = () => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Foto</label>
-                <div className="control">
-                  <input type="file" className="input" placeholder="foto" value={foto || ""} onChange={(e) => setFoto(e.target.value)} />
-                </div>
-              </div>
+  <label className="label">Foto</label>
+  <div className="control">
+    <input type="file" className="input" onChange={(e) => setFoto(e.target.files[0])} />
+  </div>
+</div>
+
 
               <div className="field">
                 <div className="control">

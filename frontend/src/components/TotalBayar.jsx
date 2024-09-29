@@ -4,12 +4,12 @@ import axios from "axios";
 import { API_URL } from "../features/constants";
 import { useNavigate } from "react-router-dom";
 
-const TotalBayar = ({ keranjang }) => {
+const TotalBayar = ({ keranjang, tanggal }) => {
   const [id_user, setId_user] = useState("");
   const [nama_lengkap, setNama_lengkap] = useState("");
   const [potongan, setPotongan] = useState(0);
   const [bayar, setBayar] = useState(0);
-  const [tanggal, setTanggal] = useState("");
+  // const [tanggal, setTanggal] = useState("");
   const [metode_bayar, setMetode_bayar] = useState("");
   const [total_bayar, setTotal_bayar] = useState(0);
 
@@ -130,7 +130,7 @@ const TotalBayar = ({ keranjang }) => {
             <option value="transfer">Transfer</option>
           </select>
         </div>
-
+{/* 
         <div className="form-group">
           <label className="form-label" htmlFor="tanggal">Tanggal Transaksi:</label>
           <input
@@ -141,7 +141,7 @@ const TotalBayar = ({ keranjang }) => {
             onChange={(e) => setTanggal(e.target.value)}
             required
           />
-        </div>
+        </div> */}
 
         <button type="submit" className="submit-button">
           Submit
