@@ -17,23 +17,35 @@
 // };
 
 // // Mendapatkan detail transaksi berdasarkan ID
+// Mendapatkan detail transaksi berdasarkan ID Transaksi
 exports.getDetailTransaksiById = async (req, res) => {
-  const { id } = req.params;
+  const { id_transaksi } = req.params;
   try {
-    const detailTransaksi = await DetailTransaksi.findByPk(id, {
-      include: [
-        { model: Transaksi, as: 'transaksi' },
-        { model: Produk, as: 'produk' }
-      ]
-    });
-    if (!detailTransaksi) {
-      return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
-    }
-    res.status(200).json(detailTransaksi);
+      const detailTransaksi = await DetailTransaksi.findAll({
+          where: { id_transaksi },
+          include: [
+              { model: Transaksi, as: 'transaksi' }, // Mengambil informasi transaksi
+              { model: Produk, as: 'produk' } // Mengambil informasi produk
+          ]
+      });
+
+      if (detailTransaksi.length === 0) {
+          return res.status(404).json({ error: 'Detail transaksi tidak ditemukan' });
+      }
+
+      // Mengambil informasi transaksi dari detailTransaksi
+      const transaksi = detailTransaksi[0].transaksi; // Mengambil transaksi dari detail pertama
+
+      res.status(200).json({
+          transaksi,
+          detailTransaksi
+      });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
   }
 };
+
+
 
 // // Membuat detail transaksi baru
 // exports.createDetailTransaksi = async (req, res) => {

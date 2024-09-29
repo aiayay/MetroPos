@@ -1,6 +1,53 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+const multer = require('multer');
+const path = require('path');
+
+
+// Konfigurasi penyimpanan multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/users'); // Ganti dengan path folder pengguna
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Menyimpan dengan nama unik
+  }
+});
+
+const upload = multer({ storage: storage }).single('foto'); // Middleware multer
+
+// Fungsi untuk meng-upload foto pengguna
+// Fungsi untuk meng-upload foto pengguna
+exports.uploadUserPhoto = (req, res) => {
+  upload(req, res, async (err) => {
+    if (err) {
+      return res.status(500).json({ success: false, message: 'Gagal mengupload foto', error: err.message });
+    }
+
+    try {
+      const userId = req.params.id; // Mengambil id pengguna dari parameter
+      const user = await User.findByPk(userId);
+
+      if (!user) {
+        return res.status(404).json({ success: false, message: 'User tidak ditemukan' });
+      }
+
+      // Membentuk URL dari path foto yang disimpan
+      const baseUrl = `${req.protocol}://${req.get('host')}/`; // Mendapatkan base URL
+      user.foto = `${baseUrl}uploads/users/${req.file.filename}`; // Menyimpan URL foto ke dalam database
+      await user.save();
+
+      res.status(200).json({
+        success: true,
+        message: 'Foto berhasil diupload',
+        data: user // Menampilkan data pengguna yang sudah diperbarui
+      });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Gagal mengupdate foto pengguna', error: error.message });
+    }
+  });
+};
 
 // Register User
 exports.registerUser = async (req, res) => {
@@ -131,3 +178,41 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ success: false, message: 'Gagal menghapus user', error: error.message });
   }
 };
+
+// Edit User
+exports.editUser = async (req, res) => {
+  const { id } = req.params; // Ambil ID dari parameter URL
+  const { username, password, nama_lengkap, notlp, jk, level, foto } = req.body; // Ambil data dari body request
+
+  try {
+    const user = await User.findByPk(id); // Cari pengguna berdasarkan ID
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User tidak ditemukan' });
+    }
+
+    // Jika password baru disertakan, hash password tersebut
+    if (password) {
+      user.password = await bcrypt.hash(password, 10);
+    }
+
+    // Update informasi pengguna
+    user.username = username || user.username; // Jika tidak ada username baru, gunakan yang lama
+    user.nama_lengkap = nama_lengkap || user.nama_lengkap;
+    user.notlp = notlp || user.notlp;
+    user.jk = jk || user.jk;
+    user.level = level || user.level;
+    user.foto = foto || user.foto;
+
+    await user.save(); // Simpan perubahan
+
+    res.status(200).json({
+      success: true,
+      message: 'User berhasil diperbarui',
+      data: user
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Gagal memperbarui user', error: error.message });
+  }
+};
+

@@ -51,4 +51,8 @@ router.delete('/users/:id', userController.deleteUser);
 // Get user by ID
 router.get('/users/:id', userController.getUserById);
 
+router.put('/:id', userController.editUser);
+
+router.post('/upload-foto/:id', userController.uploadUserPhoto);
+
 module.exports = router;
