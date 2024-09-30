@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import {jsPDF} from "jspdf";
+import "jspdf-autotable";
 
 const TransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
   const [search, setSearch] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     getTransaksi();
@@ -16,17 +18,91 @@ const TransaksiList = () => {
 
   const getTransaksi = async () => {
     const response = await axios.get(API_URL + "transaksi");
+
+    const sortedTransaksi = response.data.sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
+  
+    
     setTransaksi(response.data);
   };
 
-  // Metode untuk menghapus transaksi
   const deleteTransaksi = async (id_transaksi) => {
     await axios.delete(API_URL + "transaksi/" + id_transaksi);
     getTransaksi();
   };
 
-  // Fungsi untuk memfilter transaksi berdasarkan tanggal
-  const [selectedDate, setSelectedDate] = useState(null);
+  const handleFilter = (transaksi) => {
+    let filtered = transaksi;
+
+    // Filter berdasarkan nama member yang dicari
+    if (search) {
+      filtered = filtered.filter((item) =>
+        item.nama_member.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    // Filter berdasarkan rentang tanggal
+    if (startDate && endDate) {
+      filtered = filtered.filter((item) => {
+        const transaksiDate = new Date(item.tanggal);
+        return transaksiDate >= new Date(startDate) && transaksiDate <= new Date(endDate);
+      });
+    }
+
+    return filtered;
+  };
+
+  const createHeaders = keys => {
+    const result = [];
+
+    for(let key in keys){
+      result.push({
+        id: key,
+        name: key,
+        prompt: key,
+      }
+   
+      )
+    }
+    return result;
+  }
+  const exportPdf = async () => {
+    const doc = new jsPDF({ orientation: "landscape" });
+  
+    const title = "Laporan Transaksi";
+    const periode = `Periode: ${startDate ? startDate : '-'} sampai ${endDate ? endDate : '-'}`;
+  
+    doc.setFontSize(16);
+    doc.text(title, 14, 15);  // Menambahkan judul laporan
+    doc.setFontSize(12);
+    doc.text(periode, 14, 25);  // Menambahkan rentang periode yang diambil dari input tanggal
+    
+    // Header tabel
+    const headers = [["ID Transaksi", "Nama Member", "Nama Kasir", "Total Bayar", "Potongan", "Metode Bayar", "Tanggal"]];
+  
+    // Data yang akan dimasukkan ke dalam tabel
+    const tableData = transaksi.map((row) => [
+      row.id_transaksi,
+      row.nama_member,
+      row.nama_kasir,
+      row.total_bayar,
+      row.potongan,
+      row.metode_bayar,
+      row.tanggal,
+    ]);
+  
+    // Menggunakan autoTable untuk menampilkan data
+    doc.autoTable({
+      startY: 30,
+      head: headers,
+      body: tableData,
+    });
+  
+    // Simpan file PDF
+    doc.save("data.pdf");
+  };
+  
+  
+
 
   return (
     <div>
@@ -36,20 +112,10 @@ const TransaksiList = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <button className="button is-success">Cetak</button>
+              <button className="button is-success" onClick={exportPdf}>Cetak</button>
             </div>
           </div>
-          {/* Date range picker */}
           <div className="container mt-5">
-            <div className="columns">
-              <div className="column is-centered">
-              <DatePicker selected={selectedDate} onChange={date => setSelectedDate(date)} />
-              </div>
-              <div className="column is-centered">
-  
-              </div>
-            </div>
-            {/* Search bar */}
             <div className="columns">
               <div className="kolom is-centered">
                 <form action="">
@@ -76,17 +142,29 @@ const TransaksiList = () => {
       </div>
 
       <p className="tanggal">
-        <button className="button ungu">Filter</button>
+        Dari
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        sampai
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
       </p>
+
       <div>
-        <table className="table is-fullwidth">
+        <table className="table is-fullwidth" id="my-table">
           <thead>
             <tr>
               <th>No</th>
               <th>Kode Transaksi</th>
               <th>Nama Member</th>
               <th>Nama Kasir</th>
-              <th>Total harga</th>
+         
               <th>Total Bayar</th>
               <th>Bayar</th>
               <th>Potongan</th>
@@ -96,28 +174,26 @@ const TransaksiList = () => {
             </tr>
           </thead>
           <tbody>
-          {transaksi
-              .filter((transaksi) => {
-                return search.toLowerCase() === "" ? transaksi : transaksi.nama_member.toLowerCase().includes(search);
-              }).map((transaksi, index) => (
+            {handleFilter(transaksi).map((transaksi, index) => (
               <tr key={transaksi.id_transaksi}>
                 <td>{index + 1}</td>
                 <td>{transaksi.id_transaksi}</td>
                 <td>{transaksi.nama_member}</td>
                 <td>{transaksi.nama_kasir}</td>
-                <td>{transaksi.total_harga}</td>
+             
                 <td>{transaksi.total_bayar}</td>
                 <td>{transaksi.bayar}</td>
                 <td>{transaksi.potongan}</td>
                 <td>{transaksi.metode_bayar}</td>
                 <td>{transaksi.tanggal}</td>
                 <td>
-                  <Link
-                    to={`/transaksi/detail/${transaksi.id_transaksi}`}
-                    className="button is-primary is-info"
-                  >
-                    Detail
-                  </Link>
+                <Link
+  to={ API_URL + "transaksi/detail/" + transaksi.id_transaksi}
+  className="button is-primary is-info"
+>
+  Detail
+</Link>
+
                   <button
                     onClick={() => deleteTransaksi(transaksi.id_transaksi)}
                     className="button is-danger mb-2"

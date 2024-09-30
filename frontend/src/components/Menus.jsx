@@ -6,7 +6,11 @@ import "../index.css";
 
 const Menus = ({ menu, masukKeranjang }) => {
   const handleClick = () => {
-    masukKeranjang(menu);
+    // if (menu.stok > 0) {
+    //   masukKeranjang(menu);
+    // } else {
+    //   alert("Stok habis!");
+    // }
   };
 
   return (
