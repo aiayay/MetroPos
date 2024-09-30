@@ -126,13 +126,50 @@ exports.findOne = (req, res) => {
 };
 
 // Fungsi untuk memperbarui produk
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
 
-  Produk.update(req.body, {
-    where: { id_produk: id },
-  })
-    .then((num) => {
+  // Gunakan Multer untuk menangani upload foto
+  upload.single('foto_produk')(req, res, async (err) => {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json({ error: 'Terjadi kesalahan saat mengupload gambar.' });
+    } else if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+
+    try {
+      const { nmproduk, stok, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
+
+      // URL gambar yang akan diupdate
+      const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
+
+      // Cari kategori berdasarkan nama_kategori
+      const kategori = await Kategori.findOne({ where: { nama_kategori } });
+      if (!kategori) {
+        return res.status(404).json({ error: "Kategori tidak ditemukan" });
+      }
+
+      // Data yang akan diupdate, termasuk foto jika ada
+      const updatedData = {
+        nmproduk,
+        stok,
+        satuan,
+        merk,
+        harga_beli,
+        harga_jual,
+        diskon,
+        id_kategori: kategori.id_kategori,
+      };
+
+      // Jika ada gambar baru, tambahkan URL gambar ke dalam data yang diupdate
+      if (foto_produk) {
+        updatedData.foto_produk = foto_produk;
+      }
+
+      const num = await Produk.update(updatedData, {
+        where: { id_produk: id },
+      });
+
       if (num == 1) {
         res.send({
           message: "Produk berhasil diperbarui.",
@@ -142,12 +179,12 @@ exports.update = (req, res) => {
           message: `Tidak dapat memperbarui produk dengan id ${id}. Produk mungkin tidak ditemukan atau tidak ada perubahan data.`,
         });
       }
-    })
-    .catch((err) => {
+    } catch (error) {
       res.status(500).send({
-        message: err.message || "Terjadi kesalahan saat memperbarui produk.",
+        message: error.message || "Terjadi kesalahan saat memperbarui produk.",
       });
-    });
+    }
+  });
 };
 
 // Fungsi untuk menghapus produk
