@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
     id_pembelian: {
       type: DataTypes.STRING,
       primaryKey: true,
-      defaultValue: uuidv4(),
+      defaultValue: () => uuidv4(),
     },
     id_produk: {
       type: DataTypes.STRING,

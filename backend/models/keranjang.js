@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       id_keranjang: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4, // Generate UUID otomatis
+        defaultValue: () => uuidv4(),
         primaryKey: true,
         allowNull: false,
       },
