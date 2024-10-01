@@ -80,6 +80,7 @@ const ProductList = () => {
               .filter((produk) => {
                 return search.toLowerCase() === "" ? produk : produk.nmproduk.toLowerCase().includes(search);
               })
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((produk, index) => (
                 <tr key={produk.id_produk}>
                   <td>{index + 1}</td>

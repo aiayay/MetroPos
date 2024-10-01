@@ -19,14 +19,20 @@ const FormAddUser = () => {
   const simpanUser = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(API_URL + "user/register", {
-        username: username,
-        password: password,
-        nama_lengkap: nama_lengkap,
-        notlp: notlp,
-        jk: jk,
-        level: level,
-        foto: foto,
+      // Membuat objek form data untuk mengirim file dan data lainnya
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("nama_lengkap", nama_lengkap);
+      formData.append("notlp", notlp);
+      formData.append("jk", jk);
+      formData.append("level", level);
+      if (foto) formData.append("foto", foto); // Menambahkan file foto ke form data
+  
+      await axios.post(API_URL + "user/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Mengatur header agar sesuai dengan pengiriman file
+        },
       });
       navigate("/users");
     } catch (error) {

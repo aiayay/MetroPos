@@ -60,14 +60,18 @@ const FormEditProduk = () => {
     e.preventDefault();
     try {
       const response = await axios.put(API_URL + "produk/" + id_produk, {
-        nmproduk: nmproduk,
-        harga_jual: harga_jual,
-        stok: stok,
-        satuan: satuan,
-        merk: merk,
-        id_kategori: id_kategori, // Mengirim id_kategori
-        foto_produk: foto_produk,
-        diskon: diskon,
+        nmproduk,
+        harga_jual,
+        stok,
+        satuan,
+        merk,
+        id_kategori, // Mengirim id_kategori
+      foto_produk,
+        diskon,
+      },{
+        headers: {
+          "Content-Type" : "application/json"
+        }
       });
       // console.log("Respon dari server:", response.data);
       navigate("/produk");
