@@ -51,4 +51,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   return Keranjang;
+
 };
+
+//tes
