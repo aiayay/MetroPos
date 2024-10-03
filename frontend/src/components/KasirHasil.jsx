@@ -76,7 +76,7 @@ export default class KasirHasil extends Component {
         this.props.getListKeranjang();
         swal({
           title: "Update Pesanan!",
-          text: "Sukses Update Pesanan: " + data.id_produk.nmproduk,
+          text: "Sukses Update Pesanan: " + this.state.keranjangDetail.produk.nmproduk, // Akses nama produk yang di-update
           button: false,
           timer: 1500,
         });
@@ -107,15 +107,13 @@ export default class KasirHasil extends Component {
 
   render() {
     const { keranjang } = this.props;
-    const today = new Date().toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
+    const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
     
     // Ambil data member dari keranjang pertama (jika ada)
    // Ambil data member dari keranjang pertama (jika ada dan tidak null)
-const namaMember = keranjang.length > 0 && keranjang[0].member ? keranjang[0].member.nama_member : "Tidak ada member";
+   const namaKasir = localStorage.getItem("nama_kasir") || "Nama kasir tidak tersedia";
+   console.log(namaKasir);
+   const namaMember = keranjang.length > 0 && keranjang[0].member ? keranjang[0].member.nama_member : "Tidak ada member";
 
     return (
       <div>
@@ -128,7 +126,7 @@ const namaMember = keranjang.length > 0 && keranjang[0].member ? keranjang[0].me
                 <ListGroup variant="flush">
                   {/* Informasi Member di luar looping */}
                   <p className="text-black">Tanggal : {today}</p>
-                  <p className="text-black">Kasir :</p>
+                  <p className="text-black">Nama Kasir : {namaKasir}</p>
                   <p className="text-black">Member : {namaMember}</p>
                   <hr />
                   
@@ -160,7 +158,8 @@ const namaMember = keranjang.length > 0 && keranjang[0].member ? keranjang[0].me
             )}
             <hr />
 
-            <TotalBayar keranjang={keranjang} {...this.props} />
+            <TotalBayar keranjang={keranjang} tanggal={today} />
+
           </div>
         </Col>
       </div>

@@ -4,12 +4,11 @@ import axios from "axios";
 import { API_URL } from "../features/constants";
 import { useNavigate } from "react-router-dom";
 
-const TotalBayar = ({ keranjang }) => {
+const TotalBayar = ({ keranjang, tanggal }) => {
   const [id_user, setId_user] = useState("");
   const [nama_lengkap, setNama_lengkap] = useState("");
   const [potongan, setPotongan] = useState(0);
   const [bayar, setBayar] = useState(0);
-  const [tanggal, setTanggal] = useState("");
   const [metode_bayar, setMetode_bayar] = useState("");
   const [total_bayar, setTotal_bayar] = useState(0);
 
@@ -29,38 +28,37 @@ const TotalBayar = ({ keranjang }) => {
 
   // Submit transaksi
   const submitTotalBayar = async (event) => {
-    event.preventDefault(); // Mencegah halaman reload
-  
+    event.preventDefault();
+
     const id_member = keranjang[0]?.member?.id_member || null;
-  
+
     const transaksi = {
-      id_member: id_member, // ID member jika ada, jika tidak, null
-      id_user: id_user, // ID pengguna
-      nama_kasir: nama_lengkap, // Nama kasir
-      nama_member: keranjang[0]?.member?.nama_member || "Umum", // Nama member
-      total_bayar: total_bayar, // Total bayar
-      bayar: bayar, // Jumlah yang dibayar
-      potongan: potongan, // Potongan
-      metode_bayar: metode_bayar, // Metode pembayaran
-      tanggal: tanggal, // Tanggal transaksi
+      id_member: id_member,
+      id_user: id_user,
+      nama_kasir: nama_lengkap,
+      nama_member: keranjang[0]?.member?.nama_member || "Umum",
+      total_bayar: total_bayar,
+      bayar: bayar,
+      potongan: potongan,
+      metode_bayar: metode_bayar,
+      tanggal: tanggal, // Ambil tanggal dari props
       detailTransaksi: keranjang.map((item) => ({
-        id_produk: item.produk.id_produk, // ID produk
-        nmproduk: item.produk.nmproduk, // Nama produk
-        harga_produk: item.produk.harga_jual, // Harga produk
-        kuantitas: item.kuantitas, // Kuantitas
-        total_harga: item.total_harga, // Total harga
-        potongan: item.potongan || 0, // Potongan jika ada
+        id_produk: item.produk.id_produk,
+        nmproduk: item.produk.nmproduk,
+        harga_produk: item.produk.harga_jual,
+        kuantitas: item.kuantitas,
+        total_harga: item.total_harga,
+        potongan: item.potongan || 0,
       })),
     };
-  
+
     try {
       const res = await axios.post(API_URL + "transaksi", transaksi);
-      navigate("/sukses"); // Pindah ke halaman sukses setelah transaksi selesai
+      navigate("/sukses");
     } catch (error) {
       console.error("Error saat membuat transaksi:", error.response?.data || error.message);
     }
   };
-  
 
   return (
     <div className="fixed-bottom">
@@ -70,27 +68,7 @@ const TotalBayar = ({ keranjang }) => {
       </div>
 
       <form onSubmit={submitTotalBayar}>
-        <div className="form-group">
-          <label className="form-label" htmlFor="id_kasir">Id Kasir:</label>
-          <input
-            type="text"
-            name="id_user"
-            value={id_user}
-            onChange={(e) => setId_user(e.target.value)}
-            placeholder="Masukkan id_user"
-          />
-        </div>
-
-        <div className="form-group">
-          <label className="form-label" htmlFor="nama_lengkap">Nama Lengkap Kasir:</label>
-          <input
-            type="text"
-            name="nama_lengkap"
-            value={nama_lengkap}
-            onChange={(e) => setNama_lengkap(e.target.value)}
-            placeholder="Masukkan nama lengkap"
-          />
-        </div>
+  
 
         <div className="form-group">
           <label className="form-label" htmlFor="bayar">Bayar:</label>
@@ -131,17 +109,16 @@ const TotalBayar = ({ keranjang }) => {
           </select>
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="form-label" htmlFor="tanggal">Tanggal Transaksi:</label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             name="tanggal"
-            value={tanggal}
-            onChange={(e) => setTanggal(e.target.value)}
-            required
+            value={tanggal} // Tampilkan tanggal yang diterima dari props
+            readOnly
           />
-        </div>
+        </div> */}
 
         <button type="submit" className="submit-button">
           Submit
@@ -151,4 +128,4 @@ const TotalBayar = ({ keranjang }) => {
   );
 };
 
-export default TotalBayar; 
+export default TotalBayar;

@@ -102,6 +102,7 @@ export const authSlice = createSlice({
       state.user = action.payload.user;  // Pastikan user disimpan di state
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("nama_kasir", action.payload.user.nama);
       
       console.log("Redux State setelah login:", state); // Periksa apakah state.auth berisi user
     });

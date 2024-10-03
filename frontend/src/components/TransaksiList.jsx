@@ -174,7 +174,7 @@ const TransaksiList = () => {
             </tr>
           </thead>
           <tbody>
-            {handleFilter(transaksi).map((transaksi, index) => (
+            {handleFilter(transaksi) .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((transaksi, index) => (
               <tr key={transaksi.id_transaksi}>
                 <td>{index + 1}</td>
                 <td>{transaksi.id_transaksi}</td>
