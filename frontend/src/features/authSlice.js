@@ -30,10 +30,14 @@ export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAP
 
 //kedua
 
+// authSlice.js
 export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState();
-    const token = state.auth.user.token;  // Pastikan token tersedia di state
+    const token = state.auth.token; // Mengambil token dari state.auth.token
+    if (!token) {
+      return thunkAPI.rejectWithValue("Token tidak ditemukan");
+    }
     const response = await axios.get(API_URL + "user/admin", {
       headers: {
         Authorization: `Bearer ${token}`, // Sertakan token di header
@@ -44,9 +48,12 @@ export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
     if (error.response) {
       const message = error.response.data.msg;
       return thunkAPI.rejectWithValue(message);
+    } else {
+      return thunkAPI.rejectWithValue("Terjadi kesalahan jaringan");
     }
   }
 });
+
 
 
 export const LogOut = createAsyncThunk("user/LogOut", async (_, thunkAPI) => {
@@ -58,9 +65,25 @@ export const LogOut = createAsyncThunk("user/LogOut", async (_, thunkAPI) => {
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: {
+    user: null,
+    token: localStorage.getItem("token") || null, // Inisialisasi token dari localStorage
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: "",
+  },
   reducers: {
     reset: (state) => initialState,
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+      localStorage.removeItem("token"); // Hapus token dari localStorage
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(LoginUser.pending, (state) => {
@@ -69,7 +92,9 @@ export const authSlice = createSlice({
     builder.addCase(LoginUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.user = action.payload.user; // Simpan hanya objek user
+      state.user = action.payload.user;
+      state.token = action.payload.token; // Menyimpan token ke state
+      localStorage.setItem("token", action.payload.token); // Menyimpan token ke localStorage
     });
     
     
@@ -96,5 +121,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reset } = authSlice.actions;
+export const { reset, logout } = authSlice.actions;
 export default authSlice.reducer;
