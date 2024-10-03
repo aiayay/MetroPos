@@ -12,47 +12,54 @@ const initialState = {
 };
 
 
+// authSlice.js
+
+// Perbaiki LoginUser thunk
 export const LoginUser = createAsyncThunk("user/LoginUser", async (user, thunkAPI) => {
   try {
     const response = await axios.post(API_URL + "user/login", {
       username: user.username,
       password: user.password,
     });
-    console.log("API Response:", response.data); // Tambahkan log ini
+    console.log("API Response:", response.data); // Log respons API
     return response.data;
   } catch (error) {
-    if (error.response) {
-      const message = error.response.data.msg;
-      return thunkAPI.rejectWithValue(message);
+    if (error.response && error.response.data.message) { // Ubah 'msg' menjadi 'message'
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
+    return thunkAPI.rejectWithValue("Terjadi kesalahan");
   }
 });
 
-//kedua
-
-// authSlice.js
+// Perbaiki getMe thunk
 export const getMe = createAsyncThunk("user/getMe", async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState();
-    const token = state.auth.token; // Mengambil token dari state.auth.token
+    const token = state.auth.token;
     if (!token) {
       return thunkAPI.rejectWithValue("Token tidak ditemukan");
     }
-    const response = await axios.get(API_URL + "user/admin", {
+    const response = await axios.get(API_URL + "user/profile", {
       headers: {
-        Authorization: `Bearer ${token}`, // Sertakan token di header
+        Authorization: `Bearer ${token}`, // Menggunakan backticks
       },
     });
+    // console.log("Respons dari getMe:", action.payload);
+
     return response.data;
+    
   } catch (error) {
-    if (error.response) {
-      const message = error.response.data.msg;
-      return thunkAPI.rejectWithValue(message);
+    if (error.response && error.response.data.message) { // Ubah 'msg' menjadi 'message'
+      return thunkAPI.rejectWithValue(error.response.data.message);
     } else {
       return thunkAPI.rejectWithValue("Terjadi kesalahan jaringan");
     }
   }
+
 });
+
+
+
 
 
 
@@ -67,7 +74,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
-    token: localStorage.getItem("token") || null, // Inisialisasi token dari localStorage
+    token: localStorage.getItem("token") || null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -92,10 +99,14 @@ export const authSlice = createSlice({
     builder.addCase(LoginUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.user = action.payload.user;
-      state.token = action.payload.token; // Menyimpan token ke state
-      localStorage.setItem("token", action.payload.token); // Menyimpan token ke localStorage
+      state.user = action.payload.user;  // Pastikan user disimpan di state
+      state.token = action.payload.token;
+      localStorage.setItem("token", action.payload.token);
+      
+      console.log("Redux State setelah login:", state); // Periksa apakah state.auth berisi user
     });
+    
+    
     
     
     builder.addCase(LoginUser.rejected, (state, action) => {
@@ -109,10 +120,16 @@ export const authSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getMe.fulfilled, (state, action) => {
+      console.log("Respons dari getMe:", action.payload);
       state.isLoading = false;
       state.isSuccess = true;
-      state.user = action.payload;
+      state.user = action.payload.data;  // Simpan data user dari getMe ke Redux state
+
+      console.log("Token dari localStorage:", localStorage.getItem("token"));
+
     });
+    
+      
     builder.addCase(getMe.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;

@@ -3,15 +3,18 @@ import React, { useEffect, useState } from "react";
 import "../index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LoginUser, reset } from "../features/authSlice";
+import { LoginUser, reset, getMe } from "../features/authSlice";
+
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
+  const { user, isError, isSuccess, isLoading, message, token } = useSelector((state) => state.auth);
 
+
+  console.log("User level:", user?.level); // Pastikan user dan level ada
   useEffect(() => {
     if (isSuccess && user) {
       console.log("User level:", user.level);
@@ -32,12 +35,18 @@ const Login = () => {
       dispatch(reset());
     }
 
+    // Fetch user profile jika token ada dan user belum ada
+    if (token && !user) {
+      dispatch(getMe());
+    }
+
     // Jangan reset state jika berhasil login
-  }, [user, isSuccess, isError, message, dispatch, navigate]);
+  }, [user, isSuccess, isError, message, dispatch, navigate, token]);
 
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ username, password }));
+    // console.log("Redux State setelah login:", state.auth);
   };
 
   return (
