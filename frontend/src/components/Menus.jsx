@@ -12,8 +12,7 @@ const Menus = ({ menu, masukKeranjang }) => {
           <Card.Img
             variant="top"
             src={menu.foto_produk} // Menggunakan foto_produk dari database
-            alt={menu.nmproduk} // Tambahkan deskripsi gambar sebagai alt
-          />
+            />
         )}
         <Card.Body>
           <Card.Title>{menu.nmproduk}</Card.Title>
