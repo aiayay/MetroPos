@@ -79,6 +79,7 @@ const PembelianList = () => {
               .filter((pembelian) => {
                 return search.toLowerCase() === "" ? pembelian : pembelian.produk.nmproduk.toLowerCase().includes(search);
               })
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((pembelian, index) => (
                 <tr key={pembelian.id_pembelian}>
                   <td>{index + 1}</td>

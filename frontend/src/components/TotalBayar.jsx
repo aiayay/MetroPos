@@ -4,12 +4,12 @@ import axios from "axios";
 import { API_URL } from "../features/constants";
 import { useNavigate } from "react-router-dom";
 
-const TotalBayar = ({ keranjang, tanggal }) => {
+const TotalBayar = ({ keranjang }) => {
   const [id_user, setId_user] = useState("");
   const [nama_lengkap, setNama_lengkap] = useState("");
   const [potongan, setPotongan] = useState(0);
   const [bayar, setBayar] = useState(0);
-  // const [tanggal, setTanggal] = useState("");
+  const [tanggal, setTanggal] = useState("");
   const [metode_bayar, setMetode_bayar] = useState("");
   const [total_bayar, setTotal_bayar] = useState(0);
 
@@ -30,37 +30,37 @@ const TotalBayar = ({ keranjang, tanggal }) => {
   // Submit transaksi
   const submitTotalBayar = async (event) => {
     event.preventDefault(); // Mencegah halaman reload
-
+  
     const id_member = keranjang[0]?.member?.id_member || null;
   
     const transaksi = {
-      id_member: id_member,
-      id_user: id_user,
-      nama_kasir: nama_lengkap,
-      nama_member: keranjang[0]?.member?.nama_member || "Umum",
-      total_bayar: total_bayar,
-      bayar: bayar,
-      potongan: potongan,
-      metode_bayar: metode_bayar,
-      tanggal: tanggal,
+      id_member: id_member, // ID member jika ada, jika tidak, null
+      id_user: id_user, // ID pengguna
+      nama_kasir: nama_lengkap, // Nama kasir
+      nama_member: keranjang[0]?.member?.nama_member || "Umum", // Nama member
+      total_bayar: total_bayar, // Total bayar
+      bayar: bayar, // Jumlah yang dibayar
+      potongan: potongan, // Potongan
+      metode_bayar: metode_bayar, // Metode pembayaran
+      tanggal: tanggal, // Tanggal transaksi
       detailTransaksi: keranjang.map((item) => ({
-        id_produk: item.produk.id_produk,
-        nmproduk: item.produk.nmproduk,
-        harga_produk: item.produk.harga_jual,
-        kuantitas: item.kuantitas,
-        total_harga: item.total_harga,
-        potongan: item.potongan || 0, // Tambahkan potongan jika ada
+        id_produk: item.produk.id_produk, // ID produk
+        nmproduk: item.produk.nmproduk, // Nama produk
+        harga_produk: item.produk.harga_jual, // Harga produk
+        kuantitas: item.kuantitas, // Kuantitas
+        total_harga: item.total_harga, // Total harga
+        potongan: item.potongan || 0, // Potongan jika ada
       })),
     };
   
     try {
       const res = await axios.post(API_URL + "transaksi", transaksi);
-      // console.log("Transaksi berhasil:", res.data);
       navigate("/sukses"); // Pindah ke halaman sukses setelah transaksi selesai
     } catch (error) {
-      // console.error("Error saat membuat transaksi:", error.response?.data || error.message);
+      console.error("Error saat membuat transaksi:", error.response?.data || error.message);
     }
   };
+  
 
   return (
     <div className="fixed-bottom">
@@ -130,7 +130,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
             <option value="transfer">Transfer</option>
           </select>
         </div>
-{/* 
+
         <div className="form-group">
           <label className="form-label" htmlFor="tanggal">Tanggal Transaksi:</label>
           <input
@@ -141,7 +141,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
             onChange={(e) => setTanggal(e.target.value)}
             required
           />
-        </div> */}
+        </div>
 
         <button type="submit" className="submit-button">
           Submit
@@ -151,4 +151,4 @@ const TotalBayar = ({ keranjang, tanggal }) => {
   );
 };
 
-export default TotalBayar;
+export default TotalBayar; 

@@ -159,6 +159,7 @@ changeKategori = (value) => {
   render() {
     // console.log(this.state.menus);
     const { menus, kategoriYangDipilih, keranjang } = this.state;
+    // const filteredMenus = menus.filter(menu => menu.stok > 0);
     return (
       <div>
         <KasirLayout>

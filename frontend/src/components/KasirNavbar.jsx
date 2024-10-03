@@ -1,15 +1,25 @@
 import React from "react";
+import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
 import "../index.css";
-import { NavLink } from "react-router-dom";
 import logo from "../logo.jpeg";
 
 const KasirNavbar = () => {
+  const navigate = useNavigate();
+
   // Mendapatkan tanggal hari ini
   const today = new Date().toLocaleDateString("id-ID", {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
   });
+
+  // Fungsi logout
+  const handleLogout = () => {
+    // Hapus token atau sesi login
+    localStorage.removeItem("token"); // Contoh jika menggunakan JWT
+    // Arahkan ke halaman beranda
+    navigate("/");
+  };
 
   return (
     <div>
@@ -33,6 +43,10 @@ const KasirNavbar = () => {
                 <h2>{today}</h2>
                 <h1>nama</h1>
                 <img src={logo} width="50" height="28" alt="" className="profile-pic" />
+                {/* Tombol Logout */}
+                <button className="button is-light" onClick={handleLogout}>
+                  Logout
+                </button>
               </div>
             </div>
           </div>

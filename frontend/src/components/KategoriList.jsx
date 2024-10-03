@@ -77,6 +77,7 @@ const KategoriList = () => {
               .filter((kategori) => {
                 return search.toLowerCase() === "" ? kategori : kategori.nama_kategori.toLowerCase().includes(search);
               })
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((kategori, index) => (
                 <tr key={kategori.id_kategori}>
                   <td>{index + 1}</td>

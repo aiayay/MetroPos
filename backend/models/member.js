@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,  
       allowNull: false,
       primaryKey: true,
-      defaultValue: uuidv4(),  // Menghasilkan UUID otomatis
+      defaultValue: () => uuidv4(),
     },
     nama_member: {
       type: DataTypes.STRING,

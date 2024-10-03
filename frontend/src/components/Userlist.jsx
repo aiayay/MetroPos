@@ -82,6 +82,7 @@ const Userlist = () => {
               .filter((user) => {
                 return search.toLowerCase() === "" ? user : user.nama_lengkap.toLowerCase().includes(search);
               })
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((user, index) => (
                 <tr key={user.id_user}>
                   <td>{index + 1}</td>
@@ -91,7 +92,9 @@ const Userlist = () => {
                   <td>{user.notlp}</td>
                   <td>{user.jk}</td>
                   <td>{user.level}</td>
-                  <td>{user.foto}</td>
+                  <td>
+                    <img src={user.foto} style={{ width: "100px", height: "100px" }} />
+                  </td>
                   <td>
                     <Link to={`/users/edit/${user.id_user}`} className="button is-small is-info">
                       Edit

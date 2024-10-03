@@ -1,10 +1,12 @@
+const { v4: uuidv4 } = require('uuid'); // Mengimpor uuidv4
+
 module.exports = (sequelize, DataTypes) => {
   const Keranjang = sequelize.define(
     "Keranjang",
     {
       id_keranjang: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4, // Generate UUID otomatis
+        defaultValue: () => uuidv4(), // Menggunakan uuidv4 untuk ID unik
         primaryKey: true,
         allowNull: false,
       },
@@ -24,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       total_harga: {
         type: DataTypes.FLOAT,
         allowNull: false,
-        defaultValue: 0, // Default nilai 0
+        defaultValue: 0, // Nilai default 0
       },
       catatan: {
         type: DataTypes.STRING,
@@ -37,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  // Relasi keranjang dengan member dan produk (jika diperlukan)
+  // Relasi keranjang dengan member dan produk
   Keranjang.associate = (models) => {
     Keranjang.belongsTo(models.Member, {
       foreignKey: "id_member",

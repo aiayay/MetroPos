@@ -7,22 +7,44 @@ import "../index.css";
 const KasirTransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
   const [search, setSearch] = useState("");
-  // console.log(search);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     getTransaksi();
   }, []);
+
   const getTransaksi = async () => {
     const response = await axios.get(API_URL + "transaksi");
     setTransaksi(response.data);
   };
 
-  //metod delete transaksi
-
   const deleteTransaksi = async (id_transaksi) => {
     await axios.delete(API_URL + "transaksi/" + id_transaksi);
     getTransaksi();
   };
+
+  const handleFilter = (transaksi) => {
+    let filtered = transaksi;
+
+    // Filter berdasarkan nama member yang dicari
+    if (search) {
+      filtered = filtered.filter((item) =>
+        item.nama_member.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    // Filter berdasarkan rentang tanggal
+    if (startDate && endDate) {
+      filtered = filtered.filter((item) => {
+        const transaksiDate = new Date(item.tanggal);
+        return transaksiDate >= new Date(startDate) && transaksiDate <= new Date(endDate);
+      });
+    }
+
+    return filtered;
+  };
+
   return (
     <div>
       <h1 className="title">Transaksi</h1>
@@ -37,14 +59,18 @@ const KasirTransaksiList = () => {
               <button className="button is-success">Cetak</button>
             </div>
           </div>
-          {/* search */}
           <div className="container mt-5">
             <div className="columns">
               <div className="kolom is-centered">
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
+                      <input
+                        type="text"
+                        className="input"
+                        placeholder="cari.."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -60,9 +86,21 @@ const KasirTransaksiList = () => {
       </div>
 
       <p className="tanggal">
-        Dari <input type="date" /> sampai <input type="date" name="" id="" />
-        <button className="button ungu">Filter</button>
+        Dari
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+        sampai
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+    
       </p>
+
       <div>
         <table className="table is-fullwidth">
           <thead>
@@ -81,33 +119,35 @@ const KasirTransaksiList = () => {
             </tr>
           </thead>
           <tbody>
-            {transaksi
-              .filter((transaksi) => {
-                return search.toLowerCase() === "" ? transaksi : transaksi.nama_member.toLowerCase().includes(search);
-              })
-              .map((transaksi, index) => (
-                <tr key={transaksi.id_transaksi}>
-                  <td>{index + 1}</td>
-                  <td>{transaksi.id_transaksi}</td>
-                  <td>{transaksi.nama_member}</td>
-                  <td>{transaksi.nama_kasir}</td>
-                  <td>{transaksi.total_harga}</td>
-                  <td>{transaksi.total_bayar}</td>
-                  <td>{transaksi.bayar}</td>
-                  <td>{transaksi.potongan}</td>
-                  <td>{transaksi.metode_bayar}</td>
-                  <td>{transaksi.tanggal}</td>
-                  <td>
-                    <Link to={`/transaksi/detail/${transaksi.id_transaksi}`} className="button is-primary is-info">
-                      Detail
-                    </Link>
+            {handleFilter(transaksi).map((transaksi, index) => (
+              <tr key={transaksi.id_transaksi}>
+                <td>{index + 1}</td>
+                <td>{transaksi.id_transaksi}</td>
+                <td>{transaksi.nama_member}</td>
+                <td>{transaksi.nama_kasir}</td>
+                <td>{transaksi.total_harga}</td>
+                <td>{transaksi.total_bayar}</td>
+                <td>{transaksi.bayar}</td>
+                <td>{transaksi.potongan}</td>
+                <td>{transaksi.metode_bayar}</td>
+                <td>{transaksi.tanggal}</td>
+                <td>
+                  <Link
+                    to={`/transaksi/detail/${transaksi.id_transaksi}`}
+                    className="button is-primary is-info"
+                  >
+                    Detail
+                  </Link>
 
-                    <button onClick={() => deleteTransaksi(transaksi.id_transaksi)} className="button is-danger mb-2">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                  <button
+                    onClick={() => deleteTransaksi(transaksi.id_transaksi)}
+                    className="button is-danger mb-2"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

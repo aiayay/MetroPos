@@ -94,6 +94,7 @@ const SupplierList = () => {
                   s.nmsupplier.toLowerCase().includes(search.toLowerCase())
                 );
               })
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
               .map((s, index) => (
                 <tr key={s.id_supplier}>
                   <td>{index + 1}</td>

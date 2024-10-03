@@ -12,15 +12,33 @@ const Login = () => {
   const { user, isError, isSuccess, isLoading, message } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user || isSuccess) {
-      navigate("/dashboard");
+    if (isSuccess && user) {
+      console.log("User level:", user.level);
+      // Redirect berdasarkan level user
+      if (user.level === "admin") {
+        navigate("/dashboard");
+      } else if (user.level === "kasir") {
+        navigate("/kasir");
+      } else {
+        navigate("/");
+      }
     }
-    dispatch(reset());
-  }, [user, isSuccess, dispatch, navigate]);
+
+    // Menangani error
+    if (isError) {
+      console.error(message);
+      // Dispatch reset hanya jika ada error
+      dispatch(reset());
+    }
+
+    // Jangan reset state jika berhasil login
+  }, [user, isSuccess, isError, message, dispatch, navigate]);
+
   const Auth = (e) => {
     e.preventDefault();
     dispatch(LoginUser({ username, password }));
   };
+
   return (
     <section className="hero is-fullheight is-fullwidth">
       <div className="hero-body ">
@@ -28,7 +46,7 @@ const Login = () => {
           <div className="columns is-centered">
             <div className="column is-4">
               <form onSubmit={Auth} className="box has-background-light form-border">
-                {isError && <p className="has-text-centered">{message}</p>}
+                {isError && <p className="has-text-centered has-text-danger">{message}</p>}
                 <h1 className="title is-2" style={{ color: "black" }}>
                   Sign In
                 </h1>
@@ -37,7 +55,14 @@ const Login = () => {
                     Username
                   </label>
                   <div className="control">
-                    <input type="text" className="input" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="username" />
+                    <input
+                      type="text"
+                      className="input"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="username"
+                      required
+                    />
                   </div>
                 </div>
                 <div className="field">
@@ -45,11 +70,18 @@ const Login = () => {
                     Password
                   </label>
                   <div className="control">
-                    <input type="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="*****" />
+                    <input
+                      type="password"
+                      className="input"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="*****"
+                      required
+                    />
                   </div>
                 </div>
                 <div className="field mt-5 has-text-centered">
-                  <button type="submit" className="button login ">
+                  <button type="submit" className="button login " disabled={isLoading}>
                     {isLoading ? "Loading.." : "Login"}
                   </button>
                 </div>
