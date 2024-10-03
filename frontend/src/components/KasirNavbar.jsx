@@ -2,10 +2,13 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
 import "../index.css";
 import logo from "../logo.jpeg";
+import { useDispatch } from 'react-redux';
+import { reset } from '../features/authSlice';
+
 
 const KasirNavbar = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
   // Mendapatkan tanggal hari ini
   const today = new Date().toLocaleDateString("id-ID", {
     day: "2-digit",
@@ -16,7 +19,12 @@ const KasirNavbar = () => {
   // Fungsi logout
   const handleLogout = () => {
     // Hapus token atau sesi login
+    console.log("Token sebelum dihapus:", localStorage.getItem("token"));
     localStorage.removeItem("token"); // Contoh jika menggunakan JWT
+console.log("Token setelah dihapus:", localStorage.getItem("token")); // Harus null
+
+
+dispatch(reset());
     // Arahkan ke halaman beranda
     navigate("/");
   };
