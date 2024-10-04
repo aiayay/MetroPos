@@ -41,7 +41,7 @@ exports.create = async (req, res) => {
       return res.status(400).json({ error: err.message });
     }
 
-    const { nmproduk, stok, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
+    const { nmproduk, stok, satuan, merk,  harga_jual, diskon, nama_kategori } = req.body;
     
     // URL lengkap gambar
     const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
@@ -61,7 +61,6 @@ exports.create = async (req, res) => {
         foto_produk, // URL lengkap gambar yang diupload
         satuan,
         merk,
-        harga_beli,
         harga_jual,
         diskon,
         id_kategori: kategori.id_kategori
@@ -138,7 +137,7 @@ exports.update = async (req, res) => {
     }
 
     try {
-      const { nmproduk, stok, satuan, merk, harga_beli, harga_jual, diskon, nama_kategori } = req.body;
+      const { nmproduk, stok, satuan, merk,  harga_jual, diskon, nama_kategori } = req.body;
 
       // URL gambar yang akan diupdate
       const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
@@ -155,7 +154,6 @@ exports.update = async (req, res) => {
         stok,
         satuan,
         merk,
-        harga_beli,
         harga_jual,
         diskon,
         id_kategori: kategori.id_kategori,
