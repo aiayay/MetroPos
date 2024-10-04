@@ -3,18 +3,18 @@ import { numberWithCommas } from "../features/utils";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";  // Tambahkan ini
+import { useSelector } from "react-redux";
 
 const TotalBayar = ({ keranjang, tanggal }) => {
-  const { user } = useSelector((state) => state.auth); // Tambahkan ini
+  const { user } = useSelector((state) => state.auth);
   const [potongan, setPotongan] = useState(0);
-  const [bayar, setBayar] = useState(0);
+  const [bayar, setBayar] = useState(""); // Ubah menjadi string
   const [metode_bayar, setMetode_bayar] = useState("");
   const [total_bayar, setTotal_bayar] = useState(0);
+  const [kembalian, setKembalian] = useState(0);
 
   const navigate = useNavigate();
 
-  // Hitung total bayar
   const calculateTotalBayar = () => {
     const totalBayar = keranjang.reduce((result, item) => {
       return result + item.total_harga;
@@ -26,7 +26,12 @@ const TotalBayar = ({ keranjang, tanggal }) => {
     setTotal_bayar(calculateTotalBayar());
   }, [keranjang]);
 
-  // Submit transaksi
+  // Update kembalian setiap kali bayar atau total bayar berubah
+  useEffect(() => {
+    const bayarValue = bayar ? Number(bayar) : 0; // Jika bayar belum diisi, gunakan 0
+    setKembalian(bayarValue - total_bayar);
+  }, [bayar, total_bayar]);
+
   const submitTotalBayar = async (event) => {
     event.preventDefault();
 
@@ -34,14 +39,14 @@ const TotalBayar = ({ keranjang, tanggal }) => {
 
     const transaksi = {
       id_member: id_member,
-      id_user: user?.id_user || "",  // Ambil id_user dari Redux state
-      nama_kasir: user?.nama_lengkap || "",  
+      id_user: user?.id_user || "",
+      nama_kasir: user?.nama_lengkap || "",
       nama_member: keranjang[0]?.member?.nama_member || "Umum",
       total_bayar: total_bayar,
-      bayar: bayar,
-      potongan: potongan,
+      bayar: Number(bayar), // Pastikan nilai bayar dikirim sebagai number
+      potongan: Number(potongan),
       metode_bayar: metode_bayar,
-      tanggal: tanggal, // Ambil tanggal dari props
+      tanggal: tanggal,
       detailTransaksi: keranjang.map((item) => ({
         id_produk: item.produk.id_produk,
         nmproduk: item.produk.nmproduk,
@@ -53,7 +58,6 @@ const TotalBayar = ({ keranjang, tanggal }) => {
     };
 
     console.log("Data transaksi yang dikirim:", transaksi);
-
 
     try {
       const res = await axios.post(API_URL + "transaksi", transaksi);
@@ -71,16 +75,14 @@ const TotalBayar = ({ keranjang, tanggal }) => {
       </div>
 
       <form onSubmit={submitTotalBayar}>
-  
-
         <div className="form-group">
           <label className="form-label" htmlFor="bayar">Bayar:</label>
           <input
             type="number"
             className="form-control"
             name="bayar"
-            value={bayar}
-            onChange={(e) => setBayar(e.target.value)}
+            value={bayar} // Tetap menggunakan string untuk input
+            onChange={(e) => setBayar(e.target.value)} // Simpan sebagai string
             required
           />
         </div>
@@ -112,16 +114,17 @@ const TotalBayar = ({ keranjang, tanggal }) => {
           </select>
         </div>
 
-        {/* <div className="form-group">
-          <label className="form-label" htmlFor="tanggal">Tanggal Transaksi:</label>
+        {/* Informasi Kembalian */}
+        <div className="form-group">
+          <label className="form-label" htmlFor="kembalian">Kembalian:</label>
           <input
             type="text"
             className="form-control"
-            name="tanggal"
-            value={tanggal} // Tampilkan tanggal yang diterima dari props
+            name="kembalian"
+            value={`Rp ${numberWithCommas(kembalian)}`} // Tampilkan kembalian
             readOnly
           />
-        </div> */}
+        </div>
 
         <button type="submit" className="submit-button">
           Submit

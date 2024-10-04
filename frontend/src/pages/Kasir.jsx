@@ -26,13 +26,14 @@ export default class Kasir extends Component {
     axios
       .get(API_URL + "produk/kategori/" + encodeURIComponent(this.state.kategoriYangDipilih))
       .then((res) => {
-        const menus = res.data;
+        // Filter menu untuk hanya menampilkan yang stok lebih dari 0
+        const menus = res.data.filter(menu => menu.stok > 0); // Pastikan kolom 'stok' sesuai dengan yang ada di database
         this.setState({ menus });
       })
       .catch((error) => {
         console.log(error);
       });
-
+  
     this.getListKeranjang();
   }
 
@@ -56,8 +57,8 @@ export default class Kasir extends Component {
     axios
       .get(API_URL + "produk/kategori/" + encodeURIComponent(value))
       .then((res) => {
-        console.log("Response : ", res);
-        const menus = res.data;
+        // Filter menu untuk hanya menampilkan yang stok lebih dari 0
+        const menus = res.data.filter(menu => menu.stok > 0); // Pastikan kolom 'stok' sesuai dengan yang ada di database
         this.setState({ menus });
       })
       .catch((error) => {

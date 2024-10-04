@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { API_URL } from "../features/constants";
 import axios from "axios";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../index.css";
 
 const FormEditProduk = () => {
@@ -11,8 +12,8 @@ const FormEditProduk = () => {
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
   const [id_kategori, setKategori] = useState("");
-  const [foto_produk, setFoto_produk] = useState(""); // URL foto yang ada
-  const [fileFoto, setFileFoto] = useState(null); // File baru yang diunggah
+  const [foto_produk, setFoto_produk] = useState(""); // Gunakan string untuk URL foto
+  const [fileFoto, setFileFoto] = useState(null); // State untuk file foto
   const [diskon, setDiskon] = useState("");
   const [daftarKategori, setDaftarKategori] = useState([]);
   const [msg, setMsg] = useState("");
@@ -22,8 +23,9 @@ const FormEditProduk = () => {
   useEffect(() => {
     const getKategori = async () => {
       try {
-        const response = await axios.get(`${API_URL}kategori`);
-        const data = Array.isArray(response.data) ? response.data : response.data.data;
+        const response = await axios.get(API_URL + "kategori");
+        // console.log(response.data.data); // Periksa data di sini
+        const data = Array.isArray(response.data.data) ? response.data.data : [];
         setDaftarKategori(data);
       } catch (error) {
         console.error("Gagal mengambil kategori:", error);
@@ -36,21 +38,18 @@ const FormEditProduk = () => {
   useEffect(() => {
     const getProdukById = async () => {
       try {
-        const response = await axios.get(`${API_URL}produk/${id_produk}`);
-        const produk = response.data;
-        setNmproduk(produk.nmproduk);
-        setHarga_jual(produk.harga_jual);
-        setStok(produk.stok);
-        setSatuan(produk.satuan);
-        setMerk(produk.merk);
-        setKategori(produk.id_kategori);
-        setFoto_produk(produk.foto_produk);
-        setDiskon(produk.diskon);
+        const response = await axios.get(API_URL + "produk/" + id_produk);
+        setNmproduk(response.data.nmproduk);
+        setHarga_jual(response.data.harga_jual);
+        setStok(response.data.stok);
+        setSatuan(response.data.satuan);
+        setMerk(response.data.merk);
+        setKategori(response.data.id_kategori);
+        setFoto_produk(response.data.foto_produk);
+        setDiskon(response.data.diskon);
       } catch (error) {
         if (error.response) {
-          setMsg(error.response.data.error || "Produk tidak ditemukan.");
-        } else {
-          setMsg("Terjadi kesalahan saat mengambil data produk.");
+          setMsg(error.response.data.msg);
         }
       }
     };
@@ -60,37 +59,31 @@ const FormEditProduk = () => {
   const editProduk = async (e) => {
     e.preventDefault();
     try {
-      const formData = new FormData();
-      formData.append('nmproduk', nmproduk);
-      formData.append('harga_jual', harga_jual);
-      formData.append('stok', stok);
-      formData.append('satuan', satuan);
-      formData.append('merk', merk);
-      formData.append('id_kategori', id_kategori);
-      formData.append('diskon', diskon);
-      
-      if (fileFoto) {
-        formData.append('foto_produk', fileFoto);
-      }
-
-      const response = await axios.put(`${API_URL}produk/${id_produk}`, formData, {
+      const response = await axios.put(API_URL + "produk/" + id_produk, {
+        nmproduk,
+        harga_jual,
+        stok,
+        satuan,
+        merk,
+        id_kategori, // Mengirim id_kategori
+      foto_produk,
+        diskon,
+      },{
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+          "Content-Type" : "application/json"
+        }
       });
-
+      // console.log("Respon dari server:", response.data);
       navigate("/produk");
     } catch (error) {
       if (error.response) {
-        setMsg(error.response.data.error || 'Terjadi kesalahan saat mengedit produk.');
-      } else {
-        setMsg('Terjadi kesalahan saat mengedit produk.');
+        setMsg(error.response.data.msg);
       }
     }
   };
 
   const handleFileChange = (e) => {
-    setFileFoto(e.target.files[0]);
+    setFileFoto(e.target.files[0]); // Ambil file yang dipilih
   };
 
   return (
@@ -111,78 +104,38 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Nama Produk</label>
                 <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="Nama Produk"
-                    value={nmproduk || ""}
-                    onChange={(e) => setNmproduk(e.target.value)}
-                    required
-                  />
+                  <input type="text" className="input" placeholder="Nama Produk" value={nmproduk || ""} onChange={(e) => setNmproduk(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Harga Jual</label>
                 <div className="control">
-                  <input
-                    type="number"
-                    className="input"
-                    placeholder="Harga Jual"
-                    value={harga_jual || ""}
-                    onChange={(e) => setHarga_jual(e.target.value)}
-                    required
-                  />
+                  <input type="number" className="input" placeholder="Harga Jual" value={harga_jual || ""} onChange={(e) => setHarga_jual(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Stok</label>
                 <div className="control">
-                  <input
-                    type="number"
-                    className="input"
-                    placeholder="Stok"
-                    value={stok || ""}
-                    onChange={(e) => setStok(e.target.value)}
-                    required
-                  />
+                  <input type="number" className="input" placeholder="stok" value={stok || ""} onChange={(e) => setStok(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Satuan</label>
                 <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="Satuan"
-                    value={satuan || ""}
-                    onChange={(e) => setSatuan(e.target.value)}
-                    required
-                  />
+                  <input type="text" className="input" placeholder="Satuan" value={satuan || ""} onChange={(e) => setSatuan(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Merk</label>
                 <div className="control">
-                  <input
-                    type="text"
-                    className="input"
-                    placeholder="Merk"
-                    value={merk || ""}
-                    onChange={(e) => setMerk(e.target.value)}
-                    required
-                  />
+                  <input type="text" className="input" placeholder="Merk" value={merk || ""} onChange={(e) => setMerk(e.target.value)} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Kategori</label>
                 <div className="control">
                   <div className="select is-fullwidth">
-                    <select
-                      value={id_kategori || ""}
-                      onChange={(e) => setKategori(e.target.value)}
-                      className="text-black"
-                      required
-                    >
+                    <select value={id_kategori || ""} onChange={(e) => setKategori(e.target.value)} className="text-black">
                       <option value="">Pilih Kategori</option>
                       {daftarKategori.map((kat) => (
                         <option key={kat.id_kategori} value={kat.id_kategori}>
@@ -197,38 +150,26 @@ const FormEditProduk = () => {
                 <label className="label">Foto Produk</label>
                 <div className="control">
                   {foto_produk && (
-                    <div className="image-container mb-2">
-                      <img
-                        src={foto_produk}
-                        alt="Foto Produk"
-                        style={{ maxWidth: "200px", maxHeight: "200px" }}
-                      />
+                    <div className="image-container">
+                      <img src={foto_produk} alt="Foto Produk" style={{ maxWidth: "200px", maxHeight: "200px" }} />
                     </div>
                   )}
-                  <input type="file" className="input" onChange={handleFileChange} accept="image/*" />
+                  <input type="file" className="input" onChange={handleFileChange} />
                 </div>
               </div>
               <div className="field">
                 <label className="label">Diskon</label>
                 <div className="control">
-                  <input
-                    type="number"
-                    className="input"
-                    placeholder="Diskon"
-                    value={diskon || ""}
-                    onChange={(e) => setDiskon(e.target.value)}
-                  />
+                  <input type="text" className="input" placeholder="diskon" value={diskon || ""} onChange={(e) => setDiskon(e.target.value)} />
                 </div>
               </div>
 
-              <div className="field is-grouped">
+              <div className="field">
                 <div className="control">
                   <button type="submit" className="button is-success">
                     Edit
                   </button>
-                </div>
-                <div className="control">
-                  <Link to="/produk" className="button is-danger">
+                  <Link to="/produk" className="button is-danger mb-2">
                     Cancel
                   </Link>
                 </div>
