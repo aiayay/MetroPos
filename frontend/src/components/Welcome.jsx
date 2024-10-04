@@ -14,6 +14,7 @@ const Welcome = () => {
   useEffect(() => {
     getTransaksi();
   }, []);
+
   const getTransaksi = async () => {
     const response = await axios.get(API_URL + "transaksi");
     setTransaksi(response.data);
