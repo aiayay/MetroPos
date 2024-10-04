@@ -79,7 +79,8 @@ const MemberList = () => {
               .filter((member) => {
                 return search.toLowerCase() === "" ? member : member.nama_member.toLowerCase().includes(search);
               })
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+
               .map((member, index) => (
                 <tr key={member.id_member}>
                   <td>{index + 1}</td>

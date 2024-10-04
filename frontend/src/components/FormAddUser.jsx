@@ -105,12 +105,18 @@ const FormAddUser = () => {
                   </div>
                 </div>
               </div>
-              <div className="field">
-                <label className="label">Foto</label>
-                <div className="control">
-                  <input type="file" className="input" placeholder="foto" value={foto} onChange={(e) => setFoto(e.target.value)} />
-                </div>
-              </div>
+              {/* // Ubah bagian input file di FormAddUser.jsx */}
+<div className="field">
+  <label className="label">Foto</label>
+  <div className="control">
+    <input
+      type="file"
+      className="input"
+      onChange={(e) => setFoto(e.target.files[0])} // Simpan objek File
+    />
+  </div>
+</div>
+
 
               <div className="field">
                 <div className="control">

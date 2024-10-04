@@ -3,8 +3,10 @@ import "../index.css";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import { useSelector } from "react-redux";
 
 const Welcome = () => {
+  const { user } = useSelector((state) => state.auth)
   const [transaksi, setTransaksi] = useState([]);
   // const [search, setSearch] = useState("");
   // console.log(search);
@@ -12,6 +14,7 @@ const Welcome = () => {
   useEffect(() => {
     getTransaksi();
   }, []);
+
   const getTransaksi = async () => {
     const response = await axios.get(API_URL + "transaksi");
     setTransaksi(response.data);
@@ -20,7 +23,7 @@ const Welcome = () => {
   return (
     <div>
       <h1 className="title">Dashboard</h1>
-      <h2 className="subtitle">Welcome Back...</h2>
+      <h2 className="subtitle">Welcome Back... <strong>{user && user.nama_lengkap}</strong></h2>
 
       <ResponsiveContainer width="100%" aspect={3}>
         <BarChart data={transaksi}>

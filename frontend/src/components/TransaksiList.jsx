@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
@@ -11,6 +11,7 @@ const TransaksiList = () => {
   const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTransaksi();
@@ -174,7 +175,7 @@ const TransaksiList = () => {
             </tr>
           </thead>
           <tbody>
-            {handleFilter(transaksi).map((transaksi, index) => (
+            {handleFilter(transaksi) .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((transaksi, index) => (
               <tr key={transaksi.id_transaksi}>
                 <td>{index + 1}</td>
                 <td>{transaksi.id_transaksi}</td>
@@ -187,12 +188,12 @@ const TransaksiList = () => {
                 <td>{transaksi.metode_bayar}</td>
                 <td>{transaksi.tanggal}</td>
                 <td>
-                <Link
-  to={ API_URL + "transaksi/detail/" + transaksi.id_transaksi}
-  className="button is-primary is-info"
->
-  Detail
-</Link>
+                <button
+                  onClick={() => navigate(`/transaksi/detail/${transaksi.id_transaksi}`)}
+                  className="button is-primary is-info"
+                >
+                  Detail
+                </button>
 
                   <button
                     onClick={() => deleteTransaksi(transaksi.id_transaksi)}
