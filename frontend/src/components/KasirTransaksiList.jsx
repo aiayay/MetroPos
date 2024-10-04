@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
+import { useNavigate } from "react-router-dom";
 
 const KasirTransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
   const [search, setSearch] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     getTransaksi();
@@ -132,12 +134,12 @@ const KasirTransaksiList = () => {
                 <td>{transaksi.metode_bayar}</td>
                 <td>{transaksi.tanggal}</td>
                 <td>
-                  <Link
-                    to={`/transaksi/detail/${transaksi.id_transaksi}`}
-                    className="button is-primary is-info"
-                  >
-                    Detail
-                  </Link>
+                <button
+                  onClick={() => navigate(`/kasirtransaksi/detail/${transaksi.id_transaksi}`)}
+                  className="button is-primary is-info"
+                >
+                  Detail
+                </button>
 
                   <button
                     onClick={() => deleteTransaksi(transaksi.id_transaksi)}

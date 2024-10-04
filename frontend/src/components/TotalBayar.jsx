@@ -3,10 +3,10 @@ import { numberWithCommas } from "../features/utils";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";  // Tambahkan ini
 
 const TotalBayar = ({ keranjang, tanggal }) => {
-  const [id_user, setId_user] = useState("");
-  const [nama_lengkap, setNama_lengkap] = useState("");
+  const { user } = useSelector((state) => state.auth); // Tambahkan ini
   const [potongan, setPotongan] = useState(0);
   const [bayar, setBayar] = useState(0);
   const [metode_bayar, setMetode_bayar] = useState("");
@@ -34,8 +34,8 @@ const TotalBayar = ({ keranjang, tanggal }) => {
 
     const transaksi = {
       id_member: id_member,
-      id_user: id_user,
-      nama_kasir: nama_lengkap,
+      id_user: user?.id_user || "",  // Ambil id_user dari Redux state
+      nama_kasir: user?.nama_lengkap || "",  
       nama_member: keranjang[0]?.member?.nama_member || "Umum",
       total_bayar: total_bayar,
       bayar: bayar,
@@ -51,6 +51,9 @@ const TotalBayar = ({ keranjang, tanggal }) => {
         potongan: item.potongan || 0,
       })),
     };
+
+    console.log("Data transaksi yang dikirim:", transaksi);
+
 
     try {
       const res = await axios.post(API_URL + "transaksi", transaksi);

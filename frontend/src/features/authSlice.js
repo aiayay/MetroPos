@@ -95,6 +95,7 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(LoginUser.pending, (state) => {
       state.isLoading = true;
+      // console.log("API Response:", response.data);
     });
     builder.addCase(LoginUser.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -102,9 +103,11 @@ export const authSlice = createSlice({
       state.user = action.payload.user;  // Pastikan user disimpan di state
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("nama_kasir", action.payload.user.nama);
+      localStorage.setItem("nama_kasir", action.payload.user.nama_lengkap);
       
       console.log("Redux State setelah login:", state); // Periksa apakah state.auth berisi user
+   
+
     });
     
     
@@ -125,6 +128,7 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       state.user = action.payload.data;  // Simpan data user dari getMe ke Redux state
+      localStorage.setItem("nama_kasir", action.payload.data.nama_lengkap);
 
       console.log("Token dari localStorage:", localStorage.getItem("token"));
 

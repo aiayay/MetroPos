@@ -30,6 +30,7 @@ import KasirTransaksi from "./pages/KasirTransaksi";
 import Sukses from "./pages/Sukses";
 import AddMemberKasir from "./pages/AddMemberKasir";
 import { AdminRoute, KasirRoute } from "./components/ProtectedRoute"; // Sesuaikan path jika perlu
+import KasirDetailTransaksi from "./pages/KasirDetailTransaksi";
 
 // import ProtectedRoute from "./pages/ProtectedRoute"
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/kasir" element={<KasirRoute><Kasir /></KasirRoute>} />
           <Route path="/kasirmember/add" element={<KasirRoute><AddMemberKasir /></KasirRoute>} />
           <Route path="/kasirtransaksi" element={<KasirRoute><KasirTransaksi /></KasirRoute>} />
+          <Route path="/kasirtransaksi/detail/:id_transaksi" element={<KasirRoute><KasirDetailTransaksi /></KasirRoute>} />
           <Route path="/sukses" element={<KasirRoute><Sukses /></KasirRoute>} />
 
           {/* Rute untuk admin */}
