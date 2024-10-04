@@ -40,12 +40,7 @@ const KasirAddMember = () => {
           <div className="content">
             <form className="box has-background-light" onSubmit={simpanMember}>
               <p className="has-text-centered">{msg}</p>
-              <div className="field">
-                <label className="label">Kode Member</label>
-                <div className="control">
-                  <input type="text" className="input" readOnly />
-                </div>
-              </div>
+           
               <div className="field">
                 <label className="label">Nama Member</label>
                 <div className="control">

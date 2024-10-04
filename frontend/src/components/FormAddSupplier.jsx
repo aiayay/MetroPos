@@ -36,12 +36,7 @@ const FormAddSupplier = () => {
           <div className="content">
             <form className="box has-background-light" onSubmit={simpanSupplier}>
               <p className="has-text-centered">{msg}</p>
-              <div className="field">
-                <label className="label">Kode Supplier</label>
-                <div className="control">
-                  <input type="text" className="input" readOnly />
-                </div>
-              </div>
+        
               <div className="field">
                 <label className="label">Nama Supplier</label>
                 <div className="control">

@@ -33,12 +33,6 @@ const FormAddKategori = () => {
             <form className="box has-background-light" onSubmit={simpanKategori}>
               <p className="has-text-centered">{msg}</p>
               <div className="field">
-                <label className="label">Kode Kategori</label>
-                <div className="control">
-                  <input type="text" className="input" readOnly />
-                </div>
-              </div>
-              <div className="field">
                 <label className="label">Nama Kategori</label>
                 <div className="control">
                   <input type="text" className="input" placeholder="nama kategori" value={nama_kategori} onChange={(e) => setNama_kategori(e.target.value)} />

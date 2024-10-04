@@ -90,12 +90,7 @@ const FormAddPembelian = () => {
           <div className="content">
             <form className="box has-background-light" onSubmit={simpanPembelian}>
               <p className="has-text-centered">{msg}</p>
-              <div className="field">
-                <label className="label">Kode Pembelian</label>
-                <div className="control">
-                  <input type="text" className="input" readOnly />
-                </div>
-              </div>
+        
               <div className="field">
                 <label className="label">Nama Produk</label>
                 <div className="control">
