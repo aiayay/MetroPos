@@ -47,6 +47,7 @@ const FormEditProduk = () => {
         setKategori(response.data.id_kategori);
         setFoto_produk(response.data.foto_produk);
         setDiskon(response.data.diskon);
+        console.log(response.data);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -160,7 +161,7 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Diskon</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="diskon" value={diskon || ""} onChange={(e) => setDiskon(e.target.value)} />
+                <input type="text" className="input" placeholder="diskon" value={diskon || ""} onChange={(e) => setDiskon(e.target.value)} />
                 </div>
               </div>
 

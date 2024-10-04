@@ -36,7 +36,7 @@ const Navbar = () => {
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-end">
-            <div className="navbar-item has-dropdown is-hoverable">
+            {/* <div className="navbar-item has-dropdown is-hoverable">
               {user && (
                 <div onClick={toggleDropdown} className={`dropdown ${isDropdownActive ? 'is-active' : ''}`}>
                   <div className="dropdown-trigger">
@@ -49,14 +49,26 @@ const Navbar = () => {
                         <strong>{user.nama_lengkap}</strong>
                       </div>
                       <hr className="dropdown-divider" />
-                      <button onClick={logout} className="dropdown-item">
-                        Logout
-                      </button>
+                     
                     </div>
                   </div>
                 </div>
               )}
-            </div>
+            </div> */}
+             {/* <button onClick={logout} className="button is-danger">
+                        Logout
+                      </button> */}
+
+                      <div className="buttons">
+                {/* Menampilkan tanggal otomatis */}
+                {/* <h2>{today}</h2> */}
+                {/* <h1>nama</h1>
+                <img src={logo} width="50" height="28" alt="" className="profile-pic" /> */}
+                {/* Tombol Logout */}
+                <button className="button is-danger" onClick={logout}>
+                  Logout
+                </button>
+              </div>
           </div>
         </div>
       </nav>

@@ -48,11 +48,11 @@ dispatch(reset());
             <div className="navbar-item">
               <div className="buttons">
                 {/* Menampilkan tanggal otomatis */}
-                <h2>{today}</h2>
-                <h1>nama</h1>
-                <img src={logo} width="50" height="28" alt="" className="profile-pic" />
+                {/* <h2>{today}</h2> */}
+                {/* <h1>nama</h1>
+                <img src={logo} width="50" height="28" alt="" className="profile-pic" /> */}
                 {/* Tombol Logout */}
-                <button className="button is-light" onClick={handleLogout}>
+                <button className="button is-danger" onClick={handleLogout}>
                   Logout
                 </button>
               </div>
