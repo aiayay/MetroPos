@@ -12,7 +12,7 @@ const FormEditProduk = () => {
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
   const [id_kategori, setKategori] = useState("");
-  const [foto_produk, setFoto_produk] = useState(""); // Gunakan string untuk URL foto
+  const [foto_produk, setFoto_produk] = useState(""); // URL untuk foto produk
   const [fileFoto, setFileFoto] = useState(null); // State untuk file foto
   const [diskon, setDiskon] = useState("");
   const [daftarKategori, setDaftarKategori] = useState([]);
@@ -24,7 +24,6 @@ const FormEditProduk = () => {
     const getKategori = async () => {
       try {
         const response = await axios.get(API_URL + "kategori");
-        // console.log(response.data.data); // Periksa data di sini
         const data = Array.isArray(response.data.data) ? response.data.data : [];
         setDaftarKategori(data);
       } catch (error) {
@@ -58,22 +57,28 @@ const FormEditProduk = () => {
 
   const editProduk = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+  
+    // Tambahkan semua data ke formData
+    formData.append("nmproduk", nmproduk);
+    formData.append("harga_jual", harga_jual);
+    formData.append("stok", stok);
+    formData.append("satuan", satuan);
+    formData.append("merk", merk);
+    formData.append("id_kategori", id_kategori);
+    formData.append("diskon", diskon);
+  
+    // Tambahkan foto_produk hanya jika ada file yang dipilih
+    if (fileFoto) {
+      formData.append("foto_produk", fileFoto);
+    }
+  
     try {
-      const response = await axios.put(API_URL + "produk/" + id_produk, {
-        nmproduk,
-        harga_jual,
-        stok,
-        satuan,
-        merk,
-        id_kategori, // Mengirim id_kategori
-      foto_produk,
-        diskon,
-      },{
+      await axios.put(API_URL + "produk/" + id_produk, formData, {
         headers: {
-          "Content-Type" : "application/json"
-        }
+          "Content-Type": "multipart/form-data", // Pastikan Content-Type yang benar
+        },
       });
-      // console.log("Respon dari server:", response.data);
       navigate("/produk");
     } catch (error) {
       if (error.response) {
@@ -81,7 +86,7 @@ const FormEditProduk = () => {
       }
     }
   };
-
+  
   const handleFileChange = (e) => {
     setFileFoto(e.target.files[0]); // Ambil file yang dipilih
   };
@@ -116,7 +121,7 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Stok</label>
                 <div className="control">
-                  <input type="number" className="input" placeholder="stok" value={stok || ""} onChange={(e) => setStok(e.target.value)} />
+                  <input type="number" className="input" placeholder="Stok" value={stok || ""} onChange={(e) => setStok(e.target.value)} />
                 </div>
               </div>
               <div className="field">
@@ -160,7 +165,7 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Diskon</label>
                 <div className="control">
-                  <input type="text" className="input" placeholder="diskon" value={diskon || ""} onChange={(e) => setDiskon(e.target.value)} />
+                  <input type="text" className="input" placeholder="Diskon" value={diskon || ""} onChange={(e) => setDiskon(e.target.value)} />
                 </div>
               </div>
 
