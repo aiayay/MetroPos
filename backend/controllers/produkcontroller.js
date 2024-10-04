@@ -41,7 +41,7 @@ exports.create = async (req, res) => {
       return res.status(400).json({ error: err.message });
     }
 
-    const { nmproduk, stok, satuan, merk,  harga_jual, diskon, nama_kategori } = req.body;
+    const { nmproduk, stok, satuan, merk, harga_jual, diskon, nama_kategori } = req.body;
     
     // URL lengkap gambar
     const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
@@ -72,8 +72,6 @@ exports.create = async (req, res) => {
     }
   });
 };
-
-
 // Fungsi untuk mendapatkan semua produk beserta kategori
 exports.findAll = (req, res) => {
   Produk.findAll({
