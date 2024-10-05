@@ -377,3 +377,8 @@ textarea {
 .white-text {
   color: white;
 }
+
+.overflow-auto {
+  max-height: 400px; /* Tentukan batas maksimum tinggi keranjang */
+  overflow-y: auto;  /* Agar keranjang bisa di-scroll jika produk terlalu banyak */
+}

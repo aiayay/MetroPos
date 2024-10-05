@@ -117,53 +117,44 @@ export default class KasirHasil extends Component {
 
     return (
       <div>
-        <Col md={6} mt="2">
-          <div className="keranjang-wrapper">
-            <h2 className="text-black">Keranjang</h2>
-            <hr />
-            {keranjang.length !== 0 && (
-              <Card className="overflow-auto hasil">
-                <ListGroup variant="flush">
-                  {/* Informasi Member di luar looping */}
-                  <p className="text-black ml-3 mt-3">Tanggal : {today}</p>
-                  <p className="text-black ml-3">Nama Kasir : {namaKasir}</p>
-                  <p className="text-black ml-3">Member : {namaMember}</p>
-                  <hr />
-                  
-                  {/* Looping untuk daftar menu */}
-                  {keranjang.map((menuKeranjang) => (
-                    <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
-                      <Row>
+      <Col md={6} mt="2">
+        <div className="keranjang-wrapper">
+          <h2 className="text-black">Keranjang</h2>
+          <hr />
+          {keranjang.length !== 0 && (
+            <Card className="overflow-auto hasil" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+              <ListGroup variant="flush">
+                <p className="text-black ml-3 mt-3">Tanggal : {today}</p>
+                <p className="text-black ml-3">Nama Kasir : {namaKasir}</p>
+                <p className="text-black ml-3">Member : {namaMember}</p>
+                <hr />
+                {keranjang.map((menuKeranjang) => (
+                  <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
+                    <Row>
                       <Col xs={2} className="ml-3">
-  <h4 className="text-black">
-    <span className="tag is-success is-rounded">
-      {menuKeranjang.kuantitas}
-    </span>
-  </h4>
-</Col>
-
-                        <Col className="ml-2">
-                          <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
-                          <p className="text-black mb-3">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
-                        </Col>
-                        <Col className="ml-6">
-                          <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-
-                  <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} hapusPesanan={this.hapusPesanan} />
-                </ListGroup>
-              </Card>
-            )}
-            {/* <hr /> */}
-
-            <TotalBayar keranjang={keranjang} tanggal={today} />
-
-          </div>
-        </Col>
-      </div>
+                        <h4 className="text-black">
+                          <span className="tag is-success is-rounded">{menuKeranjang.kuantitas}</span>
+                        </h4>
+                      </Col>
+                      <Col className="ml-2">
+                        <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
+                        <p className="text-black mb-3">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
+                      </Col>
+                      <Col className="ml-6">
+                        <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
+                <ModalKeranjang handleClose={this.handleClose} {...this.state} tambah={this.tambah} kurang={this.kurang} changeHandler={this.changeHandler} handleSubmit={this.handleSubmit} hapusPesanan={this.hapusPesanan} />
+              </ListGroup>
+            </Card>
+          )}
+          <TotalBayar keranjang={keranjang} tanggal={today} />
+        </div>
+      </Col>
+    </div>
+    
     );
   }
 }

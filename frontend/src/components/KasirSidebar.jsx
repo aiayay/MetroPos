@@ -33,6 +33,7 @@ export default class KasirSidebar extends Component {
       });
   }
 
+
   render() {
     // console.log("kategori : ", this.state.kategories);
     const { kategories } = this.state;

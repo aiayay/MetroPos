@@ -149,7 +149,7 @@ export default class Kasir extends Component {
                   <div className="bd-notification is-primary">
                     <div className="cell">
                       <Col>
-                        <h2 className="text-black">Daftar Menu</h2>
+                        <h1 className="text-black">Daftar Menu</h1>
                         <hr />
                         <Row className="menu-wrapper">
                           {menus && menus.map((menu) => (
