@@ -7,6 +7,7 @@ import "../index.css";
 
 const FormAddUser = () => {
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [nama_lengkap, setNama_lengkap] = useState("");
   const [notlp, setNotlp] = useState("");
   const [jk, setJk] = useState("");
@@ -20,10 +21,23 @@ const FormAddUser = () => {
     setMsg(""); // Reset pesan error sebelum melakukan permintaan
   
     try {
-      console.log("Data yang dikirim:", formData);
- 
+      // Deklarasi formData untuk foto
+      const formData = new FormData(); 
+      
+      // Log data yang dikirim
+      console.log("Data yang dikirim:", {
+        username,
+        password,
+        nama_lengkap,
+        notlp,
+        jk,
+        level
+      });
+  
+      // Langkah 1: Tambah user
       const response = await axios.post(API_URL + "user/register", {
         username,
+        password,
         nama_lengkap,
         notlp,
         jk,
@@ -38,8 +52,7 @@ const FormAddUser = () => {
   
       // Langkah 2: Jika ada foto, upload foto
       if (foto) {
-        const formData = new FormData();
-        formData.append("foto", foto);
+        formData.append("foto", foto); // Append file foto ke formData
   
         await axios.post(API_URL + "user/upload-foto/" + id_user, formData, {
           headers: {
@@ -60,6 +73,7 @@ const FormAddUser = () => {
     }
   };
   
+  
 
   return (
     <div>
@@ -77,8 +91,21 @@ const FormAddUser = () => {
                     type="text"
                     className="input"
                     placeholder="Username"
-                    value={username || ""}
+                    value={username }
                     onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
                 </div>
@@ -90,7 +117,7 @@ const FormAddUser = () => {
                     type="text"
                     className="input"
                     placeholder="Nama Lengkap"
-                    value={nama_lengkap || ""}
+                    value={nama_lengkap }
                     onChange={(e) => setNama_lengkap(e.target.value)}
                     required
                   />
@@ -103,7 +130,7 @@ const FormAddUser = () => {
                     type="number"
                     className="input"
                     placeholder="Nomor Telepon"
-                    value={notlp || ""}
+                    value={notlp }
                     onChange={(e) => setNotlp(e.target.value)}
                     required
                   />
@@ -141,7 +168,7 @@ const FormAddUser = () => {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select
-                      value={level || ""}
+                      value={level }
                       onChange={(e) => setLevel(e.target.value)}
                       required className="text-black"
                     >
