@@ -41,7 +41,7 @@ exports.create = async (req, res) => {
       return res.status(400).json({ error: err.message });
     }
 
-    const { nmproduk, stok, satuan, merk,  harga_jual, diskon, nama_kategori } = req.body;
+    const { nmproduk, stok, satuan, merk, harga_jual, diskon, nama_kategori } = req.body;
     
     // URL lengkap gambar
     const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
@@ -72,8 +72,6 @@ exports.create = async (req, res) => {
     }
   });
 };
-
-
 // Fungsi untuk mendapatkan semua produk beserta kategori
 exports.findAll = (req, res) => {
   Produk.findAll({
@@ -102,10 +100,7 @@ exports.findOne = (req, res) => {
         model: Kategori, // Relasi dengan tabel kategori
         as: "kategori",
       },
-      {
-        model: Pembelian, // Relasi dengan tabel pembelian
-        as: "pembelian",
-      },
+      
     ],
   })
     .then((data) => {
@@ -137,16 +132,10 @@ exports.update = async (req, res) => {
     }
 
     try {
-      const { nmproduk, stok, satuan, merk,  harga_jual, diskon, nama_kategori } = req.body;
+      const { nmproduk, stok, satuan, merk, harga_jual, diskon, id_kategori } = req.body;
 
       // URL gambar yang akan diupdate
       const foto_produk = req.file ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` : null;
-
-      // Cari kategori berdasarkan nama_kategori
-      const kategori = await Kategori.findOne({ where: { nama_kategori } });
-      if (!kategori) {
-        return res.status(404).json({ error: "Kategori tidak ditemukan" });
-      }
 
       // Data yang akan diupdate, termasuk foto jika ada
       const updatedData = {
@@ -156,7 +145,7 @@ exports.update = async (req, res) => {
         merk,
         harga_jual,
         diskon,
-        id_kategori: kategori.id_kategori,
+        id_kategori, // Pastikan ini sesuai dengan model database
       };
 
       // Jika ada gambar baru, tambahkan URL gambar ke dalam data yang diupdate
@@ -184,6 +173,7 @@ exports.update = async (req, res) => {
     }
   });
 };
+
 
 // Fungsi untuk menghapus produk
 exports.delete = (req, res) => {

@@ -11,8 +11,14 @@ const FormEditProduk = () => {
   const [stok, setStok] = useState("");
   const [satuan, setSatuan] = useState("");
   const [merk, setMerk] = useState("");
+<<<<<<< HEAD
   const [nama_kategori, setNamaKategori] = useState(""); // Menggunakan nama_kategori
   const [foto_produk, setFoto_produk] = useState(null); // State untuk foto produk
+=======
+  const [id_kategori, setKategori] = useState("");
+  const [foto_produk, setFoto_produk] = useState(""); // URL untuk foto produk
+  const [fileFoto, setFileFoto] = useState(null); // State untuk file foto
+>>>>>>> 8ac51bf2a7f050b677e1e04c39da0c781c8cbf02
   const [diskon, setDiskon] = useState("");
   const [msg, setMsg] = useState("");
   const [kategoriList, setKategoriList] = useState([]);
@@ -23,7 +29,12 @@ const FormEditProduk = () => {
     const getKategori = async () => {
       try {
         const response = await axios.get(API_URL + "kategori");
+<<<<<<< HEAD
         setKategoriList(response.data.data); // Set daftar kategori dari response API
+=======
+        const data = Array.isArray(response.data.data) ? response.data.data : [];
+        setDaftarKategori(data);
+>>>>>>> 8ac51bf2a7f050b677e1e04c39da0c781c8cbf02
       } catch (error) {
         console.error("Error fetching categories", error);
       }
@@ -54,6 +65,7 @@ const FormEditProduk = () => {
 
   const editProduk = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
 
     if (!nama_kategori) {
       setMsg("Kategori harus dipilih.");
@@ -61,11 +73,17 @@ const FormEditProduk = () => {
     }
 
     const formData = new FormData(); // Membuat FormData untuk mengirimkan file dan data lainnya
+=======
+    const formData = new FormData();
+  
+    // Tambahkan semua data ke formData
+>>>>>>> 8ac51bf2a7f050b677e1e04c39da0c781c8cbf02
     formData.append("nmproduk", nmproduk);
     formData.append("harga_jual", harga_jual);
     formData.append("stok", stok);
     formData.append("satuan", satuan);
     formData.append("merk", merk);
+<<<<<<< HEAD
     formData.append("nama_kategori", nama_kategori);
     formData.append("diskon", diskon);
     if (foto_produk) {
@@ -76,6 +94,20 @@ const FormEditProduk = () => {
       await axios.post(API_URL + "produk", formData, {
         headers: {
           "Content-Type": "multipart/form-data", // Mengirimkan sebagai multipart form
+=======
+    formData.append("id_kategori", id_kategori);
+    formData.append("diskon", diskon);
+  
+    // Tambahkan foto_produk hanya jika ada file yang dipilih
+    if (fileFoto) {
+      formData.append("foto_produk", fileFoto);
+    }
+  
+    try {
+      await axios.put(API_URL + "produk/" + id_produk, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Pastikan Content-Type yang benar
+>>>>>>> 8ac51bf2a7f050b677e1e04c39da0c781c8cbf02
         },
       });
       navigate("/produk");
@@ -86,7 +118,7 @@ const FormEditProduk = () => {
       }
     }
   };
-
+  
   const handleFileChange = (e) => {
     setFoto_produk(e.target.files[0]); // Mengambil file yang dipilih
   };
@@ -132,6 +164,7 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Stok</label>
                 <div className="control">
+<<<<<<< HEAD
                   <input
                     type="number"
                     className="input"
@@ -139,6 +172,9 @@ const FormEditProduk = () => {
                     value={stok || ""} 
                     onChange={(e) => setStok(e.target.value)}
                   />
+=======
+                  <input type="number" className="input" placeholder="Stok" value={stok || ""} onChange={(e) => setStok(e.target.value)} />
+>>>>>>> 8ac51bf2a7f050b677e1e04c39da0c781c8cbf02
                 </div>
               </div>
               <div className="field">
@@ -196,6 +232,7 @@ const FormEditProduk = () => {
               <div className="field">
                 <label className="label">Diskon</label>
                 <div className="control">
+<<<<<<< HEAD
                   <input
                     type="text"
                     className="input"
@@ -203,6 +240,9 @@ const FormEditProduk = () => {
                     value={diskon || ""}
                     onChange={(e) => setDiskon(e.target.value)}
                   />
+=======
+                  <input type="text" className="input" placeholder="Diskon" value={diskon || ""} onChange={(e) => setDiskon(e.target.value)} />
+>>>>>>> 8ac51bf2a7f050b677e1e04c39da0c781c8cbf02
                 </div>
               </div>
 
