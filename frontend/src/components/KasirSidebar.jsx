@@ -39,10 +39,10 @@ export default class KasirSidebar extends Component {
     const { changeKategori, kategoriYangDipilih } = this.props;
 
     return (
-      <div>
+      <div className="ml-3">
         <Col md={8} xs={12} className="mb-4 mr-4">
           <aside className="menu pl-2 pr-2 has-shadow mt-0">
-            <h1 className="text-white">Daftar Kategori</h1>
+            <h1 className="text-white mr-2">Daftar Kategori</h1>
             <hr />
             <ul className="menu-list">
               {kategories &&

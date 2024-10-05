@@ -125,16 +125,16 @@ export default class KasirHasil extends Component {
               <Card className="overflow-auto hasil">
                 <ListGroup variant="flush">
                   {/* Informasi Member di luar looping */}
-                  <p className="text-black">Tanggal : {today}</p>
-                  <p className="text-black">Nama Kasir : {namaKasir}</p>
-                  <p className="text-black">Member : {namaMember}</p>
+                  <p className="text-black ml-3 mt-3">Tanggal : {today}</p>
+                  <p className="text-black ml-3">Nama Kasir : {namaKasir}</p>
+                  <p className="text-black ml-3">Member : {namaMember}</p>
                   <hr />
                   
                   {/* Looping untuk daftar menu */}
                   {keranjang.map((menuKeranjang) => (
                     <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
                       <Row>
-                      <Col xs={2}>
+                      <Col xs={2} className="ml-3">
   <h4 className="text-black">
     <span className="tag is-success is-rounded">
       {menuKeranjang.kuantitas}
@@ -142,11 +142,11 @@ export default class KasirHasil extends Component {
   </h4>
 </Col>
 
-                        <Col>
+                        <Col className="ml-2">
                           <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
-                          <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
+                          <p className="text-black mb-3">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
                         </Col>
-                        <Col>
+                        <Col className="ml-6">
                           <strong className="text-black">Rp. {numberWithCommas(menuKeranjang.total_harga)}</strong>
                         </Col>
                       </Row>
