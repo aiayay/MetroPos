@@ -130,7 +130,7 @@ const Welcome = () => {
 
 </div>
       
-<div className="card-container">
+<div className="card-container mr-4">
 <div className="card" style={{ backgroundColor: "#FF926F" }}>
           <header className="card-header">
             <p className="card-header-title white-text">Pengeluaran Hari Ini</p>
@@ -158,15 +158,19 @@ const Welcome = () => {
         {/* pengeluaran/pembelian hari ini */}
 
       </div>
+      <br />
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  <h3 className="title">Grafik Pendapatan</h3>
+  <ResponsiveContainer width="100%" aspect={3}>
+    <BarChart data={transaksi}>
+      <XAxis dataKey="tanggal" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="total_bayar" fill="#42921C" />
+    </BarChart>
+  </ResponsiveContainer>
+</div>
 
-      <ResponsiveContainer width="100%" aspect={3}>
-        <BarChart data={transaksi}>
-          <XAxis dataKey="tanggal" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="total_bayar" fill="#42921C" />
-        </BarChart>
-      </ResponsiveContainer>
     </div>
   );
 };

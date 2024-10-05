@@ -52,6 +52,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
         nmproduk: item.produk.nmproduk,
         harga_produk: item.produk.harga_jual,
         kuantitas: item.kuantitas,
+        catatan: item.catatan,
         total_harga: item.total_harga,
         potongan: item.potongan || 0,
       })),
