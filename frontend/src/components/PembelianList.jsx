@@ -27,7 +27,7 @@ const PembelianList = () => {
     getPembelian();
   };
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Pembelian</h1>
       <h2 className="subtitle">Barang Masuk</h2>
       <div id="navbarBasicExample" className="navbar-menu">

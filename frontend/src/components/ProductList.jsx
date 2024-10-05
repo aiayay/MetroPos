@@ -25,7 +25,7 @@ const ProductList = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Produk</h1>
       <h2 className="subtitle">Data Barang</h2>
       <div id="navbarBasicExample" className="navbar-menu">

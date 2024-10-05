@@ -70,7 +70,7 @@ const FormAddProduk = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Produk</h1>
       <h2 className="subtitle">Tambah Produk</h2>
       <div className="card is-shadowless">

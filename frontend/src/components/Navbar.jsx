@@ -65,7 +65,7 @@ const Navbar = () => {
                 {/* <h1>nama</h1>
                 <img src={logo} width="50" height="28" alt="" className="profile-pic" /> */}
                 {/* Tombol Logout */}
-                <button className="button is-danger" onClick={logout}>
+                <button className="button is-danger mr-5" onClick={logout}>
                   Logout
                 </button>
               </div>

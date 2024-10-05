@@ -24,7 +24,7 @@ const FormAddKategori = () => {
     }
   };
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Kategori</h1>
       <h2 className="subtitle">Tambah Kategori</h2>
       <div className="card is-shadowless">

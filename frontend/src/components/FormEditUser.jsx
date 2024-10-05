@@ -78,7 +78,7 @@ const FormEditUser = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">User</h1>
       <h2 className="subtitle">Edit user</h2>
       <div className="card is-shadowless">

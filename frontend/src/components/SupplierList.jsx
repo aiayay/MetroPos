@@ -36,7 +36,7 @@ const SupplierList = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Supplier</h1>
       <h2 className="subtitle">Data Supplier</h2>
       <div id="navbarBasicExample" className="navbar-menu">

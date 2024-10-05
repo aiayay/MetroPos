@@ -28,7 +28,7 @@ const MemberList = () => {
     getMember();
   };
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Member</h1>
       <h2 className="subtitle">Data Member</h2>
       <div id="navbarBasicExample" className="navbar-menu">

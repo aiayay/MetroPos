@@ -32,7 +32,7 @@ const FormAddMember = () => {
     }
   };
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Member</h1>
       <h2 className="subtitle">Tambah Member</h2>
       <div className="card is-shadowless">

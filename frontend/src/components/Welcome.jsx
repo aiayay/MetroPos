@@ -21,9 +21,9 @@ const Welcome = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Dashboard</h1>
-      <h2 className="subtitle">Welcome Back... <strong>{user && user.nama_lengkap}</strong></h2>
+      <h2 className="subtitle mt-3">Welcome Back... <strong className="text-black">{user && user.nama_lengkap}</strong></h2>
 
       <ResponsiveContainer width="100%" aspect={3}>
         <BarChart data={transaksi}>

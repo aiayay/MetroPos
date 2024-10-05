@@ -106,7 +106,7 @@ const TransaksiList = () => {
 
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Transaksi</h1>
       <h2 className="subtitle">Barang Terjual</h2>
       <div id="navbarBasicExample" className="navbar-menu">

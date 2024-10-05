@@ -29,7 +29,7 @@ const Userlist = () => {
     getUser();
   };
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Users</h1>
       <h2 className="subtitle">Data Admin dan Kasir</h2>
       <div id="navbarBasicExample" className="navbar-menu">

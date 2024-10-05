@@ -48,7 +48,7 @@ const KasirTransaksiList = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Transaksi</h1>
       <h2 className="subtitle">Barang Terjual</h2>
       <Link to="/kasir" className="button is-danger mb-2">

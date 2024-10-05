@@ -16,107 +16,110 @@ const Sidebar = () => {
     navigate("/");
   };
 
-  // Return harus berada dalam satu elemen JSX yang valid
+  // Pastikan user login tersedia sebelum menampilkan data user
+  const userName = user ? user.nama_lengkap : "Guest";
+  const userProfilePic = user && user.foto ? user.foto : "assets/images/default_profile.png"; // Gunakan foto default jika user tidak memiliki foto
+
   return (
     <>
-    
-        <div>
-          <aside className="menu pl-2 pr-2 has-shadow mt-5">
-            <ul className="menu-list">
-              <li className="item-sidebar">
-                <div id="navbarBasicExample" className="navbar-menu">
-                  <div className="navbar-end">
-                    <div className="navbar-item">
-                      <div className="buttons">
-                        <img src="assets/images/foto.png" width="50" height="28" alt="" className="profile-pic" />
-                        <h1 className="text-white">nur aini pertiwi</h1>
-                      </div>
+      <div>
+        <aside className="menu pl-2 pr-2 has-shadow mt-5">
+          <ul className="menu-list">
+            <li className="item-sidebar">
+              <div id="navbarBasicExample" className="navbar-menu">
+                <div className="navbar-end">
+                  <div className="navbar-item">
+                    <div className="buttons">
+                      {/* Menampilkan foto user */}
+                      <img src={userProfilePic} width="50" height="50" alt="Profile" className="profile-pic" />
+                      {/* Menampilkan nama user */}
+                      <h1 className="text-white ml-2">{userName}</h1>
                     </div>
                   </div>
                 </div>
-              </li>
+              </div>
+            </li>
 
-              <li className="item-sidebar">
-                <NavLink to={"/dashboard"}>
-                  <IoHome />
-                  Dashboard
-                </NavLink>
-              </li>
-              <li className="item-sidebar">
-                <NavLink to={"/produk"}>
-                  <IoCube />
-                  Produk
-                </NavLink>
-              </li>
-            </ul>
+            <li className="item-sidebar">
+              <NavLink to={"/dashboard"}>
+                <IoHome />
+                Dashboard
+              </NavLink>
+            </li>
+            <li className="item-sidebar">
+              <NavLink to={"/produk"}>
+                <IoCube />
+                Produk
+              </NavLink>
+            </li>
+          </ul>
 
+          <ul className="menu-list">
+            <li className="item-sidebar">
+              <NavLink to={"/member"}>
+                <IoPeopleOutline />
+                Member
+              </NavLink>
+            </li>
+          </ul>
+
+          <ul className="menu-list">
+            <li className="item-sidebar">
+              <NavLink to={"/transaksi"}>
+                <IoCart />
+                Transaksi
+              </NavLink>
+            </li>
+          </ul>
+
+          <ul className="menu-list">
+            <li className="item-sidebar">
+              <NavLink to={"/kategori"}>
+                <IoList />
+                Kategori
+              </NavLink>
+            </li>
+          </ul>
+
+          <div>
             <ul className="menu-list">
               <li className="item-sidebar">
-                <NavLink to={"/member"}>
-                  <IoPeopleOutline />
-                  Member
+                <NavLink to={"/users"}>
+                  <IoPerson />
+                  Users
                 </NavLink>
               </li>
             </ul>
+          </div>
 
-            <ul className="menu-list">
-              <li className="item-sidebar">
-                <NavLink to={"/transaksi"}>
-                  <IoCart />
-                  Transaksi
-                </NavLink>
-              </li>
-            </ul>
+          <ul className="menu-list">
+            <li className="item-sidebar">
+              <NavLink to={"/supplier"}>
+                <IoPeopleCircle />
+                Supplier
+              </NavLink>
+            </li>
+          </ul>
 
-            <ul className="menu-list">
-              <li className="item-sidebar">
-                <NavLink to={"/kategori"}>
-                  <IoList />
-                  Kategori
-                </NavLink>
-              </li>
-            </ul>
+          <ul className="menu-list">
+            <li className="item-sidebar">
+              <NavLink to={"/pembelian"}>
+                <IoWallet />
+                Pembelian
+              </NavLink>
+            </li>
+          </ul>
 
-            <div>
-              <ul className="menu-list">
-                <li className="item-sidebar">
-                  <NavLink to={"/users"}>
-                    <IoPerson />
-                    Users
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-
-            <ul className="menu-list">
-              <li className="item-sidebar">
-                <NavLink to={"/supplier"}>
-                  <IoPeopleCircle />
-                  Supplier
-                </NavLink>
-              </li>
-            </ul>
-
-            <ul className="menu-list">
-              <li className="item-sidebar">
-                <NavLink to={"/pembelian"}>
-                  <IoWallet />
-                  Pembelian
-                </NavLink>
-              </li>
-            </ul>
-
-            <ul className="menu-list">
-              <li className="item-sidebar">
-                <button onClick={logout} className="button is-black">
-                  <IoLogOut />
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </aside>
-        </div>
-  
+          {/* <ul className="menu-list">
+            <li className="item-sidebar">
+              <button onClick={logout} className="button is-danger">
+                <IoLogOut />
+                Logout
+              </button>
+            </li>
+          </ul> */}
+        </aside>
+      </div>
     </>
   );
 };

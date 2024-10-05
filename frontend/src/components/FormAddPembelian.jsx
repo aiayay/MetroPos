@@ -82,7 +82,7 @@ const FormAddPembelian = () => {
   };
 
   return (
-    <div>
+    <div className="mt-5">
       <h1 className="title">Pembelian</h1>
       <h2 className="subtitle">Tambah Pembelian</h2>
       <div className="card is-shadowless">
