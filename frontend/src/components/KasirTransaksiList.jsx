@@ -31,9 +31,7 @@ const KasirTransaksiList = () => {
 
     // Filter berdasarkan nama member yang dicari
     if (search) {
-      filtered = filtered.filter((item) =>
-        item.nama_member.toLowerCase().includes(search.toLowerCase())
-      );
+      filtered = filtered.filter((item) => item.nama_member.toLowerCase().includes(search.toLowerCase()));
     }
 
     // Filter berdasarkan rentang tanggal
@@ -51,10 +49,23 @@ const KasirTransaksiList = () => {
     <div className="mt-5">
       <h1 className="title ml-5">Transaksi</h1>
       <h2 className="subtitle ml-5">Barang Terjual</h2>
-      <Link to="/kasir" className="button is-danger mb-2 ml-5">
+
+      {/* <Link to="/kasir" className="button is-danger mb-2 ml-5">
         Kembali
-      </Link>
+      </Link> */}
       <div id="navbarBasicExample" className="navbar-menu">
+        <nav className="breadcrumb ml-5" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <a href="/kasir">Kembali</a>
+            </li>
+            <li className="is-active">
+              <a href="#" aria-current="page">
+                Transaksi List
+              </a>
+            </li>
+          </ul>
+        </nav>
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
@@ -64,15 +75,10 @@ const KasirTransaksiList = () => {
           <div className="container mt-5">
             <div className="columns">
               <div className="kolom is-centered">
-                <form action="" >
+                <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input
-                        type="text"
-                        className="input"
-                        placeholder="cari.."
-                        onChange={(e) => setSearch(e.target.value)}
-                      />
+                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -89,18 +95,9 @@ const KasirTransaksiList = () => {
 
       <p className="tanggal ml-5">
         Dari
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
+        <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
         sampai
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-    
+        <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
       </p>
 
       <div>
@@ -134,17 +131,11 @@ const KasirTransaksiList = () => {
                 <td>{transaksi.metode_bayar}</td>
                 <td>{transaksi.tanggal}</td>
                 <td>
-                <button
-                  onClick={() => navigate(`/kasirtransaksi/detail/${transaksi.id_transaksi}`)}
-                  className="button is-primary is-info"
-                >
-                  Detail
-                </button>
+                  <button onClick={() => navigate(`/kasirtransaksi/detail/${transaksi.id_transaksi}`)} className="button is-primary is-info">
+                    Detail
+                  </button>
 
-                  <button
-                    onClick={() => deleteTransaksi(transaksi.id_transaksi)}
-                    className="button is-danger mb-2"
-                  >
+                  <button onClick={() => deleteTransaksi(transaksi.id_transaksi)} className="button is-danger mb-2">
                     Delete
                   </button>
                 </td>

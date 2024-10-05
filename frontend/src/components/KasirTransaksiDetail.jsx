@@ -37,9 +37,24 @@ const KasirTransaksiDetail = () => {
     <div className="mt-5">
       <h1 className="title ml-5">Transaksi</h1>
       <h2 className="subtitle ml-5">Detail Transaksi</h2>
-      <Link to="/kasir" className="button is-danger mb-2 ml-5">
+      <nav className="breadcrumb ml-5" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <a href="/kasir">Kembali</a>
+            </li>
+            <li>
+              <a href="/kasirtransaksi">Transaksi List</a>
+            </li>
+            <li className="is-active">
+              <a href="#" aria-current="page">
+                Transaksi Detail
+              </a>
+            </li>
+          </ul>
+        </nav>
+      {/* <Link to="/kasir" className="button is-danger mb-2 ml-5">
         Kembali
-      </Link>
+      </Link> */}
       <div>
         <table className="table is-fullwidth ml-5">
           <thead>
