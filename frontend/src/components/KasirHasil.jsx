@@ -134,13 +134,14 @@ export default class KasirHasil extends Component {
                   {keranjang.map((menuKeranjang) => (
                     <ListGroup.Item key={menuKeranjang.id_keranjang} onClick={() => this.handleShow(menuKeranjang)}>
                       <Row>
-                        <Col xs={2}>
-                          <h4 className="text-black">
-                            <Badge pill variant="success">
-                              {menuKeranjang.kuantitas}
-                            </Badge>
-                          </h4>
-                        </Col>
+                      <Col xs={2}>
+  <h4 className="text-black">
+    <span className="tag is-success is-rounded">
+      {menuKeranjang.kuantitas}
+    </span>
+  </h4>
+</Col>
+
                         <Col>
                           <h5 className="text-black">{menuKeranjang.produk.nmproduk}</h5>
                           <p className="text-black">Rp. {numberWithCommas(menuKeranjang.produk.harga_jual)}</p>
