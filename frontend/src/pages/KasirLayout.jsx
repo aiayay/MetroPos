@@ -46,7 +46,7 @@ export default class KasirLayout extends Component {
       <React.Fragment>
         <KasirNavbar />
         <div className="columns mt-6" style={{ minHeight: "100vh" }}>
-     
+     {/* <KasirSidebar /> */}
           <div className="column">
             {/* <KasirNavbarBawah /> */}
             <main>{this.props.children}</main>

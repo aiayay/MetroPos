@@ -156,7 +156,7 @@ export default class KasirHasil extends Component {
                 </ListGroup>
               </Card>
             )}
-            <hr />
+            {/* <hr /> */}
 
             <TotalBayar keranjang={keranjang} tanggal={today} />
 

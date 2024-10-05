@@ -3,6 +3,7 @@ import "../index.css";
 import axios from "axios";
 import { useParams } from "react-router-dom"; // Untuk mengambil parameter dari URL
 import { API_URL } from "../features/constants";
+import { Link } from "react-router-dom";
 
 
 const KasirTransaksiDetail = () => {
@@ -34,10 +35,13 @@ const KasirTransaksiDetail = () => {
 
   return (
     <div className="mt-5">
-      <h1 className="title">Transaksi</h1>
-      <h2 className="subtitle">Detail Transaksi</h2>
+      <h1 className="title ml-5">Transaksi</h1>
+      <h2 className="subtitle ml-5">Detail Transaksi</h2>
+      <Link to="/kasir" className="button is-danger mb-2 ml-5">
+        Kembali
+      </Link>
       <div>
-        <table className="table is-fullwidth">
+        <table className="table is-fullwidth ml-5">
           <thead>
             <tr>
               <th>No</th>
@@ -45,7 +49,7 @@ const KasirTransaksiDetail = () => {
               <th>Harga</th>
               <th>Kuantitas</th>
               <th>Catatan</th>
-              <th>Actions</th>
+              {/* <th>Actions</th> */}
             </tr>
           </thead>
           <tbody>
@@ -56,14 +60,14 @@ const KasirTransaksiDetail = () => {
                 <td>{detailItem.harga_produk}</td>
                 <td>{detailItem.kuantitas}</td>
                 <td>{detailItem.catatan}</td>
-                <td>
+                {/* <td>
                   <button
                     onClick={() => deleteDetail(detailItem.id_detailtrans)}
                     className="button is-danger"
                   >
                     Delete
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

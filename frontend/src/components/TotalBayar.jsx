@@ -68,7 +68,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
   };
 
   return (
-    <div className="fixed-bottom">
+    <div className="fixed-bottom mr-5 ml-3">
       <h3><strong className="text-black">Total Pembayaran : </strong></h3>
       <div className="total-bayar">
         Rp {numberWithCommas(total_bayar)}
@@ -126,9 +126,12 @@ const TotalBayar = ({ keranjang, tanggal }) => {
           />
         </div>
 
-        <button type="submit" className="submit-button">
-          Submit
-        </button>
+        <div className="is-flex is-justify-content-center">
+  <button type="submit" className="button is-success">
+    Proses Pembayaran
+  </button>
+</div>
+
       </form>
     </div>
   );

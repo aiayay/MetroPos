@@ -49,9 +49,9 @@ const KasirTransaksiList = () => {
 
   return (
     <div className="mt-5">
-      <h1 className="title">Transaksi</h1>
-      <h2 className="subtitle">Barang Terjual</h2>
-      <Link to="/kasir" className="button is-danger mb-2">
+      <h1 className="title ml-5">Transaksi</h1>
+      <h2 className="subtitle ml-5">Barang Terjual</h2>
+      <Link to="/kasir" className="button is-danger mb-2 ml-5">
         Kembali
       </Link>
       <div id="navbarBasicExample" className="navbar-menu">
@@ -64,7 +64,7 @@ const KasirTransaksiList = () => {
           <div className="container mt-5">
             <div className="columns">
               <div className="kolom is-centered">
-                <form action="">
+                <form action="" >
                   <div className="field has-addons">
                     <div className="control is-expanded">
                       <input
@@ -87,7 +87,7 @@ const KasirTransaksiList = () => {
         </div>
       </div>
 
-      <p className="tanggal">
+      <p className="tanggal ml-5">
         Dari
         <input
           type="date"
@@ -104,7 +104,7 @@ const KasirTransaksiList = () => {
       </p>
 
       <div>
-        <table className="table is-fullwidth">
+        <table className="table is-fullwidth ml-5">
           <thead>
             <tr>
               <th>No</th>

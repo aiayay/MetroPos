@@ -33,8 +33,11 @@ const KasirAddMember = () => {
   };
   return (
     <div className="mt-5">
-      <h1 className="title">Member</h1>
-      <h2 className="subtitle">Tambah Member</h2>
+      <h1 className="title ml-5">Member</h1>
+      <h2 className="subtitle ml-5">Tambah Member</h2>
+      <Link to="/kasir" className="button is-danger mb-2 ml-5">
+        Kembali
+      </Link>
       <div className="card is-shadowless">
         <div className="card-content has-background-light">
           <div className="content">

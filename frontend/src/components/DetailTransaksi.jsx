@@ -44,7 +44,7 @@ const DetailTransaksi = () => {
               <th>Harga</th>
               <th>Kuantitas</th>
               <th>Catatan</th>
-              <th>Actions</th>
+              {/* <th>Actions</th> */}
             </tr>
           </thead>
           <tbody>
@@ -55,14 +55,14 @@ const DetailTransaksi = () => {
                 <td>{detailItem.harga_produk}</td>
                 <td>{detailItem.kuantitas}</td>
                 <td>{detailItem.catatan}</td>
-                <td>
+                {/* <td>
                   <button
                     onClick={() => deleteDetail(detailItem.id_detailtrans)}
                     className="button is-danger"
                   >
                     Delete
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

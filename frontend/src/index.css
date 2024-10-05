@@ -14,10 +14,10 @@
 
 @media only screen and (max-height: 1000px) {
   .hasil {
-    height: 650px;
+    height: 650px !important;
   }
   .menu {
-    height: 800px;
+    height: 800px !important;
   }
 }
 
@@ -314,3 +314,66 @@ textarea {
 }
 
 
+.card-container {
+  display: flex;
+  justify-content: flex-start; /* Atur posisi card ke kiri */
+  flex-wrap: wrap; /* Agar card tidak meluber ke luar */
+}
+
+.card {
+  margin-right: 15px; /* Jarak antar card */
+  margin-bottom: 15px; /* Jarak ke bawah */
+  flex: 1 1 200px; /* Ukuran minimum card */
+  max-width: 300px; /* Maksimal lebar card */
+}
+
+.card-transaksi {
+  background-color: FAC256;
+}
+
+.white-text {
+  color: white !important;
+}
+
+.transaksi {
+  background-color: #CE9910 !important;
+}
+.pendapatan {
+  background-color: #42921C !important;
+}
+.pembelian {
+  background-color: #991010 !important;
+}
+.card-footer-item{
+  color: white !important;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px; /* Mengatur jarak antar card */
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1; /* Card akan otomatis menyesuaikan ukuran */
+  min-width: 280px; /* Menentukan lebar minimum card */
+  max-width: 350px; /* Menentukan lebar maksimum card */
+  margin: 10px; /* Mengatur margin untuk card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Membuat sudut card membulat */
+}
+
+.card-header-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.white-text {
+  color: white;
+}
