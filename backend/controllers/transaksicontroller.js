@@ -102,7 +102,8 @@ exports.createTransaksi = async (req, res) => {
             harga_produk: detail.harga_produk,
             kuantitas: detail.kuantitas,
             total_harga: detail.total_harga,
-            potongan: detail.potongan
+            potongan: detail.potongan,
+            catatan: detail.catatan
           });
         }
 
