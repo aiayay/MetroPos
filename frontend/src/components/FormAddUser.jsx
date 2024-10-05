@@ -18,10 +18,11 @@ const FormAddUser = () => {
   const addUser = async (e) => {
     e.preventDefault();
     setMsg(""); // Reset pesan error sebelum melakukan permintaan
-
+  
     try {
-      // Langkah 1: Tambahkan data pengguna baru
-      const response = await axios.post(API_URL + "user", {
+      console.log("Data yang dikirim:", formData);
+ 
+      const response = await axios.post(API_URL + "user/register", {
         username,
         nama_lengkap,
         notlp,
@@ -32,24 +33,25 @@ const FormAddUser = () => {
           "Content-Type": "application/json"
         }
       });
-
+  
       const id_user = response.data.data.id_user; // Dapatkan ID user yang baru ditambahkan
-
+  
       // Langkah 2: Jika ada foto, upload foto
       if (foto) {
         const formData = new FormData();
         formData.append("foto", foto);
-
+  
         await axios.post(API_URL + "user/upload-foto/" + id_user, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
         });
       }
-
+  
       // Navigasi ke halaman users setelah berhasil menambahkan user
       navigate("/users");
     } catch (error) {
+      console.error('Error:', error);
       if (error.response) {
         setMsg(error.response.data.message || error.response.data.msg || "Terjadi kesalahan");
       } else {
@@ -57,6 +59,7 @@ const FormAddUser = () => {
       }
     }
   };
+  
 
   return (
     <div>
@@ -150,19 +153,16 @@ const FormAddUser = () => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Foto</label>
-                <div className="control">
-                  <input
-                    type="file"
-                    className="input"
-                    accept="image/*"
-                    onChange={(e) => setFoto(e.target.files[0])}
-                  />
-                  {foto && (
-                    <p className="mt-2">Foto yang dipilih: {foto.name}</p>
-                  )}
-                </div>
-              </div>
+  <label className="label">Foto</label>
+  <div className="control">
+    <input
+      type="file"
+      className="input"
+      onChange={(e) => setFoto(e.target.files[0])}
+    />
+  </div>
+</div>
+
 
               <div className="field">
                 <div className="control">
