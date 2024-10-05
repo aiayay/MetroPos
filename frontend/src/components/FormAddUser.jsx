@@ -101,7 +101,7 @@ const FormAddUser = () => {
                 <label className="label">Password</label>
                 <div className="control">
                   <input
-                    type="text"
+                    type="password"
                     className="input"
                     placeholder="password"
                     value={password}
