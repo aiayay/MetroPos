@@ -27,11 +27,11 @@ const Navbar = () => {
           <NavLink className="navbar-item" to="/dashboard">
             <h1>Metro Pos</h1>
           </NavLink>
-          <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          {/* <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
-          </a>
+          </a> */}
         </div>
 
         <div id="navbarBasicExample" className="navbar-menu">

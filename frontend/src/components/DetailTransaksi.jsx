@@ -35,8 +35,8 @@ const DetailTransaksi = () => {
     <div className="mt-5">
       <h1 className="title">Transaksi</h1>
       <h2 className="subtitle">Detail Transaksi</h2>
-      <div>
-        <table className="table is-fullwidth">
+      <div className="table-container" style={{ overflowX: 'auto' }}>
+      <table className="table is-fullwidth" style={{ minWidth: "600px" }}>
           <thead>
             <tr>
               <th>No</th>

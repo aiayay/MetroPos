@@ -61,8 +61,8 @@ const MemberList = () => {
           </div>
         </div>
       </div>
-      <div>
-        <table className="table is-fullwidth">
+      <div className="table-container" style={{ overflowX: 'auto' }}>
+      <table className="table is-fullwidth" style={{ minWidth: "600px" }}>
           <thead>
             <tr>
               <th>No</th>

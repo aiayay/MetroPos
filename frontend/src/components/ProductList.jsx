@@ -7,17 +7,15 @@ import "../index.css";
 const ProductList = () => {
   const [produk, setProduk] = useState([]);
   const [search, setSearch] = useState("");
-  // console.log(search);
 
   useEffect(() => {
     getProduk();
   }, []);
+
   const getProduk = async () => {
     const response = await axios.get(API_URL + "produk");
     setProduk(response.data);
   };
-
-  //metod delete produk
 
   const deleteProduk = async (id_produk) => {
     await axios.delete(API_URL + "produk/" + id_produk);
@@ -37,14 +35,19 @@ const ProductList = () => {
               </Link>
             </div>
           </div>
-          {/* search */}
+          {/* Search */}
           <div className="container mt-5">
             <div className="columns">
               <div className="kolom is-centered">
                 <form action="">
                   <div className="field has-addons">
                     <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
+                      <input
+                        type="text"
+                        className="input"
+                        placeholder="cari.."
+                        onChange={(e) => setSearch(e.target.value)}
+                      />
                     </div>
                     <div className="control">
                       <button type="submit" className="button is-info">
@@ -58,8 +61,8 @@ const ProductList = () => {
           </div>
         </div>
       </div>
-      <div>
-        <table className="table is-fullwidth">
+      <div className="table-container" style={{ overflowX: 'auto' }}>
+        <table className="table is-fullwidth" style={{ minWidth: "600px" }}>
           <thead>
             <tr>
               <th>No</th>
@@ -92,7 +95,7 @@ const ProductList = () => {
                   <td>{produk.stok}</td>
                   <td>{produk.satuan}</td>
                   <td>
-                    <img src={produk.foto_produk} style={{ width: "100px", height: "100px" }} />
+                    <img src={produk.foto_produk} alt="Foto Produk" style={{ width: "100px", height: "100px" }} />
                   </td>
                   <td>{produk.diskon}</td>
                   <td>

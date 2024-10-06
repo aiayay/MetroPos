@@ -100,8 +100,8 @@ const KasirTransaksiList = () => {
         <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
       </p>
 
-      <div>
-        <table className="table is-fullwidth ml-5">
+      <div className="table-container" style={{ overflowX: 'auto' }}>
+      <table className="table is-fullwidth" style={{ minWidth: "600px" }}>
           <thead>
             <tr>
               <th>No</th>

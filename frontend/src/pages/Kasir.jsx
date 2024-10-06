@@ -18,7 +18,7 @@ export default class Kasir extends Component {
       menus: [],
       kategoriYangDipilih: "Minuman",
       keranjang: [],
-      id_member: null, // Tambahkan state id_member
+      id_member: null, 
     };
   }
 
@@ -26,8 +26,7 @@ export default class Kasir extends Component {
     axios
       .get(API_URL + "produk/kategori/" + encodeURIComponent(this.state.kategoriYangDipilih))
       .then((res) => {
-        // Filter menu untuk hanya menampilkan yang stok lebih dari 0
-        const menus = res.data.filter(menu => menu.stok > 0); // Pastikan kolom 'stok' sesuai dengan yang ada di database
+        const menus = res.data.filter(menu => menu.stok > 0);
         this.setState({ menus });
       })
       .catch((error) => {
@@ -57,8 +56,7 @@ export default class Kasir extends Component {
     axios
       .get(API_URL + "produk/kategori/" + encodeURIComponent(value))
       .then((res) => {
-        // Filter menu untuk hanya menampilkan yang stok lebih dari 0
-        const menus = res.data.filter(menu => menu.stok > 0); // Pastikan kolom 'stok' sesuai dengan yang ada di database
+        const menus = res.data.filter(menu => menu.stok > 0);
         this.setState({ menus });
       })
       .catch((error) => {
@@ -77,7 +75,7 @@ export default class Kasir extends Component {
         keranjangItems.forEach((item) => {
           const updatedKeranjang = {
             ...item,
-            id_member: id_member, // Assign member baru ke setiap item
+            id_member: id_member, 
           };
 
           axios
@@ -114,22 +112,7 @@ export default class Kasir extends Component {
           button: false,
           timer: 1500,
         });
-      } 
-      // else {
-      //   const keranjangUpdate = {
-      //     id_member: this.state.id_member || null,
-      //     id_produk: value.id_produk,
-      //     kuantitas: produkDiKeranjang.kuantitas + 1,
-      //   };
-      //   await axios.put(API_URL + "keranjang/" + produkDiKeranjang.id_keranjang, keranjangUpdate);
-      //   swal({
-      //     title: "Sukses Masuk Keranjang",
-      //     text: "Sukses Masuk Keranjang: " + value.nmproduk,
-      //     icon: "success",
-      //     button: false,
-      //     timer: 1500,
-      //   });
-      // }
+      }
     } catch (error) {
       console.error("Error saat memproses keranjang:", error);
     }
@@ -140,36 +123,30 @@ export default class Kasir extends Component {
     return (
       <div>
         <KasirLayout>
-          <KasirNavbarBawah pilihMember={this.pilihMember} /> {/* Tambahkan prop pilihMember */}
+          <KasirNavbarBawah pilihMember={this.pilihMember} />
           <Container fluid className="mt-3">
             <Row>
-              <div className="columns">
+              {/* Mengubah lebar sidebar menjadi lebih besar */}
+              <Col xs={12} md={4}>
                 <KasirSidebar changeKategori={this.changeKategori} kategoriYangDipilih={kategoriYangDipilih} />
-                <div className="column is-6">
-                  <div className="bd-notification is-primary">
-                    <div className="cell">
-                      <Col>
-                        <h1 className="text-black">Daftar Menu</h1>
-                        <hr />
-                        <Row className="menu-wrapper">
-                          {menus && menus.map((menu) => (
-                            <Menus key={menu.id_produk} menu={menu} masukKeranjang={this.masukKeranjang} />
-                          ))}
-                        </Row>
-                      </Col>
-                    </div>
-                  </div>
+              </Col>
+              {/* Mengurangi lebar kolom menu agar kategori lebih lebar */}
+              <Col xs={12} md={4}>
+                <div className="bd-notification is-primary">
+                  <h1 className="text-black">Daftar Menu</h1>
+                  <hr />
+                  <Row className="menu-wrapper">
+                    {menus && menus.map((menu) => (
+                      <Menus key={menu.id_produk} menu={menu} masukKeranjang={this.masukKeranjang} />
+                    ))}
+                  </Row>
                 </div>
-                <div className="column">
-                  <div className="bd-notification is-primary">
-                    <div className="cell">
-                      <Col>
-                        <KasirHasil keranjang={keranjang} {...this.props} getListKeranjang={this.getListKeranjang} />
-                      </Col>
-                    </div>
-                  </div>
+              </Col>
+              <Col xs={12} md={4}>
+                <div className="bd-notification is-primary">
+                  <KasirHasil keranjang={keranjang} {...this.props} getListKeranjang={this.getListKeranjang} />
                 </div>
-              </div>
+              </Col>
             </Row>
           </Container>
         </KasirLayout>

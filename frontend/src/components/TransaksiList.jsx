@@ -157,8 +157,8 @@ const TransaksiList = () => {
         />
       </p>
 
-      <div>
-        <table className="table is-fullwidth" id="my-table">
+      <div className="table-container" style={{ overflowX: 'auto' }}>
+        <table className="table is-fullwidth" style={{ minWidth: "600px" }}>
           <thead>
             <tr>
               <th>No</th>
