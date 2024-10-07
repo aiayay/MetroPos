@@ -3,6 +3,8 @@ import "../index.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
+import { IoTrash } from "react-icons/io5";
+import { FaPenToSquare } from "react-icons/fa6";
 
 const KategoriList = () => {
   const [kategori, setKategori] = useState([]);
@@ -34,32 +36,26 @@ const KategoriList = () => {
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <Link to="/kategori/add" className="button is-primary mb-2">
-                Tambah Data +
-              </Link>
-            </div>
-          </div>
-          {/* search */}
-          <div className="container mt-5">
-            <div className="columns">
-              <div className="kolom is-centered">
-                <form action="">
-                  <div className="field has-addons">
-                    <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
-                    </div>
-                    <div className="control">
-                      <button type="submit" className="button is-info">
-                        search
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+        <div className="navbar-item">
+  <div className="buttons" style={{ display: 'flex', alignItems: 'center' }}>
+    <Link to="/kategori/add" className="button is-success">
+      Tambah Data +
+    </Link>
+    <form action="" style={{ display: 'flex', marginLeft: '10px' }}>
+      <div className="field has-addons">
+        <div className="control is-expanded">
+          <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
+        </div>
+        <div className="control">
+          <button type="submit" className="button is-info">
+            search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
         </div>
       </div>
       <div className="table-container" style={{ overflowX: 'auto' }}>
@@ -83,14 +79,25 @@ const KategoriList = () => {
                   <td>{index + 1}</td>
                   <td>{kategori.id_kategori}</td>
                   <td>{kategori.nama_kategori}</td>
-                  <td>
+                  {/* <td>
                     <Link to={`/kategori/edit/${kategori.id_kategori}`} className="button is-small is-info">
                       Edit
                     </Link>
                     <button onClick={() => deleteKategori(kategori.id_kategori)} className="button is-small is-danger">
                       Delete
                     </button>
-                  </td>
+                  </td> */}
+                  <td>
+  <Link to={`/kategori/edit/${kategori.id_kategori}`} className="button is-small is-info button-spacing">
+    <FaPenToSquare className="icon-spacing" />
+  </Link>
+  <button 
+    onClick={() => deleteKategori(kategori.id_kategori)}
+    className="button is-small is-danger button-spacing"
+  >
+    <IoTrash className="icon-spacing" />
+  </button>
+</td>
                 </tr>
               ))}
           </tbody>

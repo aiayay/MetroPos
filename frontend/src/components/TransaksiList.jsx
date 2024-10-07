@@ -5,6 +5,8 @@ import { API_URL } from "../features/constants";
 import "../index.css";
 import {jsPDF} from "jspdf";
 import "jspdf-autotable";
+import { IoTrash, IoEyeOutline } from "react-icons/io5";
+
 
 const TransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
@@ -109,7 +111,7 @@ const TransaksiList = () => {
     <div className="mt-5">
       <h1 className="title">Transaksi</h1>
       <h2 className="subtitle">Barang Terjual</h2>
-      <div id="navbarBasicExample" className="navbar-menu">
+      {/* <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
@@ -140,22 +142,45 @@ const TransaksiList = () => {
             </div>
           </div>
         </div>
+      </div> */}
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-end">
+        <div className="navbar-item">
+        <div className="buttons" style={{ display: 'flex', alignItems: 'center' }}>
+        <button className="button is-success" onClick={exportPdf}>Cetak</button>
+          <form action="" style={{ display: 'flex', marginLeft: '10px' }}>
+            <div className="field has-addons">
+              <div className="control is-expanded">
+                <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
+              </div>
+              <div className="control">
+                <button type="submit" className="button is-info">
+                  search
+                </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+        </div>
       </div>
 
       <p className="tanggal">
-        Dari
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-        sampai
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </p>
+    Dari
+    <input
+        type="date"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+    />
+    Sampai
+    <input
+        type="date"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+    />
+</p>
+
 
       <div className="table-container" style={{ overflowX: 'auto' }}>
         <table className="table is-fullwidth" style={{ minWidth: "600px" }}>
@@ -187,7 +212,7 @@ const TransaksiList = () => {
                 <td>{transaksi.potongan}</td>
                 <td>{transaksi.metode_bayar}</td>
                 <td>{transaksi.tanggal}</td>
-                <td>
+                {/* <td>
                 <button
                   onClick={() => navigate(`/transaksi/detail/${transaksi.id_transaksi}`)}
                   className="button is-primary is-info"
@@ -201,7 +226,22 @@ const TransaksiList = () => {
                   >
                     Delete
                   </button>
-                </td>
+                </td> */}
+                <td>
+                <button 
+                  onClick={() => navigate(`/transaksi/detail/${transaksi.id_transaksi}`)}
+                  className="button is-small mb-2 is-primary is-info button-spacing"
+                >
+                  <IoEyeOutline className="icon-spacing" />
+                </button>
+                <button 
+                  onClick={() => deleteTransaksi(transaksi.id_transaksi)}
+                  className="button is-small is-danger button-spacing"
+                >
+                  <IoTrash className="icon-spacing" />
+                </button>
+              </td>
+
               </tr>
             ))}
           </tbody>

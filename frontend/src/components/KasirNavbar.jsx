@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
 import "../index.css";
 import logo from "../logo.jpeg";
+// import metroLogo from "../assets/images/poslogo.png";
 import { useDispatch } from 'react-redux';
 import { reset } from '../features/authSlice';
 
@@ -33,9 +34,7 @@ dispatch(reset());
     <div>
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <NavLink className="navbar-item" to="">
-            <h1>Metro Pos</h1>
-          </NavLink>
+        <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
           <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>

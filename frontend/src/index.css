@@ -39,6 +39,16 @@
     height: 1024px;
     /* height: 100%; */
   }
+  .burger-button {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
 }
 
 /* Untuk layar kecil (mobile) */
@@ -93,12 +103,23 @@
   /* height: 100% !important; */
 }
 .menu1.is-active {
-  display: block; /* Tampilkan menu saat aktif */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #333; /* Tampilkan menu saat aktif */
 
 }
 .menu.is-active {
-  display: block; /* Tampilkan menu saat aktif */
-
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px;
+  background-color: #333; /* Ganti sesuai kebutuhan */
 }
 /* .item-sidebar {
   background-color: #c081ff;
@@ -109,10 +130,16 @@
 .item-sidebar a {
   color: white !important;
   background-color: #c081ff !important;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   /* height: 100%; */
 }
 .item-sidebar a:hover {
   background-color: #36dda5 !important;
+}
+.item-sidebar a svg {
+  margin-right: 10px; /* Menambahkan jarak antara ikon dan teks */
 }
 .menu-list {
   color: white !important;
@@ -137,9 +164,29 @@
   color: white !important;
   background-color: #c081ff !important;
   /* height: 100%; */
-  padding: 0%;
+  /* padding: 0%; */
   padding-left:0%;
 }
+.kategori-title {
+  display: inline-block;
+  margin-bottom: 0; /* Hilangkan jarak vertikal */
+  align-items: center;
+}
+
+.menu1-list li {
+  display: flex;
+  align-items: center; /* Align icon dan text secara vertikal */
+  padding: 8px 0; /* Jarak antara item */
+}
+
+.menu1-list .icon {
+  font-size: 1.5em; /* Ukuran icon */
+}
+
+.menu1-list li span {
+  margin-left: 10px; /* Jarak antara icon dan text */
+}
+
 .menu1 p {
   color: white;
 }
@@ -189,6 +236,7 @@
 .ungu {
   background-color: #c081ff !important;
   /* height: 100%; */
+  outline: none !important;
 }
 .button {
   color: white !important;
@@ -197,12 +245,19 @@
   color: black !important;
 }
 .input {
-  background-color: gainsboro !important;
+  background-color: white !important; /* Pastikan background cukup terang */
   color: black !important;
 }
-.input ::placeholder {
-  color: rgb(199, 22, 22) !important;
+
+.input::placeholder {
+  color: rgba(189, 185, 185, 0.801) !important; /* Warna merah gelap */
+  opacity: 1 !important; /* Pastikan placeholder terlihat jelas */
+  font-size: 1em !important; /* Pastikan ukuran font placeholder sesuai */
+  font-weight: bold !important; /* Membuat placeholder lebih tebal */
 }
+
+
+
 .select select {
   background-color: gainsboro !important;
 }
@@ -256,12 +311,20 @@
   padding: 20px;
 }
 .menu1 {
-  border-top-right-radius: 15px; /* Membulatkan sudut kanan atas */
-  border-top-left-radius: 0; /* Tidak ada border-radius di sudut kiri atas */
-  border-bottom-right-radius: 0; /* Tidak ada border-radius di sudut kanan bawah */
+  border-top-right-radius: 15px;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
-  padding: 0px;
+  /* padding-right: 2rem !important; */
 }
+
+/* div.menu1 {
+  padding-right: 2rem !important;
+}
+.menu1.menu-active {
+  padding-right: 2rem !important;
+} */
+
 .hr {
   border-color: white;
 }
@@ -346,7 +409,7 @@
   display: flex;
   flex-wrap: wrap;
   /* justify-content: center; */
-  background-color: rgb(230, 230, 230) !important;
+  /* background-color: rgb(230, 230, 230) !important; */
 }
 
 .menu-wrapper .col {
@@ -379,6 +442,16 @@
   .menu1 {
     display: block; 
   }
+  .burger-button {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
   
 }
 
@@ -392,10 +465,12 @@
 }
 
 .bd-notification {
-  padding: 20px;
-  background-color: #f5f5f5 !important;
-  border-radius: 5px;
+  padding: 10px;
+  /* background-color: #f5f5f5 !important; */
+  /* border-radius: 5px; */
   margin-bottom: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 
 .text-black {
@@ -415,6 +490,16 @@
     height: 768px;
     /* height: 100%; */
   }
+  .burger-button {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
 }
 
 @media (max-width: 576px) {
@@ -424,6 +509,11 @@
   .menu1 {
     height: 576px;
     /* height: 100%; */
+  }
+}
+@media (min-width: 769px) {
+  aside.menu {
+    display: block !important;
   }
 }
 
@@ -563,7 +653,7 @@ textarea {
 
 .card {
   flex: 1; /* Card akan otomatis menyesuaikan ukuran */
-  min-width: 280px; /* Menentukan lebar minimum card */
+  min-width: 200px; /* Menentukan lebar minimum card */
   max-width: 350px; /* Menentukan lebar maksimum card */
   margin: 10px; /* Mengatur margin untuk card */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -584,7 +674,7 @@ textarea {
 }
 
 .overflow-auto {
-  background-color: gainsboro !important;
+  background-color: #f5f5f5 !important;
   max-height: 400px; /* Tentukan batas maksimum tinggi keranjang */
   overflow-y: auto;  /* Agar keranjang bisa di-scroll jika produk terlalu banyak */
 }
@@ -595,6 +685,39 @@ textarea {
   cursor: pointer;
   margin: 10px;
 }
+.burger-button {
+  display: none;
+}
+
+.card-footer {
+  /* padding: 10px;  */
+  border-top-left-radius: 10px; /* Round the top left corner */
+  border-top-right-radius: 10px; /* Round the top right corner */
+  background-color: inherit; 
+}
+
+.card-footer-item {
+  border-radius: 5px; /* Add a slight border-radius to the button */
+  /* padding: 10px 15px;  */
+  text-align: center; /* Center align the text */
+  /* display: inline-block; */
+  transition: background-color 0.3s; 
+}
+
+.card-footer-item:hover {
+  background-color: rgba(0, 0, 0, 0.1); 
+}
 
 
+.button-spacing {
+  margin: 0 5px; /* Margin horizontal */
+}
+.tanggal {
+  display: flex; /* Menyusun elemen dalam baris */
+  align-items: center; /* Menyusun elemen secara vertikal di tengah */
+}
 
+.tanggal input {
+  margin-left: 8px; /* Jarak di sebelah kiri input tanggal */
+  margin-right: 8px; /* Jarak di sebelah kanan input tanggal */
+}

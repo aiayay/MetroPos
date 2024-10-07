@@ -33,10 +33,7 @@ const Sidebar = () => {
         <IoMenu size={24} />
       </button>
 
-       <a href=""  onClick={toggleMenu} role="button"  className="burger-button" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-         
-          </a> 
-          <aside className={`menu pl-2 pr-2 has-shadow ${isMenuOpen ? 'is-active' : ''}`}>
+      <aside className={`menu mt-3 pl-2 pr-2 has-shadow ${isMenuOpen ? 'is-active' : ''}`}>
         <ul className="menu-list">
           <li className="item-sidebar">
             <div id="navbarBasicExample" className="navbar-menu">

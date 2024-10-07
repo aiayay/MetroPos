@@ -38,10 +38,11 @@ const KasirNavbarBawah = ({ pilihMember }) => {
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
           <div className="navbar-item">
+            <h1 className="text-black">Cari Member</h1>
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="field has-addons">
                 <div className="control is-expanded">
-                  <input type="text" className="input" placeholder="Cari member atau produk.." value={search} onChange={(event) =>{
+                  <input type="text" className="input" placeholder="Cari member.." value={search} onChange={(event) =>{
                     setSearch(event.target.value);
                   }} />
                 </div>

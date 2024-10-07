@@ -56,7 +56,7 @@ export default class KasirSidebar extends Component {
 
     return (
       <div>
-        <Col md={8} xs={12} className="mb-4">
+        <Col md={8} xs={12} className="mb-4" mt="2">
           {/* Tambahkan tombol burger menu */}
           <div className="is-hidden-desktop">
             <button
@@ -71,35 +71,30 @@ export default class KasirSidebar extends Component {
 
           {/* Sidebar kategori */}
           <aside
-            className={`menu1 pl-2 pr-2 has-shadow mt-0 ${
-              burgerMenuActive ? "" : "is-hidden-mobile"
-            }`}
-          >
-            <h1 className="text-white mr-2">Daftar Kategori</h1>
-            <hr />
-            <ul className="menu-list">
-              {kategories &&
-                kategories.map((kategori) => (
-                  <li
-                    key={kategori.id_kategori}
-                    className={
-                      kategoriYangDipilih === kategori.nama_kategori
-                        ? "item-sidebar"
-                        : ""
-                    }
-                    onClick={() =>
-                      changeKategori(kategori.nama_kategori)
-                    }
-                    style={{ cursor: "pointer" }}
-                  >
-                    <a>
-                      {this.getIcon(kategori.nama_kategori)}{" "}
-                      {kategori.nama_kategori}
-                    </a>
-                  </li>
-                ))}
-            </ul>
-          </aside>
+              className={`menu1 pl-2 pr-6 has-shadow mt-0 ${
+                burgerMenuActive ? "" : "is-hidden-mobile"
+              }`}
+              style={{ paddingTop: '20px' }} // Tambahkan padding top
+            >
+              <h1 className="">Daftar Kategori</h1>
+              <hr />
+              <ul className="menu1-list">
+                {kategories &&
+                  kategories.map((kategori) => (
+                    <li
+                      key={kategori.id_kategori}
+                      className={`d-flex align-items-center ${kategoriYangDipilih === kategori.nama_kategori ? "item-sidebar" : ""}`}
+                      onClick={() => changeKategori(kategori.nama_kategori)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <span className="icon">{this.getIcon(kategori.nama_kategori)}</span>
+                      <span className="ml-2">{kategori.nama_kategori}</span>
+                    </li>
+                  ))}
+              </ul>
+            </aside>
+
+
         </Col>
       </div>
     );

@@ -88,7 +88,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label className="form-label" htmlFor="potongan">Potongan:</label>
           <input
             type="number"
@@ -97,7 +97,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
             value={potongan}
             onChange={(e) => setPotongan(e.target.value)}
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label className="form-label" htmlFor="metode_bayar">Metode Pembayaran:</label>

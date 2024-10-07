@@ -123,32 +123,33 @@ export default class Kasir extends Component {
     return (
       <div>
         <KasirLayout>
-          <KasirNavbarBawah pilihMember={this.pilihMember} />
           <Container fluid className="mt-3">
-            <Row>
-              {/* Mengubah lebar sidebar menjadi lebih besar */}
-              <Col xs={12} md={4}>
-                <KasirSidebar changeKategori={this.changeKategori} kategoriYangDipilih={kategoriYangDipilih} />
-              </Col>
-              {/* Mengurangi lebar kolom menu agar kategori lebih lebar */}
-              <Col xs={12} md={4}>
-                <div className="bd-notification is-primary">
-                  <h1 className="text-black">Daftar Menu</h1>
-                  <hr />
-                  <Row className="menu-wrapper">
-                    {menus && menus.map((menu) => (
-                      <Menus key={menu.id_produk} menu={menu} masukKeranjang={this.masukKeranjang} />
-                    ))}
-                  </Row>
-                </div>
-              </Col>
-              <Col xs={12} md={4}>
-                <div className="bd-notification is-primary">
-                  <KasirHasil keranjang={keranjang} {...this.props} getListKeranjang={this.getListKeranjang} />
-                </div>
-              </Col>
-            </Row>
-          </Container>
+  <Row>
+    {/* Mengubah lebar sidebar menjadi lebih besar */}
+    <Col xs={12} md={3}>
+      <KasirSidebar changeKategori={this.changeKategori} kategoriYangDipilih={kategoriYangDipilih} />
+    </Col>
+    {/* Mengurangi lebar kolom menu agar kategori lebih lebar */}
+    <Col xs={12} md={5}>
+      <div className="bd-notification is-primary">
+          <KasirNavbarBawah pilihMember={this.pilihMember} />
+        {/* <h1 className="text-black">Daftar Menu</h1>
+        <hr /> */}
+        <Row className="menu-wrapper">
+          {menus && menus.map((menu) => (
+            <Menus key={menu.id_produk} menu={menu} masukKeranjang={this.masukKeranjang} />
+          ))}
+        </Row>
+      </div>
+    </Col>
+    <Col xs={12} md={4}>
+      <div className="bd-notification is-primary">
+        <KasirHasil keranjang={keranjang} {...this.props} getListKeranjang={this.getListKeranjang} />
+      </div>
+    </Col>
+  </Row>
+</Container>
+
         </KasirLayout>
       </div>
     );

@@ -16,9 +16,11 @@ const Menus = ({ menu, masukKeranjang }) => {
             variant="top"
             src={menu.foto_produk}
             style={{ 
-              height: "200px", 
-              objectFit: "cover"
-            }} // Gambar mengikuti ukuran kartu, tidak perlu border radius untuk gambar lagi
+              height: "150px", // Perkecil tinggi gambar menjadi 150px
+              width: "80%", // Perkecil lebar gambar menjadi 80% dari container
+              objectFit: "cover", // Menjaga proporsi gambar
+              margin: "0 auto" // Untuk memusatkan gambar
+            }}
           />
         )}
         <Card.Body style={{ borderRadius: "0 0 15px 15px" }}> {/* Bagian bawah kartu juga melengkung */}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
+import { IoTrash } from "react-icons/io5";
 const PembelianList = () => {
   const [pembelian, setPembelian] = useState([]);
   const [search, setSearch] = useState("");
@@ -32,32 +33,26 @@ const PembelianList = () => {
       <h2 className="subtitle">Barang Masuk</h2>
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <Link to="/pembelian/add" className="button is-primary mb-2">
-                Tambah Data +
-              </Link>
-            </div>
-          </div>
-          {/* search */}
-          <div className="container mt-5">
-            <div className="columns">
-              <div className="kolom is-centered">
-                <form action="">
-                  <div className="field has-addons">
-                    <div className="control is-expanded">
-                      <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
-                    </div>
-                    <div className="control">
-                      <button type="submit" className="button is-info">
-                        search
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
+        <div className="navbar-item">
+  <div className="buttons" style={{ display: 'flex', alignItems: 'center' }}>
+    <Link to="/pembelian/add" className="button is-success">
+      Tambah Data +
+    </Link>
+    <form action="" style={{ display: 'flex', marginLeft: '10px' }}>
+      <div className="field has-addons">
+        <div className="control is-expanded">
+          <input type="text" className="input" placeholder="cari.." onChange={(e) => setSearch(e.target.value)} />
+        </div>
+        <div className="control">
+          <button type="submit" className="button is-info">
+            search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
         </div>
       </div>
       <div className="table-container" style={{ overflowX: 'auto' }}>
@@ -89,14 +84,23 @@ const PembelianList = () => {
                   <td>{pembelian.kuantitas}</td>
                   <td>{pembelian.harga_beli}</td>
                   <td>{pembelian.tanggal}</td>
-                  <td>
-                    {/* <Link to={`/pembelian/edit/${pembelian.id_pembelian}`} className="button is-small is-info">
-                      Edit
-                    </Link> */}
+                  {/* <td>
+               
                     <button onClick={() => deletePembelian(pembelian.id_pembelian)} className="button is-small is-danger">
                       Delete
                     </button>
-                  </td>
+                  </td> */}
+                  <td>
+  {/* <Link to={`/supplier/edit/${s.id_supplier}`} className="button is-small is-info button-spacing">
+    <FaPenToSquare className="icon-spacing" />
+  </Link> */}
+  <button 
+    onClick={() => deletePembelian(pembelian.id_pembelian)}
+    className="button is-small is-danger button-spacing"
+  >
+    <IoTrash className="icon-spacing" />
+  </button>
+</td>
                 </tr>
               ))}
           </tbody>

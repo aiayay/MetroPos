@@ -24,9 +24,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <NavLink className="navbar-item" to="/dashboard">
-            <h1>Metro Pos</h1>
-          </NavLink>
+        <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
           {/* <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
