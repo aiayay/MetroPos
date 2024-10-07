@@ -31,7 +31,6 @@ const KasirNavbarBawah = ({ pilihMember }) => {
   };
 
   // Fungsi untuk menambahkan member ke keranjang
- 
 
   return (
     <div>
@@ -42,9 +41,15 @@ const KasirNavbarBawah = ({ pilihMember }) => {
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="field has-addons">
                 <div className="control is-expanded">
-                  <input type="text" className="input" placeholder="Cari member.." value={search} onChange={(event) =>{
-                    setSearch(event.target.value);
-                  }} />
+                  <input
+                    type="text"
+                    className="input"
+                    placeholder="Cari member.."
+                    value={search}
+                    onChange={(event) => {
+                      setSearch(event.target.value);
+                    }}
+                  />
                 </div>
                 {/* <div className="control">
                   <button type="submit" className="button is-info">
@@ -54,7 +59,7 @@ const KasirNavbarBawah = ({ pilihMember }) => {
               </div>
             </form>
             <div className="buttons">
-              <Link to="/kasirmember/add" className="button ungu mb-2">
+              <Link to="/kasirmember/add" className="button ungu mb-2  is-light">
                 Tambah Member
               </Link>
               <Link to="/kasirtransaksi" className="button is-success mb-2">
@@ -92,7 +97,9 @@ const KasirNavbarBawah = ({ pilihMember }) => {
                     <td>{member.alamat}</td>
                     <td>{member.jk}</td>
                     <td>
-                      <button className="button is-primary" onClick={() => pilihMember(member.id_member)}>Pilih</button>
+                      <button className="button is-primary" onClick={() => pilihMember(member.id_member)}>
+                        Pilih
+                      </button>
                     </td>
                   </tr>
                 ))}

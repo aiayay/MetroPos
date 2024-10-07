@@ -35,9 +35,21 @@ const KasirAddMember = () => {
     <div className="mt-5">
       <h1 className="title ml-5">Member</h1>
       <h2 className="subtitle ml-5">Tambah Member</h2>
-      <Link to="/kasir" className="button is-danger mb-2 ml-5">
+      {/* <Link to="/kasir" className="button is-danger mb-2 ml-5">
         Kembali
-      </Link>
+      </Link> */}
+      <nav className="breadcrumb ml-5" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <a href="/kasir">Kembali</a>
+            </li>
+            <li className="is-active">
+              <a href="#" aria-current="page">
+                Tambah Member
+              </a>
+            </li>
+          </ul>
+        </nav>
       <div className="card is-shadowless">
         <div className="card-content has-background-light">
           <div className="content">
@@ -63,28 +75,30 @@ const KasirAddMember = () => {
                 </div>
               </div>
               <div className="field">
-                <label className="label">Jenis Kelamin</label>
-                <div className="control">
-                  <label className="radio">
-                    <input type="radio" name="jk" value="Laki-laki" onChange={(e) => setJk(e.target.value)} />
-                    Laki-laki
-                  </label>
-                  <label className="radio">
-                    <input type="radio" name="jk" value="Perempuan" onChange={(e) => setJk(e.target.value)} />
-                    Perempuan
-                  </label>
-                </div>
-              </div>
-              <div className="field">
-                <div className="control">
-                  <button type="submit" className="button is-success">
-                    Simpan
-                  </button>
-                  <Link to="/kasir" className="button is-danger mb-2">
-                    Cancel
-                  </Link>
-                </div>
-              </div>
+  <label className="label">Jenis Kelamin</label>
+  <div className="control">
+    <label className="radio mr-3">
+      <input type="radio" name="jk" value="Laki-laki" onChange={(e) => setJk(e.target.value)} />
+      Laki-laki
+    </label>
+    <label className="radio">
+      <input type="radio" name="jk" value="Perempuan" onChange={(e) => setJk(e.target.value)} />
+      Perempuan
+    </label>
+  </div>
+</div>
+
+<div className="field">
+  <div className="control">
+    <button type="submit" className="button is-success mr-3">
+      Simpan
+    </button>
+    <Link to="/kasir" className="button is-danger mb-2">
+      Cancel
+    </Link>
+  </div>
+</div>
+
             </form>
           </div>
         </div>

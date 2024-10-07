@@ -17,7 +17,7 @@ const Menus = ({ menu, masukKeranjang }) => {
             src={menu.foto_produk}
             style={{ 
               height: "150px", // Perkecil tinggi gambar menjadi 150px
-              width: "80%", // Perkecil lebar gambar menjadi 80% dari container
+              width: "100%", // Perkecil lebar gambar menjadi 80% dari container
               objectFit: "cover", // Menjaga proporsi gambar
               margin: "0 auto" // Untuk memusatkan gambar
             }}

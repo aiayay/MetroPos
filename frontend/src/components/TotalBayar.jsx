@@ -76,6 +76,21 @@ const TotalBayar = ({ keranjang, tanggal }) => {
       </div>
 
       <form onSubmit={submitTotalBayar}>
+      <div className="form-group">
+          <label className="form-label" htmlFor="metode_bayar">Metode Pembayaran:</label>
+          <select
+            name="metode_bayar"
+            className="form-control"
+            value={metode_bayar}
+            onChange={(e) => setMetode_bayar(e.target.value)}
+            required
+          >
+            <option value="" disabled>Pilih Metode</option>
+            <option value="cash">Cash</option>
+            <option value="kartu">Kartu</option>
+            <option value="transfer">Transfer</option>
+          </select>
+        </div>
         <div className="form-group">
           <label className="form-label" htmlFor="bayar">Bayar:</label>
           <input
@@ -99,21 +114,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
           />
         </div> */}
 
-        <div className="form-group">
-          <label className="form-label" htmlFor="metode_bayar">Metode Pembayaran:</label>
-          <select
-            name="metode_bayar"
-            className="form-control"
-            value={metode_bayar}
-            onChange={(e) => setMetode_bayar(e.target.value)}
-            required
-          >
-            <option value="" disabled>Pilih Metode</option>
-            <option value="cash">Cash</option>
-            <option value="kartu">Kartu</option>
-            <option value="transfer">Transfer</option>
-          </select>
-        </div>
+       
 
         {/* Informasi Kembalian */}
         <div className="form-group">

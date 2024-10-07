@@ -34,7 +34,7 @@ dispatch(reset());
     <div>
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-        <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
+        <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="130" height="80" className="ml-3" />
           <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
