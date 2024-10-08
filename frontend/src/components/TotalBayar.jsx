@@ -76,7 +76,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
       </div>
 
       <form onSubmit={submitTotalBayar}>
-      <div className="form-group">
+        <div className="form-group">
           <label className="form-label" htmlFor="metode_bayar">Metode Pembayaran:</label>
           <select
             name="metode_bayar"
@@ -91,6 +91,7 @@ const TotalBayar = ({ keranjang, tanggal }) => {
             <option value="transfer">Transfer</option>
           </select>
         </div>
+
         <div className="form-group">
           <label className="form-label" htmlFor="bayar">Bayar:</label>
           <input
@@ -103,20 +104,6 @@ const TotalBayar = ({ keranjang, tanggal }) => {
           />
         </div>
 
-        {/* <div className="form-group">
-          <label className="form-label" htmlFor="potongan">Potongan:</label>
-          <input
-            type="number"
-            className="form-control"
-            name="potongan"
-            value={potongan}
-            onChange={(e) => setPotongan(e.target.value)}
-          />
-        </div> */}
-
-       
-
-        {/* Informasi Kembalian */}
         <div className="form-group">
           <label className="form-label" htmlFor="kembalian">Kembalian:</label>
           <input
@@ -125,15 +112,15 @@ const TotalBayar = ({ keranjang, tanggal }) => {
             name="kembalian"
             value={`Rp ${numberWithCommas(kembalian)}`} // Tampilkan kembalian
             readOnly
+            disabled={metode_bayar !== "cash"} // Disable jika metode bayar bukan cash
           />
         </div>
 
         <div className="is-flex is-justify-content-center">
-  <button type="submit" className="button is-success">
-    Proses Pembayaran
-  </button>
-</div>
-
+          <button type="submit" className="button is-success">
+            Proses Pembayaran
+          </button>
+        </div>
       </form>
     </div>
   );

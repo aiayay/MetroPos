@@ -39,12 +39,12 @@ const Sidebar = () => {
             <div id="navbarBasicExample" className="navbar-menu">
               <div className="navbar-end">
                 <div className="navbar-item">
-                  <div className="buttons">
-                    {/* Menampilkan foto user */}
+                  {/* <div className="buttons">
+             
                     <img src={userProfilePic} width="50" height="50" alt="Profile" className="profile-pic" />
-                    {/* Menampilkan nama user */}
+              
                     <h1 className="text-white ml-2">{userName}</h1>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -97,6 +97,7 @@ const Sidebar = () => {
               Pembelian
             </NavLink>
           </li>
+          <br /><br /><br />
           <li className="item-sidebar">
             <NavLink onClick={logout}>
               <IoLogOut />

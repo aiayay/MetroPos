@@ -148,17 +148,19 @@ const Welcome = () => {
       </div>
 
       <br />
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h3 className="title">Grafik Pendapatan</h3>
-        <ResponsiveContainer width="100%" aspect={3}>
-          <BarChart data={transaksi}>
-            <XAxis dataKey="tanggal" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="total_bayar" fill="#42921C" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '80%', margin: '0 auto' }}>
+  <h3 className="title">Grafik Pendapatan</h3>
+  <ResponsiveContainer width="80%" height={300}>
+    <BarChart data={transaksi}>
+      <XAxis dataKey="tanggal" />
+      <YAxis />
+      <Tooltip />
+      <Bar dataKey="total_bayar" fill="#42921C" />
+    </BarChart>
+  </ResponsiveContainer>
+</div>
+
+
     </div>
   );
 };

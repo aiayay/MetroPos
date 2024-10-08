@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 import "../index.css";
-import { useNavigate } from "react-router-dom";
-import { IoTrash, IoEyeOutline } from "react-icons/io5";
 import {jsPDF} from "jspdf";
 import "jspdf-autotable";
+import { IoTrash, IoEyeOutline } from "react-icons/io5";
+
 
 const KasirTransaksiList = () => {
   const [transaksi, setTransaksi] = useState([]);
@@ -21,6 +21,10 @@ const KasirTransaksiList = () => {
 
   const getTransaksi = async () => {
     const response = await axios.get(API_URL + "transaksi");
+
+    const sortedTransaksi = response.data.sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
+  
+    
     setTransaksi(response.data);
   };
 
@@ -28,6 +32,42 @@ const KasirTransaksiList = () => {
     await axios.delete(API_URL + "transaksi/" + id_transaksi);
     getTransaksi();
   };
+
+  const handleFilter = (transaksi) => {
+    let filtered = transaksi;
+
+    // Filter berdasarkan nama member yang dicari
+    if (search) {
+      filtered = filtered.filter((item) =>
+        item.nama_member.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    // Filter berdasarkan rentang tanggal
+    if (startDate && endDate) {
+      filtered = filtered.filter((item) => {
+        const transaksiDate = new Date(item.tanggal);
+        return transaksiDate >= new Date(startDate) && transaksiDate <= new Date(endDate);
+      });
+    }
+
+    return filtered;
+  };
+
+  const createHeaders = keys => {
+    const result = [];
+
+    for(let key in keys){
+      result.push({
+        id: key,
+        name: key,
+        prompt: key,
+      }
+   
+      )
+    }
+    return result;
+  }
   const exportPdf = async () => {
     const doc = new jsPDF({ orientation: "landscape" });
   
@@ -64,25 +104,8 @@ const KasirTransaksiList = () => {
     doc.save("data.pdf");
   };
   
+  
 
-  const handleFilter = (transaksi) => {
-    let filtered = transaksi;
-
-    // Filter berdasarkan nama member yang dicari
-    if (search) {
-      filtered = filtered.filter((item) => item.nama_member.toLowerCase().includes(search.toLowerCase()));
-    }
-
-    // Filter berdasarkan rentang tanggal
-    if (startDate && endDate) {
-      filtered = filtered.filter((item) => {
-        const transaksiDate = new Date(item.tanggal);
-        return transaksiDate >= new Date(startDate) && transaksiDate <= new Date(endDate);
-      });
-    }
-
-    return filtered;
-  };
 
   return (
     <div className="mt-5">
@@ -162,7 +185,7 @@ const KasirTransaksiList = () => {
             </tr>
           </thead>
           <tbody>
-            {handleFilter(transaksi).map((transaksi, index) => (
+          {handleFilter(transaksi) .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((transaksi, index) => (
               <tr key={transaksi.id_transaksi}>
                 <td>{index + 1}</td>
                 <td>{transaksi.id_transaksi}</td>

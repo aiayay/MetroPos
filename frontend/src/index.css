@@ -34,6 +34,9 @@
   .navbar h1 {
     font-size: 24px;
   }
+  /* .navbar h6 {
+    font-size: 24px;
+  } */
   .menu1 {
     height: 1024px;
     /* height: 100%; */
@@ -59,6 +62,9 @@
   .navbar h1 {
     font-size: 20px;
   }
+  /* .navbar h6 {
+    font-size: 20px;
+  } */
   .menu1 {
     height: 600px;
     /* height: 100%; */
@@ -80,9 +86,13 @@
 }
 
 .navbar h1,
-.navbar h2 {
+.navbar {
   color: #8127db;
   font-size: 30px;
+}
+.navbar p{
+  color: #8127db;
+  font-size: 20px;
 }
 .box .login {
   background-color: #36dda5;
@@ -480,6 +490,9 @@
   h1 {
     font-size: 1.5rem;
   }
+  /* h2 {
+    font-size: 1.5rem;
+  } */
   .menu1 {
     height: 768px;
     /* height: 100%; */
@@ -500,6 +513,9 @@
   h1 {
     font-size: 1.25rem;
   }
+  /* h2 {
+    font-size: 1.25rem;
+  } */
   .menu1 {
     height: 576px;
     /* height: 100%; */
@@ -722,3 +738,18 @@ textarea {
 .button.is-success {
   margin-right: 15px;
 }
+/* .profile-pic {
+  width: 50px;   
+  height: 100%;  
+  border-radius: 50%; 
+  object-fit: cover;
+  border: 2px solid #fff;  
+} */
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  object-fit: cover; /* Menjaga proporsi gambar */
+  border-radius: 0;  /* Menghilangkan efek bulat */
+  border: 2px solid #fff;  
+}
+

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../index.css";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
 
@@ -20,53 +20,31 @@ const Navbar = () => {
     setDropdownActive(!isDropdownActive);
   };
 
+  // Pastikan user login tersedia sebelum menampilkan data user
+  const userName = user ? user.nama_lengkap : "Guest";
+  const userProfilePic = user && user.foto ? user.foto : "assets/images/default_profile.png"; // Gunakan foto default jika user tidak memiliki foto
+
   return (
     <div>
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-        <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
-          {/* <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a> */}
+          <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
         </div>
 
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-end">
-            {/* <div className="navbar-item has-dropdown is-hoverable">
-              {user && (
-                <div onClick={toggleDropdown} className={`dropdown ${isDropdownActive ? 'is-active' : ''}`}>
-                  <div className="dropdown-trigger">
-                    <img src={user.foto || "default.jpg"} width="50" height="28" alt="" className="profile-pic" />
-                  </div>
-
-                  <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div className="dropdown-content">
-                      <div className="dropdown-item">
-                        <strong>{user.nama_lengkap}</strong>
-                      </div>
-                      <hr className="dropdown-divider" />
-                     
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div> */}
-             {/* <button onClick={logout} className="button is-danger">
-                        Logout
-                      </button> */}
-
-                      <div className="buttons">
-                {/* Menampilkan tanggal otomatis */}
-                {/* <h2>{today}</h2> */}
-                {/* <h1>nama</h1>
-                <img src={logo} width="50" height="28" alt="" className="profile-pic" /> */}
-                {/* Tombol Logout */}
-                <button className="button is-danger mr-5" onClick={logout}>
-                  Logout
-                </button>
+            <div className="navbar-item">
+              <div className="buttons">
+                {/* Menampilkan foto dan nama user */}
+                <img src={userProfilePic} width="50" height="50%" alt="Profile" className="profile-pic" />
+                <p className="ml-2">{userName}</p>
               </div>
+            </div>
+            {/* <div className="navbar-item">
+              <button className="button is-danger" onClick={logout}>
+                Logout
+              </button>
+            </div> */}
           </div>
         </div>
       </nav>
