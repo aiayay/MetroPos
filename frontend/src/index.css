@@ -753,3 +753,30 @@ textarea {
   border: 2px solid #fff;  
 }
 
+/* index.css or navbar.css */
+
+/* Ensure the navbar has a consistent height */
+.navbar {
+  height: 60px; /* Set a fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px; /* Adjust padding if necessary */
+  background-color: #36dda5;
+  /* Additional styles here */
+}
+
+/* Ensure that the side navigation isn't too wide */
+.navbar-side {
+  width: 250px; /* Adjust this as necessary */
+  min-width: 200px; /* Ensure a minimum width */
+  max-width: 250px; /* Ensure it doesn't exceed this */
+  background-color: #8127db;
+}
+
+/* If the size changes on certain pages, override it */
+.navbar.large {
+  width: 100%; /* Ensure full width if needed */
+}
+
+
