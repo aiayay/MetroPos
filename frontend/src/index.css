@@ -1,327 +1,406 @@
 .hero {
-  background-color: #c081ff;
-  height: 100%;
+    background-color: #c081ff;
+    height: 100%;
 }
+
 .column {
-  background-color: white;
+    background-color: white;
 }
 
 .label {
-  color: black;
+    color: black;
 }
+
+
 /* .box {
   background-color: white;
 } */
+
+
 /* Untuk layar besar (desktop) */
+
 @media (min-width: 1024px) {
-  .container {
-    max-width: 1200px;
-    /* display: flex; */
-  }
-  .menu1 {
-    height: 1024px;
-    /* height: 100%; */
-  }
+    .container {
+        max-width: 1200px;
+        /* display: flex; */
+    }
+    .menu1 {
+        height: 1024px;
+        /* height: 100%; */
+    }
 }
+
+
 /* .aside {
   height: 100%;
 } */
+
+
 /* Untuk tablet */
-@media (max-width: 1024px) {
-  .container {
-    max-width: 768px;
-  }
-  .navbar h1 {
-    font-size: 24px;
-  }
-  /* .navbar h6 {
-    font-size: 24px;
-  } */
-  .menu1 {
-    height: 1024px;
-    /* height: 100%; */
-  }
-  .burger-button {
-    display: block;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-  }
+
+@media (max-width: 1000px) {
+    .container {
+        max-width: 768px;
+    }
+    .navbar h1 {
+        font-size: 84px;
+    }
+    .navbar h6 {
+        font-size: 24px;
+    }
+    .menu1 {
+        height: 1024px;
+        /* height: 100%; */
+    }
+    .burger-button {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
 }
 
+
 /* Untuk layar kecil (mobile) */
+
 @media (max-width: 600px) {
-  .container {
-    max-width: 100%;
-    padding: 10px;
-  }
-  .navbar h1 {
-    font-size: 20px;
-  }
-  /* .navbar h6 {
+    .container {
+        max-width: 100%;
+        padding: 10px;
+    }
+    .navbar h1 {
+        font-size: 40px;
+    }
+    /* .navbar h6 {
     font-size: 20px;
   } */
-  .menu1 {
-    height: 600px;
-    /* height: 100%; */
-  }
+    .menu1 {
+        height: 600px;
+        /* height: 100%; */
+    }
 }
 
 @media only screen and (max-height: 1000px) {
-  .hasil {
-    height: 650px !important;
-  }
-  .menu {
-    height: 800px !important;
-    /* height: 100%; */
-  }
-  .menu1 {
-    height: 1000px;
-    /* height: 100%; */
-  }
+    .hasil {
+        height: 650px !important;
+    }
+    .menu {
+        height: 800px !important;
+        height: 100%;
+    }
+    .menu1 {
+        height: 1000px;
+        height: 100%;
+    }
 }
 
 .navbar h1,
 .navbar {
-  color: #8127db;
-  font-size: 30px;
+    color: #8127db;
+    font-size: 30px;
 }
-.navbar p{
-  color: #8127db;
-  font-size: 20px;
+
+.navbar p {
+    color: #8127db;
+    font-size: 20px;
 }
+
 .box .login {
-  background-color: #36dda5;
-  font-weight: 500;
-  font-size: large;
+    background-color: #36dda5;
+    font-weight: 500;
+    font-size: large;
 }
+
 .menu {
-  color: white !important;
-  background-color: #c081ff !important;
-  display: none;
-  height: 100% !important;
+    color: white !important;
+    background-color: #c081ff !important;
+    display: none;
+    height: 100% !important;
 }
+
 .menu1 {
-  color: white !important;
-  background-color: #c081ff !important;
-  display: none;
-  /* height: 100% !important; */
+    color: white !important;
+    background-color: #c081ff !important;
+    display: none;
+    /* height: 100% !important; */
 }
+
 .menu1.is-active {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 250px;
-  background-color: #333; /* Tampilkan menu saat aktif */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #333;
+    /* Tampilkan menu saat aktif */
 }
+
 .menu.is-active {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 250px;
-  background-color: #333; /* Ganti sesuai kebutuhan */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background-color: #333;
+    /* Ganti sesuai kebutuhan */
 }
+
+
 /* .item-sidebar {
   background-color: #c081ff;
 } */
+
 .navbar {
-  background-color: #36dda5 !important;
+    background-color: #36dda5 !important;
 }
+
 .item-sidebar a {
-  color: white !important;
-  background-color: #c081ff !important;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  /* height: 100%; */
+    color: white !important;
+    background-color: #c081ff !important;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    /* height: 100%; */
 }
+
 .item-sidebar a:hover {
-  background-color: #36dda5 !important;
+    background-color: #36dda5 !important;
 }
+
 .item-sidebar a svg {
-  margin-right: 10px; /* Menambahkan jarak antara ikon dan teks */
+    margin-right: 10px;
+    /* Menambahkan jarak antara ikon dan teks */
 }
+
 .menu-list {
-  color: white !important;
-  background-color: #c081ff !important;
-  /* height: 100%; */
+    color: white !important;
+    background-color: #c081ff !important;
+    /* height: 100%; */
 }
+
 .menu-list a {
-  color: white !important;
-  background-color: #c081ff !important;
-  /* height: 100%; */
-  /* padding-left: 0%; */
+    color: white !important;
+    background-color: #c081ff !important;
+    /* height: 100%; */
+    /* padding-left: 0%; */
 }
+
 .menu p {
-  color: white;
+    color: white;
 }
+
 .menu1-list {
-  color: white !important;
-  background-color: #c081ff !important;
-  /* height: 100%; */
+    color: white !important;
+    background-color: #c081ff !important;
+    /* height: 100%; */
 }
+
 .menu1-list a {
-  color: white !important;
-  background-color: #c081ff !important;
-  /* height: 100%; */
-  /* padding: 0%; */
-  padding-left: 0%;
+    color: white !important;
+    background-color: #c081ff !important;
+    /* height: 100%; */
+    /* padding: 0%; */
+    padding-left: 0%;
 }
+
 .kategori-title {
-  display: inline-block;
-  margin-bottom: 0; /* Hilangkan jarak vertikal */
-  align-items: center;
+    display: inline-block;
+    margin-bottom: 0;
+    /* Hilangkan jarak vertikal */
+    align-items: center;
 }
 
 .menu1-list li {
-  display: flex;
-  align-items: center; /* Align icon dan text secara vertikal */
-  padding: 8px 0; /* Jarak antara item */
+    display: flex;
+    align-items: center;
+    /* Align icon dan text secara vertikal */
+    padding: 8px 0;
+    /* Jarak antara item */
 }
 
 .menu1-list .icon {
-  font-size: 1.5em; /* Ukuran icon */
+    font-size: 1.5em;
+    /* Ukuran icon */
 }
 
 .menu1-list li span {
-  margin-left: 10px; /* Jarak antara icon dan text */
+    margin-left: 10px;
+    /* Jarak antara icon dan text */
 }
 
 .menu1 p {
-  color: white;
+    color: white;
 }
+
 .title {
-  color: black !important;
+    color: black !important;
 }
+
 .subtitle {
-  color: black;
+    color: black;
 }
+
 .table {
-  flex: 1 0 auto;
-  background-color: white !important;
-  width: 100% !important; /* Agar tabel menyesuaikan lebar kontennya */
-  min-width: 600px !important;
-  border-collapse: collapse !important;
-  overflow-x: auto !important;
+    flex: 1 0 auto;
+    background-color: white !important;
+    width: 100% !important;
+    /* Agar tabel menyesuaikan lebar kontennya */
+    min-width: 600px !important;
+    border-collapse: collapse !important;
+    overflow-x: auto !important;
 }
+
 .table-container {
-  overflow-x: auto !important; /* Tambahkan scroll horizontal */
-  margin: 20px 0; /* Margin untuk spasi di atas dan bawah */
-  -webkit-overflow-scrolling: touch !important;
-  width: 100%;
-  margin-bottom: 20px;
-  display: flex;
+    overflow-x: auto !important;
+    /* Tambahkan scroll horizontal */
+    margin: 20px 0;
+    /* Margin untuk spasi di atas dan bawah */
+    -webkit-overflow-scrolling: touch !important;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
 }
+
 .table img {
-  max-width: 100%;
-  height: auto;
+    max-width: 100%;
+    height: auto;
 }
+
 .table tr,
 .table th,
 .table td {
-  color: black !important;
-  text-align: left;
-  padding: 8px; /* Add some padding */
-  text-align: left; /* Align text */
-  border: 1px solid #ddd; /* Add border */
-  overflow-x: auto !important;
+    color: black !important;
+    text-align: left;
+    padding: 8px;
+    /* Add some padding */
+    text-align: left;
+    /* Align text */
+    border: 1px solid #ddd;
+    /* Add border */
+    overflow-x: auto !important;
 }
+
 .box h1,
 .box label {
-  color: black !important;
+    color: black !important;
 }
+
 .table td {
-  color: black !important;
+    color: black !important;
 }
+
 .ungu {
-  background-color: #c081ff !important;
-  /* height: 100%; */
-  outline: #c081ff !important;
+    background-color: #c081ff !important;
+    /* height: 100%; */
+    outline: #c081ff !important;
 }
+
 .button {
-  color: white !important;
+    color: white !important;
 }
+
 .tanggal {
-  color: black !important;
+    color: black !important;
 }
+
 .input {
-  background-color: white !important; /* Pastikan background cukup terang */
-  color: black !important;
+    background-color: white !important;
+    /* Pastikan background cukup terang */
+    color: black !important;
 }
 
 .input::placeholder {
-  color: rgba(189, 185, 185, 0.801) !important; /* Warna merah gelap */
-  opacity: 1 !important; /* Pastikan placeholder terlihat jelas */
-  font-size: 1em !important; /* Pastikan ukuran font placeholder sesuai */
-  font-weight: bold !important; /* Membuat placeholder lebih tebal */
+    color: rgba(189, 185, 185, 0.801) !important;
+    /* Warna merah gelap */
+    opacity: 1 !important;
+    /* Pastikan placeholder terlihat jelas */
+    font-size: 1em !important;
+    /* Pastikan ukuran font placeholder sesuai */
+    font-weight: bold !important;
+    /* Membuat placeholder lebih tebal */
 }
 
 .select select {
-  background-color: gainsboro !important;
+    background-color: gainsboro !important;
 }
+
 .form-border {
-  border: 5px solid #36dda5;
-  border-radius: 8px;
+    border: 5px solid #36dda5;
+    border-radius: 8px;
 }
+
 .row {
-  display: flex;
+    display: flex;
 }
+
 .p {
-  color: black !important;
+    color: black !important;
 }
+
 .h1 {
-  color: black !important;
+    color: black !important;
 }
+
+
 /* .item-sidebar {
   background-color: #36dda5;
   color: white;
 } */
 
 .keranjang-wrapper {
-  position: relative;
-  right: 0;
+    position: relative;
+    right: 0;
 }
+
 .text-black {
-  color: black !important;
+    color: black !important;
 }
+
 .text-white {
-  color: white !important;
-  text-align: center;
+    color: white !important;
+    text-align: center;
 }
+
 .card-body {
-  background-color: lightgray !important;
+    background-color: lightgray !important;
 }
+
 .card-body .card-title,
 .card-body .card-text {
-  color: black !important;
-  text-align: center;
+    color: black !important;
+    text-align: center;
 }
+
 .flex-container {
-  border-radius: 15px;
-  overflow: hidden;
+    border-radius: 15px;
+    overflow: hidden;
 }
+
 .menu {
-  border-top-right-radius: 15px; /* Membulatkan sudut kanan atas */
-  border-top-left-radius: 0; /* Tidak ada border-radius di sudut kiri atas */
-  border-bottom-right-radius: 0; /* Tidak ada border-radius di sudut kanan bawah */
-  border-bottom-left-radius: 0;
-  padding: 20px;
+    border-top-right-radius: 15px;
+    /* Membulatkan sudut kanan atas */
+    border-top-left-radius: 0;
+    /* Tidak ada border-radius di sudut kiri atas */
+    border-bottom-right-radius: 0;
+    /* Tidak ada border-radius di sudut kanan bawah */
+    border-bottom-left-radius: 0;
+    padding: 20px;
 }
+
 .menu1 {
-  border-top-right-radius: 15px;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  /* padding-right: 2rem !important; */
+    border-top-right-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    /* padding-right: 2rem !important; */
 }
+
 
 /* div.menu1 {
   padding-right: 2rem !important;
@@ -331,48 +410,64 @@
 } */
 
 .hr {
-  border-color: white;
+    border-color: white;
 }
+
 .profile-pic {
-  width: 50px; /* Ukuran lebar gambar */
-  height: 50px; /* Ukuran tinggi gambar */
-  border-radius: 50%; /* Membuat gambar menjadi bulat */
-  object-fit: cover; /* Memastikan gambar tidak terdistorsi */
-  border: 2px solid #fff; /* Menambahkan border putih (opsional) */
+    width: 50px;
+    /* Ukuran lebar gambar */
+    height: 50px;
+    /* Ukuran tinggi gambar */
+    border-radius: 50%;
+    /* Membuat gambar menjadi bulat */
+    object-fit: cover;
+    /* Memastikan gambar tidak terdistorsi */
+    border: 2px solid #fff;
+    /* Menambahkan border putih (opsional) */
 }
+
 .tbody {
-  background-color: white !important;
-  overflow-x: auto !important;
+    background-color: white !important;
+    overflow-x: auto !important;
 }
+
 .kategori-aktif {
-  background-color: #36dda5 !important;
-  color: white !important;
+    background-color: #36dda5 !important;
+    color: white !important;
 }
 
 .btn-success {
-  background-color: #36dda5;
+    background-color: #36dda5;
 }
 
 .modal-content {
-  color: black; /* Ubah sesuai kebutuhan */
+    color: black;
+    /* Ubah sesuai kebutuhan */
 }
+
 .bootstrap-modal .modal-content {
-  background-color: white !important;
-  color: black !important;
+    background-color: white !important;
+    color: black !important;
 }
+
 .modal-card-body {
-  background-color: white !important;
+    background-color: white !important;
 }
+
 .modal-card-head {
-  background-color: white !important;
+    background-color: white !important;
 }
+
 .modal-card-foot {
-  background-color: white !important;
+    background-color: white !important;
 }
+
 .modal-card-title {
-  color: black !important;
-  text-align: center;
+    color: black !important;
+    text-align: center;
 }
+
+
 /* .menu {
   position: absolute;
   top: 0; 
@@ -387,176 +482,192 @@
 } */
 
 .card {
-  margin: 2px;
+    margin: 2px;
 }
 
 @media only screen and (max-height: 1000px) {
-  .hasil {
-    background-color: rgb(230, 230, 230) !important;
-    height: 650px;
-  }
-
-  /* .menu-wrapper {
+    .hasil {
+        background-color: rgb(230, 230, 230) !important;
+        height: 650px;
+    }
+    /* .menu-wrapper {
     height: 800px; 
     display: flex;
      flex-wrap: wrap;
   }
    */
-  /* .menu-wrapper .col-md-4 {
+    /* .menu-wrapper .col-md-4 {
    
     margin-bottom: 20px;
   } */
 }
 
+
 /* responsive */
 
 .menu-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  /* justify-content: center; */
-  /* background-color: rgb(230, 230, 230) !important; */
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    /* background-color: rgb(230, 230, 230) !important; */
 }
 
 .menu-wrapper .col {
-  /* flex-basis: 100%; */
-  /* max-width: 100%; */
-  margin-bottom: 15px;
+    /* flex-basis: 100%; */
+    /* max-width: 100%; */
+    margin-bottom: 15px;
 }
 
 @media (min-width: 768px) {
-  .menu-wrapper .col {
-    flex-basis: 50%;
-    max-width: 50%;
-    background-color: rgb(230, 230, 230) !important;
-  }
-  .table-container {
-    overflow-x: auto; /* Aktifkan scroll di tampilan kecil */
-    overflow-x: auto !important;
-  }
-  .burger {
-    display: none; /* Sembunyikan tombol burger di layar besar */
-  }
-  table {
-    min-width: 600px !important;
-    overflow-x: auto !important;
-    /* width: 100%;  */
-  }
-  .menu {
-    display: block; /* Tampilkan menu di layar besar */
-  }
-  .menu1 {
-    display: block;
-  }
-  .burger-button {
-    display: block;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-  }
+    .menu-wrapper .col {
+        flex-basis: 50%;
+        max-width: 50%;
+        background-color: rgb(230, 230, 230) !important;
+    }
+    .table-container {
+        overflow-x: auto;
+        /* Aktifkan scroll di tampilan kecil */
+        overflow-x: auto !important;
+    }
+    .burger {
+        display: none;
+        /* Sembunyikan tombol burger di layar besar */
+    }
+    table {
+        min-width: 600px !important;
+        overflow-x: auto !important;
+        /* width: 100%;  */
+    }
+    .menu {
+        display: block;
+        /* Tampilkan menu di layar besar */
+    }
+    .menu1 {
+        display: block;
+    }
+    .burger-button {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
 }
 
+
 /* Untuk layar sangat besar */
+
 @media (min-width: 992px) {
-  .menu-wrapper .col {
-    /* flex-basis: 33.33%;
+    .menu-wrapper .col {
+        /* flex-basis: 33.33%;
     max-width: 33.33%; */
-    background-color: rgb(230, 230, 230) !important;
-  }
+        background-color: rgb(230, 230, 230) !important;
+    }
 }
 
 .bd-notification {
-  padding: 10px;
-  /* background-color: #f5f5f5 !important; */
-  /* border-radius: 5px; */
-  margin-bottom: 20px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+    padding: 10px;
+    /* background-color: #f5f5f5 !important; */
+    /* border-radius: 5px; */
+    margin-bottom: 20px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .text-black {
-  color: #000;
+    color: #000;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .bd-notification {
-    padding: 15px;
-  }
 
-  h1 {
-    font-size: 1.5rem;
-  }
-  /* h2 {
+/* Responsive adjustments */
+
+@media (max-width: 768px) {
+    .bd-notification {
+        padding: 15px;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    /* h2 {
     font-size: 1.5rem;
   } */
-  .menu1 {
-    height: 768px;
-    /* height: 100%; */
-  }
-  .burger-button {
-    display: block;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-  }
+    .menu1 {
+        height: 768px;
+        /* height: 100%; */
+    }
+    .burger-button {
+        display: block;
+        background: none;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
 }
 
 @media (max-width: 576px) {
-  h1 {
-    font-size: 1.25rem;
-  }
-  /* h2 {
+    h1 {
+        font-size: 1.25rem;
+    }
+    /* h2 {
     font-size: 1.25rem;
   } */
-  .menu1 {
-    height: 576px;
-    /* height: 100%; */
-  }
-}
-@media (min-width: 769px) {
-  aside.menu {
-    display: block !important;
-  }
+    .menu1 {
+        height: 576px;
+        /* height: 100%; */
+    }
 }
 
+@media (min-width: 769px) {
+    aside.menu {
+        display: block !important;
+    }
+}
+
+
 /* batas responsive */
+
 .overflow-auto::-webkit-scrollbar {
-  display: none;
-  background-color: rgb(230, 230, 230) !important;
+    display: none;
+    background-color: rgb(230, 230, 230) !important;
 }
+
 .bootstrap-modal .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
 }
+
 .modal-content {
-  background-color: #fff !important;
-  border-radius: 5px !important;
+    background-color: #fff !important;
+    border-radius: 5px !important;
 }
 
 .modal-header {
-  border-bottom: 1px solid #dee2e6 !important;
+    border-bottom: 1px solid #dee2e6 !important;
 }
 
 .modal-footer {
-  border-top: 1px solid #dee2e6 !important;
+    border-top: 1px solid #dee2e6 !important;
 }
+
 textarea {
-  width: 100%; /* Lebar textarea memenuhi container */
-  height: 200px; /* Ketinggian textarea */
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+    width: 100%;
+    /* Lebar textarea memenuhi container */
+    height: 200px;
+    /* Ketinggian textarea */
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
+
+
 /* .modal-header .btn-close {
   display: block;
   position: absolute;
@@ -565,179 +676,216 @@ textarea {
 } */
 
 .form-container {
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  max-width: 600px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    max-width: 600px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }
 
 .form-label {
-  font-weight: bold;
-  font-size: 1rem;
-  color: #333;
-  flex-basis: 30%;
-  text-align: left;
-  padding-right: 15px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+    flex-basis: 30%;
+    text-align: left;
+    padding-right: 15px;
 }
 
 .form-control {
-  flex-basis: 65%;
-  height: 40px;
-  border-radius: 4px;
-  border: 1px solid #ced4da;
+    flex-basis: 65%;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
 }
 
 .submit-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .submit-button:hover {
-  background-color: #0056b3;
+    background-color: #0056b3;
 }
 
 .total-bayar {
-  text-align: right;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  color: #28a745;
+    text-align: right;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #28a745;
 }
 
 .card-container {
-  display: flex;
-  justify-content: flex-start; /* Atur posisi card ke kiri */
-  flex-wrap: wrap; /* Agar card tidak meluber ke luar */
+    display: flex;
+    justify-content: flex-start;
+    /* Atur posisi card ke kiri */
+    flex-wrap: wrap;
+    /* Agar card tidak meluber ke luar */
 }
 
 .card {
-  margin-right: 15px; /* Jarak antar card */
-  margin-bottom: 15px; /* Jarak ke bawah */
-  flex: 1 1 200px; /* Ukuran minimum card */
-  max-width: 300px; /* Maksimal lebar card */
+    margin-right: 15px;
+    /* Jarak antar card */
+    margin-bottom: 15px;
+    /* Jarak ke bawah */
+    flex: 1 1 200px;
+    /* Ukuran minimum card */
+    max-width: 300px;
+    /* Maksimal lebar card */
 }
 
 .card-transaksi {
-  background-color: FAC256;
+    background-color: FAC256;
 }
 
 .white-text {
-  color: white !important;
+    color: white !important;
 }
 
 .transaksi {
-  background-color: #ce9910 !important;
+    background-color: #ce9910 !important;
 }
+
 .pendapatan {
-  background-color: #42921c !important;
+    background-color: #42921c !important;
 }
+
 .pembelian {
-  background-color: #991010 !important;
+    background-color: #991010 !important;
 }
+
 .card-footer-item {
-  color: white !important;
+    color: white !important;
 }
 
 .card-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px; /* Mengatur jarak antar card */
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    /* Mengatur jarak antar card */
+    margin-bottom: 20px;
 }
 
 .card {
-  flex: 1; /* Card akan otomatis menyesuaikan ukuran */
-  min-width: 200px; /* Menentukan lebar minimum card */
-  max-width: 350px; /* Menentukan lebar maksimum card */
-  margin: 10px; /* Mengatur margin untuk card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px; /* Membuat sudut card membulat */
+    flex: 1;
+    /* Card akan otomatis menyesuaikan ukuran */
+    min-width: 200px;
+    /* Menentukan lebar minimum card */
+    max-width: 350px;
+    /* Menentukan lebar maksimum card */
+    margin: 10px;
+    /* Mengatur margin untuk card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    /* Membuat sudut card membulat */
 }
 
 .card-header-title {
-  font-size: 1.2rem;
-  font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .card-content {
-  padding: 16px;
+    padding: 16px;
 }
 
 .white-text {
-  color: white;
+    color: white;
 }
 
 .overflow-auto {
-  background-color: #f5f5f5 !important;
-  max-height: 400px; /* Tentukan batas maksimum tinggi keranjang */
-  overflow-y: auto; /* Agar keranjang bisa di-scroll jika produk terlalu banyak */
+    background-color: #f5f5f5 !important;
+    max-height: 400px;
+    /* Tentukan batas maksimum tinggi keranjang */
+    overflow-y: auto;
+    /* Agar keranjang bisa di-scroll jika produk terlalu banyak */
 }
+
 .burger {
-  background: none;
-  border: none;
-  color: white; /* Atur warna sesuai kebutuhan */
-  cursor: pointer;
-  margin: 10px;
+    background: none;
+    border: none;
+    color: white;
+    /* Atur warna sesuai kebutuhan */
+    cursor: pointer;
+    margin: 10px;
 }
+
 .burger-button {
-  display: none;
+    display: none;
 }
 
 .card-footer {
-  /* padding: 10px;  */
-  border-top-left-radius: 10px; /* Round the top left corner */
-  border-top-right-radius: 10px; /* Round the top right corner */
-  background-color: inherit;
+    /* padding: 10px;  */
+    border-top-left-radius: 10px;
+    /* Round the top left corner */
+    border-top-right-radius: 10px;
+    /* Round the top right corner */
+    background-color: inherit;
 }
 
 .card-footer-item {
-  border-radius: 5px; /* Add a slight border-radius to the button */
-  /* padding: 10px 15px;  */
-  text-align: center; /* Center align the text */
-  /* display: inline-block; */
-  transition: background-color 0.3s;
+    border-radius: 5px;
+    /* Add a slight border-radius to the button */
+    /* padding: 10px 15px;  */
+    text-align: center;
+    /* Center align the text */
+    /* display: inline-block; */
+    transition: background-color 0.3s;
 }
 
 .card-footer-item:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .button-spacing {
-  margin: 0 5px; /* Margin horizontal */
+    margin: 0 5px;
+    /* Margin horizontal */
 }
+
 .tanggal {
-  display: flex; /* Menyusun elemen dalam baris */
-  align-items: center; /* Menyusun elemen secara vertikal di tengah */
+    display: flex;
+    /* Menyusun elemen dalam baris */
+    align-items: center;
+    /* Menyusun elemen secara vertikal di tengah */
 }
 
 .tanggal input {
-  margin-left: 8px; /* Jarak di sebelah kiri input tanggal */
-  margin-right: 8px; /* Jarak di sebelah kanan input tanggal */
-}
-/* Memberikan margin antar radio button */
-.radio {
-  margin-right: 15px;
+    margin-left: 8px;
+    /* Jarak di sebelah kiri input tanggal */
+    margin-right: 8px;
+    /* Jarak di sebelah kanan input tanggal */
 }
 
-/* Memberikan margin antar tombol */
-.button.is-success {
-  margin-right: 15px;
+
+/* Memberikan margin antar radio button */
+
+.radio {
+    margin-right: 15px;
 }
+
+
+/* Memberikan margin antar tombol */
+
+.button.is-success {
+    margin-right: 15px;
+}
+
+
 /* .profile-pic {
   width: 50px;   
   height: 100%;  
@@ -745,38 +893,13 @@ textarea {
   object-fit: cover;
   border: 2px solid #fff;  
 } */
+
 .profile-pic {
-  width: 50px;
-  height: 50px;
-  object-fit: cover; /* Menjaga proporsi gambar */
-  border-radius: 0;  /* Menghilangkan efek bulat */
-  border: 2px solid #fff;  
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    /* Menjaga proporsi gambar */
+    border-radius: 0;
+    /* Menghilangkan efek bulat */
+    border: 2px solid #fff;
 }
-
-/* index.css or navbar.css */
-
-/* Ensure the navbar has a consistent height */
-.navbar {
-  height: 60px; /* Set a fixed height */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px; /* Adjust padding if necessary */
-  background-color: #36dda5;
-  /* Additional styles here */
-}
-
-/* Ensure that the side navigation isn't too wide */
-.navbar-side {
-  width: 250px; /* Adjust this as necessary */
-  min-width: 200px; /* Ensure a minimum width */
-  max-width: 250px; /* Ensure it doesn't exceed this */
-  background-color: #8127db;
-}
-
-/* If the size changes on certain pages, override it */
-.navbar.large {
-  width: 100%; /* Ensure full width if needed */
-}
-
-
