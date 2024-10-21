@@ -71,11 +71,9 @@ export default class KasirSidebar extends Component {
 
           {/* Sidebar kategori */}
           <aside
-              className={`menu1 pl-2 pr-6 has-shadow mt-0 ${
-                burgerMenuActive ? "" : "is-hidden-mobile"
-              }`}
-              style={{ paddingTop: '20px' }} // Tambahkan padding top
-            >
+  className={`menu1 pl-2 pr-6 has-shadow mt-0 ${burgerMenuActive ? "" : "is-hidden-mobile"}`}
+  style={{ paddingTop: '20px' }}
+>
               <h1 className="">Daftar Kategori</h1>
               <hr />
               <ul className="menu1-list">
