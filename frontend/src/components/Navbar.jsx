@@ -3,6 +3,9 @@ import "../index.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
+//import poslogo from "../assets/images/poslogo.png"; // pastikan path ini benar sesuai dengan struktur proyek
+
+
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -28,7 +31,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <img src="../assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
+        <img src="/assets/images/poslogo.png" alt="Metro Pos Logo" width="112" height="80" className="ml-3" />
         </div>
 
         <div id="navbarBasicExample" className="navbar-menu">

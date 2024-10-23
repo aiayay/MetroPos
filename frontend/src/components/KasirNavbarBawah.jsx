@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../index.css";
-import { NavLink } from "react-router-dom";
-import logo from "../logo.jpeg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../features/constants";
 
 const KasirNavbarBawah = ({ pilihMember }) => {
   const [member, setMember] = useState([]);
-  const [produk, setProduk] = useState([]); // Untuk data produk/menu
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     getMember();
-    getProduk(); // Tambahkan jika ingin cari produk
   }, []);
 
   const getMember = async () => {
@@ -25,25 +21,17 @@ const KasirNavbarBawah = ({ pilihMember }) => {
     }
   };
 
-  const getProduk = async () => {
-    const response = await axios.get(API_URL + "produk");
-    setProduk(response.data);
-  };
-
-  // Fungsi untuk menambahkan member ke keranjang
-
   return (
-    <div>
-      <div id="navbarBasicExample" className="navbar-menu">
+    <div className="container is-fullwidth">
+      <div id="navbarBasicExample" className="navbar-menu is-mobile">
         <div className="navbar-end">
           <div className="navbar-item">
-            <h1 className="text-black">Cari Member</h1>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <div className="field has-addons">
+            <form onSubmit={(e) => e.preventDefault()} className="is-flex is-flex-direction-column is-align-items-center is-fullwidth">
+              <div className="field has-addons is-fullwidth mt-3">
                 <div className="control is-expanded">
                   <input
                     type="text"
-                    className="input"
+                    className="input is-fullwidth"
                     placeholder="Cari member.."
                     value={search}
                     onChange={(event) => {
@@ -51,27 +39,23 @@ const KasirNavbarBawah = ({ pilihMember }) => {
                     }}
                   />
                 </div>
-                {/* <div className="control">
-                  <button type="submit" className="button is-info">
-                    search
-                  </button>
-                </div> */}
               </div>
             </form>
-            <div className="buttons">
-              <Link to="/kasirmember/add" className="button ungu mb-2  is-light">
+            <div className="buttons is-flex is-justify-content-center mt-3">
+              <Link to="/kasirmember/add" className="button ungu is-light mr-2">
                 Tambah Member
               </Link>
-              <Link to="/kasirtransaksi" className="button is-success mb-2">
+              <Link to="/kasirtransaksi" className="button is-success">
                 Riwayat Transaksi
               </Link>
             </div>
           </div>
         </div>
       </div>
-      <div>
-        {search ? (
-          <table className="table is-fullwidth">
+
+      <div className="table-container is-scrollable mt-4">
+        {search && (
+          <table className="table is-fullwidth is-striped is-hoverable">
             <thead>
               <tr>
                 <th>No</th>
@@ -86,7 +70,9 @@ const KasirNavbarBawah = ({ pilihMember }) => {
             <tbody>
               {member
                 .filter((member) => {
-                  return search.toLowerCase() === "" ? member : member.nama_member.toLowerCase().includes(search);
+                  return search.toLowerCase() === ""
+                    ? member
+                    : member.nama_member.toLowerCase().includes(search);
                 })
                 .map((member, index) => (
                   <tr key={member.id_member}>
@@ -105,7 +91,7 @@ const KasirNavbarBawah = ({ pilihMember }) => {
                 ))}
             </tbody>
           </table>
-        ) : null}
+        )}
       </div>
     </div>
   );

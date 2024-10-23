@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../index.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { IoPerson, IoHome, IoLogOut, IoCube, IoPeopleOutline, IoCart, IoList, IoPeopleCircle, IoWallet, IoMenu } from "react-icons/io5";
+import { IoPerson, IoHome, IoLogOut, IoCube, IoPeople, IoCart, IoListCircle, IoPeopleCircle, IoWallet, IoMenu } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, reset } from "../features/authSlice";
 
@@ -63,7 +63,7 @@ const Sidebar = () => {
           </li>
           <li className="item-sidebar">
             <NavLink to={"/member"}>
-              <IoPeopleOutline />
+              <IoPeople />
               Member
             </NavLink>
           </li>
@@ -75,7 +75,7 @@ const Sidebar = () => {
           </li>
           <li className="item-sidebar">
             <NavLink to={"/kategori"}>
-              <IoList />
+              <IoListCircle />
               Kategori
             </NavLink>
           </li>
