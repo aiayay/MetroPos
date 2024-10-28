@@ -563,21 +563,27 @@
 
 
 /* CSS khusus untuk mengatur lebar form login */
+
 .custom-login-form {
     width: 100%;
-    max-width: 500px; /* Maksimal lebar form adalah 500px */
-    margin: 0 auto; /* Memusatkan form */
-    padding: 20px; /* Menambahkan padding agar form terlihat lebih lega */
-  }
-  
-  /* Untuk layar lebih kecil dari 768px, biarkan form mengambil 90% lebar layar */
-  @media screen and (max-width: 768px) {
+    max-width: 500px;
+    /* Maksimal lebar form adalah 500px */
+    margin: 0 auto;
+    /* Memusatkan form */
+    padding: 20px;
+    /* Menambahkan padding agar form terlihat lebih lega */
+}
+
+
+/* Untuk layar lebih kecil dari 768px, biarkan form mengambil 90% lebar layar */
+
+@media screen and (max-width: 768px) {
     .column {
-      width: 1000% !important;
+        width: 1000% !important;
     }
-  }
-  
-  
+}
+
+
 /* Untuk layar sangat besar */
 
 @media (min-width: 992px) {
@@ -599,6 +605,15 @@
 
 .text-black {
     color: #000;
+}
+
+
+/* index.css */
+
+@media (max-width: 768px) {
+    .login-form {
+        padding: 1rem;
+    }
 }
 
 
