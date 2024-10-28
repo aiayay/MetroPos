@@ -931,50 +931,6 @@ textarea {
 }
 
 
-/* index.css */
-
-.hero.is-fullheight.is-fullwidth {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.container {
-    padding: 20px;
-}
-
-.columns.is-centered {
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-}
-
-.column.is-4 {
-    max-width: 100%;
-    padding: 20px;
-}
-
-.box {
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.field {
-    margin-bottom: 1.5rem;
-}
-
-
-/* Button styling */
-
-.button.login {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-}
-
-
 /* Responsiveness */
 
 @media screen and (max-width: 768px) {
