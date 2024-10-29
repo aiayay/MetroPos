@@ -935,22 +935,13 @@ textarea {
 
 @media screen and (max-width: 768px) {
     .column.is-4 {
-        max-width: 90%;
+        max-width: 100%;
+        max-height: 100%;
     }
     .title.is-2 {
         font-size: 1.75rem;
     }
     .box {
         padding: 1.75rem;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .title.is-2 {
-        font-size: 1.5rem;
-    }
-    .button.login {
-        font-size: 1.5rem;
-        padding: 8px;
     }
 }
