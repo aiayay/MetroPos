@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../index.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { LoginUser, reset, getMe } from "../features/authSlice";
+import { LoginUser, reset, getMe } from  "../features/authSlice";
 
 
 const Login = () => {
@@ -83,7 +83,7 @@ const Login = () => {
                     <input
                       type="password"
                       className="input"
-                      value={password}
+                      value={password}  
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="*****"
                       required
